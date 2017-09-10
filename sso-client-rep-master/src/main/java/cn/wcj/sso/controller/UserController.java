@@ -43,6 +43,15 @@ public class UserController {
 		return "redirect:" + casConfig.getLocalServerLoginUrl();
 	}
 
+	/**
+	 * 
+	 * @Description:cas就不用在这里登录认证了，认证在cas认证中心，sso-client只是做了授权
+	 * @author:hsj -heshengjin
+	 * @time:2017年9月10日 下午4:17:56
+	 * @param user
+	 * @param attributes
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
 	public String login(TbUser user,RedirectAttributes attributes){
 		String username = user.getUsername();
