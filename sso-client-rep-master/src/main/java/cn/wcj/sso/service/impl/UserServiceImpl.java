@@ -13,9 +13,10 @@ import cn.wcj.sso.mapper.TbUserMapperCustom;
 import cn.wcj.sso.pojo.po.TbUser;
 import cn.wcj.sso.pojo.po.TbUserExample;
 import cn.wcj.sso.pojo.po.TbUserExample.Criteria;
+import cn.wcj.sso.service.IUserService;
 
 @Service
-public class UserServiceImpl{
+public class UserServiceImpl implements IUserService{
 
 	@Autowired
 	private TbUserMapper tbUserMapper   ;   //原生User的Mapper
