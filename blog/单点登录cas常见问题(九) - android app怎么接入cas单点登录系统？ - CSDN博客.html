@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://blog.csdn.net/matthewei6/article/details/50709212 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="canonical" href="http://blog.csdn.net/matthewei6/article/details/50709212"> 
+    <script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/hm.js.下载"></script><script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/hm.js.下载"></script><script type="text/javascript">
+        var username = "matthewei6";
+        var _blogger = username;
+        var blog_address = "http://blog.csdn.net/matthewei6";
+        var static_host = "http://s.csdnimg.cn/static/";
+        var currentUserName = ""; 
+        var fileName = '50709212';
+        var commentscount = 2;
+        var islock = false
+        window.quickReplyflag = true;
+        var totalFloor = 2;
+        var isBole = false;
+        var isDigg = false;
+        var isExpert=false;
+        var isAdm = false;
+    </script>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/jquery-1.9.1.min.js.下载" type="text/javascript"></script>
+    <link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/avatar.css">
+    <link type="text/css" rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/default.css">
+    <link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/style.css">
+    <link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/content_toolbar.css">
+
+    <script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/iconfont.js.下载"></script><style type="text/css" abt="234"></style>
+    <script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/main.js.下载"></script>
+    <script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/tracking_for_recommend.js.下载" charset="utf-8"></script>
+    <script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/tracking.js.下载" charset="utf-8"></script>
+    <script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/cnick.js.下载" charset="utf-8"></script>
+    <link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/prettify.css">
+    <script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/prettify.js.下载"></script>
+    <script src="http://dup.baidustatic.com/js/ds.js"></script>
+    <script type="text/javascript">
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+    </script>
+    <meta name="description" content="cas-server-support-rest子项目有什么用：如果一个android app要接入cas中心系统，就需要用到这个子项目。
+引入的前提条件是，cas项目已经启用了，通常不会启用一部分项目，如cas-server-webapp。
+引入步骤：
+1、将cas-server-support-rest模块导入到自己的cas项目中
+2、修改cas目录下的pom.xml，解开注释cas-s">
+    <meta name="keywords" content="cas,单点登录">
+    <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/matthewei6/article/details/50709212#">
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    
+    <script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/switchHome.js.下载"></script>
+    <title>单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客</title>
+    <link href="http://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+<script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/wxLogin.js.下载"></script><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/share.js.下载"></script><link type="text/css" rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/style(1).css"><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style><link rel="stylesheet" href="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/share_style0_16.css"><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style></head>
+<body><svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><symbol id="icon-xiajiantou" viewBox="0 0 1024 1024"><path d="M328.208 346.062h368.494c20.393 0 36.887 16.366 36.887 36.757 0 9.484-3.637 18.056-9.483 24.55L541.873 650.522c-12.211 16.105-35.2 19.484-51.438 7.275-2.859-2.08-5.324-4.547-7.274-7.275L298.853 404.772c-12.08-16.106-8.83-39.225 7.404-51.306 6.626-5.066 14.289-7.404 21.95-7.404z"></path></symbol><symbol id="icon-shouji" viewBox="0 0 1024 1024"><path d="M537.754 795.889c-26.41 0-47.893 21.478-47.893 47.892s21.484 47.893 47.893 47.893 47.892-21.479 47.892-47.893-21.483-47.892-47.892-47.892z"></path><path d="M774.697 42.071H300.815c-39.864 0-72.3 32.43-72.3 72.3v795.264c0 39.869 32.43 72.3 72.3 72.3h473.872c39.87 0 72.3-32.431 72.3-72.3v-795.27c0.004-39.864-32.426-72.294-72.29-72.294zM300.815 90.266h473.872a24.125 24.125 0 0 1 24.1 24.1v595.809H276.72v-595.81a24.125 24.125 0 0 1 24.094-24.1z m473.882 843.463H300.815a24.125 24.125 0 0 1-24.1-24.1V762.501h522.072V909.63a24.115 24.115 0 0 1-24.09 24.1z"></path></symbol><symbol id="icon-tianxie" viewBox="0 0 1024 1024"><path d="M121.905 780.19h780.19v97.524h-780.19V780.19zM823.296 298.496l-68.974-68.974-344.795 344.796-34.475 103.448 103.424-34.475zM875.008 246.76l17.237-17.238-68.949-68.949-17.262 17.237-17.237 17.238 68.974 68.973z"></path></symbol><symbol id="icon-sousuo" viewBox="0 0 1024 1024"><path d="M1023.972002 964.002812l-59.981188 59.981189-271.443276-271.459276c-166.600191 136.489602-412.812649 126.986048-568.309361-28.494664-165.624236-165.624236-165.624236-434.187647 0-599.859881 165.624236-165.592238 434.187647-165.592238 599.827883 0 155.52871 155.52871 164.984266 401.789166 28.462666 568.389356L1023.972002 964.002812zM663.364906 184.007375c-132.585785-132.585785-347.327719-132.761777-479.705514-0.43198-132.329797 132.345796-132.121807 347.119729 0.463978 479.705514s347.375717 132.793775 479.705514 0.41598c132.329797-132.281799 132.169805-347.10373-0.463978-479.689514z"></path></symbol><symbol id="icon-guanbi" viewBox="0 0 1024 1024"><path d="M1002.211316 933.90818c24.46369 24.46369 29.007633 59.583246 10.159871 78.447007-18.863761 18.863761-53.983317 14.303819-78.447007-10.159871L21.807724 90.09486C-2.655966 65.631169-7.199909 30.495614 11.647853 11.647853c18.863761-18.863761 53.983317-14.303819 78.447007 10.159871L1002.211316 933.90818z"></path><path d="M933.92418 21.807724C958.38787-2.655966 993.507426-7.199909 1012.371187 11.647853c18.863761 18.863761 14.303819 53.983317-10.159871 78.447007L90.09486 1002.211316c-24.46369 24.46369-59.583246 29.007633-78.447007 10.159871-18.847761-18.863761-14.303819-53.983317 10.159871-78.463007L933.92418 21.807724z"></path></symbol><symbol id="icon-caidan" viewBox="0 0 1024 1024"><path d="M0 132.8a48.496 48.496 0 0 0 48.496 48.496h927.008a48.496 48.496 0 1 0 0-96.992H48.496A48.496 48.496 0 0 0 0 132.8s0-26.784 0 0zM0 512.016a48.48 48.48 0 0 0 48.48 48.48h927.04a48.48 48.48 0 0 0 0-96.96H48.48A48.48 48.48 0 0 0 0 512.016s0-26.784 0 0zM0 891.2a48.496 48.496 0 0 0 48.496 48.496h927.008a48.496 48.496 0 1 0 0-96.992H48.496A48.496 48.496 0 0 0 0 891.2s0-26.784 0 0z"></path></symbol><symbol id="icon-yonghudenglu" viewBox="0 0 1024 1024"><path d="M1022.26704 962.432c-43.888-157.584-162.16-281.216-312.064-340.144 92.8-61.376 153.92-164.496 153.92-281.168C864.12304 153.04 706.04304 0 511.70704 0 317.35504 0 159.19504 153.04 159.19504 341.136c0 116.704 61.152 219.84 154.064 281.184C164.13904 681.024 46.18704 803.792 1.80304 960.16c-7.344 26.016 8.464 52.864 35.36 60.032a52.016 52.016 0 0 0 38.4-4.608 49.072 49.072 0 0 0 23.712-29.568c50.768-178.96 220.352-303.92 412.448-303.92 193.04 0 362.848 125.712 412.944 305.744 7.296 26.048 34.992 41.456 61.952 34.48 26.912-7.04 42.88-33.824 35.648-59.888zM260.25104 341.136c0-134.256 112.816-243.424 251.472-243.424 138.576 0 251.328 109.184 251.328 243.424 0 133.904-112.768 242.864-251.328 242.864-138.672 0-251.472-108.976-251.472-242.864z m0 0"></path></symbol><symbol id="toolbar-csdnlogo" viewBox="0 0 1024 1024"><path d="M533.941333 419.264c14.709333-1.621333 37.290667-3.264 68.352-3.264 51.872 0 93.802667 9.152 119.776 28.416 23.338667 17.952 38.858667 47.008 34.56 89.130667-3.978667 39.189333-24.042667 66.634667-53.312 83.594666C676.544 633.152 642.837333 640 592.106667 640c-29.888 0-58.421333-1.642667-80.106667-4.896l21.941333-215.84z m42.869334 172.938667c4.981333 0.992 11.562667 1.973333 24.533333 1.973333 51.882667 0 88.469333-25.877333 92.16-62.24 5.333333-52.554667-27.125333-70.944-81.802667-70.624-7.072 0-16.917333 0-22.133333 0.970667L576.8 592.213333h0.010667z m223.498666-164.704c210.954667-39.872 229.162667 31.776 222.645334 95.189333L1010.656 640h-66.944l11.210667-106.986667c2.421333-23.562667 17.504-69.653333-55.338667-67.914666-25.184 0.608-37.706667 4.064-37.706667 4.064s-2.186667 28.469333-4.832 49.514666L844.32 640H778.666667l13.024-119.573333" fill="#231916"></path><path d="M226.634667 632.682667c-12.373333 4.341333-38.037333 7.317333-73.909334 7.317333C49.6 640-6.048 590.933333 0.522667 526.090667 8.416 448.810667 90.858667 405.333333 181.141333 405.333333c34.976 0 55.552 2.858667 74.858667 7.637334l-6.208 52.064c-12.821333-4.384-42.890667-8.405333-67.232-8.405334-53.141333 0-98.250667 16.042667-103.424 66.762667-4.608 45.354667 27.061333 67.04 86.816 67.04 20.8 0 51.477333-3.018667 65.653333-7.370667l-4.992 49.6 0.021334 0.021334z" fill="#C92027"></path><path d="M272.714667 580.021333c19.285333 6.762667 59.488 13.504 92 13.504 35.029333 0 54.528-9.333333 56.096-23.797333 1.418667-13.205333-12.928-14.986667-52.490667-24.010667-54.666667-12.896-89.546667-32.842667-86.133333-64.704C286.176 443.989333 337.685333 416 416.725333 416c38.56 0 75.914667 2.613333 95.274667 8.714667l-6.656 46.666666c-12.565333-4.202667-60.672-10.037333-93.205333-10.037333-32.992 0-50.069333 9.973333-51.253334 20.917333-1.493333 13.845333 15.658667 14.485333 58.528 25.450667 58.026667 14.154667 83.402667 34.090667 80.085334 64.992C495.605333 609.109333 449.258667 640 356.714667 640c-38.528 0-71.744-6.762667-90.048-13.525333l6.048-46.453334z" fill="#231916"></path></symbol><symbol id="icon-morentouxiang" viewBox="0 0 1024 1024"><path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#A0C3FF"></path><path d="M691.2 887.466667c-55.466667-25.6-123.733333-51.2-123.733333-51.2v-38.4c68.266667-25.6 119.466667-89.6 132.266666-166.4 12.8-4.266667 38.4-17.066667 46.933334-55.466667l8.533333-46.933333s4.266667-59.733333-42.666667-46.933334c4.266667-38.4 4.266667-81.066667 4.266667-115.2-4.266667-64-89.6-98.133333-89.6-98.133333l12.8-17.066667s-42.666667-12.8-59.733333-4.266666l12.8-29.866667s-85.333333 0-132.266667 38.4h-4.266667v-17.066667s-145.066667 21.333333-140.8 243.2c-46.933333-12.8-42.666667 46.933333-42.666666 46.933334l8.533333 46.933333c4.266667 38.4 29.866667 51.2 46.933333 55.466667 12.8 81.066667 64 145.066667 132.266667 166.4v38.4s-68.266667 29.866667-123.733333 51.2c-29.866667 12.8-59.733333 34.133333-81.066667 59.733333 68.266667 51.2 157.866667 76.8 256 76.8s187.733333-25.6 264.533333-72.533333c-21.333333-29.866667-51.2-46.933333-85.333333-64z" fill="#4374E0"></path></symbol><symbol id="icon-icon_boke" viewBox="0 0 1024 1024"><path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m298.667-256H213.333v42.667h597.334V768z m-21.334-448L704 234.667 341.333 597.333l-42.666 128 128-42.666L789.333 320z"></path></symbol><symbol id="icon-icon_gitchatx" viewBox="0 0 1024 1024"><path d="M810.667 533.333v-64h-384v85.334h298.666v128h85.334V533.333zM256 810.667h426.667v-85.334h-384V298.667h426.666V384h85.334V213.333H213.333v597.334H256zM512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m213.333-298.667v85.334h85.334v-85.334h-85.334z"></path></symbol><symbol id="icon-guanbi1" viewBox="0 0 1024 1024"><path d="M512 1024A512 512 0 1 1 512 0a512 512 0 0 1 0 1024z m160-768L512 416 352 256l-96 96 160 160-160 160 96 96 160-160 160 160 96-96-160-160 160-160-96-96z"></path></symbol></svg><div id="MathJax_Message" style="display: none;"></div><svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><symbol id="icon-read" viewBox="0 0 1024 1024"><path d="M988.16 240.64c0-5.12-2.56-11.52-6.4-15.36-2.56-2.56-51.2-55.04-135.68-81.92-32-10.24-64-15.36-96-15.36-97.28 0-181.76 46.08-235.52 84.48-55.04-39.68-139.52-85.76-236.8-85.76-32 0-65.28 5.12-96 15.36-84.48 26.88-131.84 81.92-134.4 84.48-3.84 3.84-5.12 8.96-5.12 15.36l0 546.56 60.16 71.68c3.84 8.96 12.8 15.36 21.76 15.36 3.84 0 7.68 0 10.24-2.56 19.2-5.12 120.32-29.44 199.68-29.44 37.12 0 64 5.12 79.36 15.36 7.68 5.12 11.52 10.24 12.8 16.64 0 12.8 10.24 23.04 23.04 23.04 1.28 0 8.96 0 21.76 0 24.32 0 61.44 0 98.56-2.56l0 0c1.28 0 3.84 0 5.12 0 10.24 0 20.48-7.68 23.04-17.92 2.56-10.24 7.68-16.64 17.92-23.04 16.64-8.96 42.24-14.08 76.8-14.08 78.08 0 171.52 24.32 198.4 32 3.84 1.28 7.68 2.56 11.52 2.56 0 0 0 0 0 0 8.96 0 17.92-5.12 21.76-14.08l64-72.96L988.16 241.92 988.16 240.64zM88.32 744.96 88.32 250.88c14.08-14.08 52.48-46.08 107.52-64 26.88-8.96 53.76-12.8 81.92-12.8 70.4 0 142.08 26.88 213.76 79.36l0 477.44c-38.4-23.04-88.32-34.56-149.76-34.56-32 0-66.56 3.84-102.4 10.24C179.2 715.52 124.16 733.44 88.32 744.96zM893.44 824.32c-20.48-5.12-61.44-15.36-106.24-23.04-35.84-5.12-66.56-7.68-94.72-7.68-43.52 0-76.8 6.4-101.12 20.48-15.36 8.96-26.88 20.48-33.28 34.56-33.28 1.28-65.28 2.56-87.04 2.56-1.28 0-2.56 0-3.84 0-6.4-12.8-15.36-24.32-29.44-32-23.04-15.36-58.88-21.76-106.24-21.76-76.8 0-165.12 19.2-200.96 28.16l-29.44-35.84c51.2-17.92 148.48-47.36 240.64-47.36 70.4 0 122.88 17.92 153.6 52.48l0 0c2.56 2.56 2.56 2.56 2.56 2.56l1.28 1.28c0 0 1.28 1.28 1.28 1.28 0 0 1.28 1.28 1.28 1.28l1.28 0c0 0 2.56 1.28 2.56 1.28l1.28 0c0 0 1.28 0 1.28 0 0 0 1.28 0 1.28 0l2.56 0c0 0 1.28 0 1.28 0 0 0 2.56 0 2.56 0 0 0 1.28 0 1.28 0 0 0 2.56-1.28 2.56-1.28 0 0 1.28 0 1.28 0 0 0 1.28 0 1.28-1.28 0 0 1.28 0 1.28 0 0 0 1.28 0 1.28-1.28 0 0 1.28 0 1.28 0l2.56-2.56 0 0c30.72-37.12 81.92-56.32 152.32-56.32 39.68 0 122.88 6.4 240.64 49.92L893.44 824.32zM940.8 744.96c-35.84-14.08-90.88-32-152.32-43.52-37.12-6.4-71.68-10.24-103.68-10.24-60.16 0-110.08 12.8-148.48 37.12L536.32 253.44c70.4-51.2 142.08-78.08 212.48-78.08 28.16 0 55.04 3.84 81.92 12.8 56.32 17.92 94.72 49.92 110.08 64L940.8 744.96z"></path></symbol><symbol id="icon-fanhuidingbu" viewBox="0 0 1024 1024"><path d="M527.072 190.496a21.28 21.28 0 0 0-30.176 0l-155.488 155.488a21.376 21.376 0 0 0 30.176 30.176L512 235.744l140.384 140.384a21.28 21.28 0 0 0 30.208 0 21.376 21.376 0 0 0 0-30.176l-155.52-155.456zM114.336 586.176h91.264V819.2h42.688v-233.024h91.264v-42.656H114.336v42.656z m460.576-42.688h-113.056a53.248 53.248 0 0 0-53.344 53.344v168.992a53.248 53.248 0 0 0 53.344 53.344h113.056a53.248 53.248 0 0 0 53.344-53.344v-168.992a53.248 53.248 0 0 0-53.344-53.344z m10.688 222.368a10.464 10.464 0 0 1-3.136 7.552 10.464 10.464 0 0 1-7.552 3.136h-113.056a10.464 10.464 0 0 1-7.552-3.136 10.464 10.464 0 0 1-3.136-7.552v-168.992c0-2.016 0.544-4.96 3.136-7.552a10.464 10.464 0 0 1 7.552-3.136h113.056c2.016 0 4.96 0.544 7.552 3.136a10.464 10.464 0 0 1 3.136 7.552v168.992z m308.448-206.72a53.248 53.248 0 0 0-37.728-15.616h-146.304V819.2h42.656v-120.928h103.648a53.248 53.248 0 0 0 53.344-53.344v-48.096c0-13.632-5.216-27.296-15.616-37.696z m-27.04 85.792a10.464 10.464 0 0 1-3.136 7.552 10.464 10.464 0 0 1-7.552 3.136h-103.648v-69.408h103.648c2.016 0 4.96 0.544 7.552 3.136a10.464 10.464 0 0 1 3.136 7.552v48.032z" fill=""></path><path d="M942.08 51.2c16.928 0 30.72 13.792 30.72 30.72v860.16c0 16.928-13.792 30.72-30.72 30.72H81.92a30.784 30.784 0 0 1-30.72-30.72V81.92c0-16.928 13.792-30.72 30.72-30.72h860.16m0-51.2H81.92A81.92 81.92 0 0 0 0 81.92v860.16A81.92 81.92 0 0 0 81.92 1024h860.16A81.92 81.92 0 0 0 1024 942.08V81.92A81.92 81.92 0 0 0 942.08 0z" fill=""></path></symbol><symbol id="icon-shoucang" viewBox="0 0 1024 1024"><path d="M865.6 1024c-27.2 0-51.2-11.2-68.8-32L520 704 243.2 992c-17.6 20.8-41.6 32-68.8 32-49.6 0-89.6-41.6-89.6-91.2V150.4C84.8 67.2 150.4 0 232 0h576c81.6 0 147.2 67.2 147.2 150.4v782.4c0 49.6-40 91.2-89.6 91.2zM520 611.2l326.4 339.2c4.8 6.4 12.8 9.6 19.2 9.6 14.4 0 25.6-12.8 25.6-27.2V150.4c0-48-36.8-86.4-83.2-86.4h-576c-46.4 0-83.2 38.4-83.2 86.4v782.4c0 14.4 11.2 27.2 25.6 27.2 8 0 14.4-3.2 19.2-9.6l1.6-1.6 324.8-337.6z" fill=""></path></symbol><symbol id="icon-mulu" viewBox="0 0 1024 1024"><path d="M36.416 201.472h57.44c20.128 0 36.448-18.88 36.448-53.664C130.336 112.992 114.016 96 93.856 96H36.416C16.288 96-0.032 112.992-0.032 147.808c0 34.784 16.288 53.664 36.448 53.664z m262.848 0h678.08c25.792 0 46.656-18.88 46.656-53.664C1023.968 112.992 1003.072 96 977.312 96H299.264c-25.792 0-46.656 16.992-46.656 51.808 0 34.784 20.864 53.664 46.656 53.664z m-203.136 255.296H35.552c-18.912 0-34.208 20.8-34.208 51.552 0 30.816 15.328 54.752 34.208 54.752h60.576c18.912 0 39.328-23.936 39.328-54.752-0.032-30.72-20.416-51.552-39.328-51.552z m881.184 0H299.264c-25.76 0-46.656 20.8-46.656 51.552 0 30.816 20.864 54.752 46.656 54.752h678.08c25.792 0 46.656-23.936 46.656-54.752-0.032-30.72-20.896-51.552-46.688-51.552zM97.248 819.712H38.912c-18.304 0-33.088 20.896-33.088 51.648 0 30.752 14.816 56.64 33.088 56.64h58.336c18.304 0 38.176-25.888 38.176-56.64s-19.872-51.648-38.176-51.648z m880.064 0H299.264c-25.76 0-46.656 20.896-46.656 51.648 0 30.752 20.864 55.168 46.656 55.168h678.08c25.792 0 46.656-24.416 46.656-55.168-0.032-30.752-20.896-51.648-46.688-51.648z" fill=""></path></symbol><symbol id="icon-xinlang" viewBox="0 0 1024 1024"><path d="M429.664 928C217.024 928 0 824.896 0 654.624c0-88.864 56.032-191.424 152.608-288.224C281.664 236.896 432 178.432 488.576 235.168c25.152 24.672 27.424 68.192 11.424 119.744-8 26.336 24.608 11.456 24.608 12.032 104.032-44.16 194.848-46.432 228 1.12 17.792 25.216 16 60.736 0 101.984-7.456 18.944 2.336 21.76 16.544 26.336 58.912 18.304 124.032 62.464 124.032 140.416-0.096 129.024-185.312 291.2-463.52 291.2z m-39.424-465.344c-169.696 17.216-297.632 120.928-286.816 232.672 10.816 111.744 157.088 188.512 326.848 171.936 169.696-17.216 297.632-120.864 286.752-232.672-10.816-111.744-157.088-188.512-326.784-171.936z m-69.728 356.448c-81.728-26.336-116.032-107.104-80.544-179.936 35.424-71.04 126.304-111.2 206.848-90.528 84 21.76 126.304 100.896 91.968 177.664-34.304 77.92-133.664 120.288-218.272 92.8z m45.696-153.024c-25.696-10.912-60 0.544-76 25.76-16.544 25.792-8.544 56.192 17.152 68.224 26.24 12.032 61.664 0.544 78.272-25.792 16.064-26.368 7.456-56.704-19.424-68.192z m65.184-26.944a25.152 25.152 0 0 0-28.608 10.912c-5.728 10.304-2.88 21.216 7.456 25.792a24.32 24.32 0 0 0 29.152-10.848c5.696-10.368 2.24-21.856-8-25.856z m579.36-187.392a38.912 38.912 0 0 1-49.12 25.216 39.904 39.904 0 0 1-25.76-49.28 192.736 192.736 0 0 0-40.032-189.152 192.448 192.448 0 0 0-183.424-59.552 39.68 39.68 0 0 1-46.848-30.4 39.136 39.136 0 0 1 30.272-46.432 270.112 270.112 0 0 1 258.304 83.68 272.192 272.192 0 0 1 56.608 265.92z m-132.544-43.008a33.6 33.6 0 1 1-64.032-20.672 65.024 65.024 0 0 0-13.696-63.584 64.128 64.128 0 0 0-61.12-20.032 33.28 33.28 0 0 1-40.032-25.76 33.6 33.6 0 0 1 25.696-40.128 130.4 130.4 0 0 1 125.664 40.704 132.16 132.16 0 0 1 27.52 129.472z" fill="#707070"></path></symbol><symbol id="icon-sousuo" viewBox="0 0 1024 1024"><path d="M944.513789 1024a77.19975 77.19975 0 0 1-55.325422-23.345409l-210.780262-210.204622A431.538289 431.538289 0 0 1 433.185369 866.658339C194.134776 866.658339 0.52778 673.051343 0.52778 434.00075S194.134776 1.343161 433.185369 1.343161c239.082573 0 432.657589 193.606996 432.657589 432.657589 0 87.273454-26.41549 173.299688-76.17639 245.222735l210.780263 210.812243c14.135166 14.167146 22.737789 34.378513 22.737789 55.293441a79.182511 79.182511 0 0 1-78.670831 78.670831zM433.185369 158.652842c-151.777139 0-275.347908 123.538788-275.347907 275.347908s123.538788 275.347908 275.347907 275.347907 275.347908-123.538788 275.347908-275.347907-123.538788-275.347908-275.347908-275.347908z"></path></symbol><symbol id="icon-QQ" viewBox="0 0 1024 1024"><path d="M149.9071 430.705026c0-15.993503 10.299816-41.679068 19.959892-53.674195-0.607753-14.873957 5.693687-45.133664 17.113047-54.889701 0-105.685065 81.662824-238.814981 177.080062-284.428451 58.85609-27.98863 120.495049-37.680692 185.044825-37.680692 50.283572 0 105.109299 11.995127 151.938275 31.379252 134.217474 56.521038 164.541155 161.694312 193.073564 295.911786l0.511792 2.846843c16.601256 25.141786 31.443226 54.889701 31.443226 85.661201 0 15.38575-10.299816 30.86746-10.299815 44.589885 0 1.119545 3.454597 5.693687 3.966388 6.845219 49.100053 72.578515 93.689938 151.426483 93.689939 241.661825 0 19.959891-10.811608 89.72355-42.862587 89.72355-22.294943 0-46.828976-54.281948-54.889701-69.123919-0.511792-0.543779-1.119545-0.543779-1.727299-0.543779l-2.846843 2.239091c-18.328554 47.372755-38.288445 91.96264-75.457346 127.404242 32.594758 31.379252 85.117421 28.532409 94.809484 82.814356-2.846843 6.30144-1.727298 13.146659-6.30144 19.384126-32.594758 49.100053-119.95127 55.401493-172.505919 55.401493-69.667697 0-126.25271-18.328554-191.954019-37.680693-13.754412-3.966389-34.322057-1.727298-49.164027-3.454596-34.833849 38.288445-119.95127 48.556274-169.051323 48.556274-43.374379 0-211.338144-2.846843-211.338144-77.088683 0-31.987005 6.909193-41.135289 29.140162-61.702933 17.720801-3.454597 30.86746-13.146659 51.435104-14.266204 2.846843 0 5.117921-0.607753 8.028739-1.119546 0.543779-0.511792 1.119545-0.511792 1.119545-2.23909l-1.119545-1.727298c-39.407991-9.148284-94.809484-108.563896-103.382001-149.699185l-2.846844-1.663324c-3.966389 0-5.693687 8.572517-6.845219 11.419361-12.538906 29.140162-42.254834 60.583388-75.361384 63.97401H29.923843c-4.574142 0-2.846843-4.574142-6.30144-5.693687a139.399369 139.399369 0 0 1-13.146659-57.128791c0-114.257583 54.889701-198.799238 143.973511-266.195858a77.152657 77.152657 0 0 1-4.542155-29.811889z" fill="#707070"></path></symbol><symbol id="icon-weixin" viewBox="0 0 1024 1024"><path d="M692.992 347.968c-172 0-308.032 128.192-308.032 285.856 0 26.464 4 51.872 11.488 75.808-11.328 0.992-22.688 1.472-34.048 1.472-45.536 0-81.504-8.96-126.976-17.984l-126.496 63.36 36.032-108.768c-90.56-63.328-144.992-145.184-144.992-244.384C-0.032 231.232 162.976 96 362.432 96c178.048 0 334.56 108.224 365.536 253.952a260.992 260.992 0 0 0-34.976-1.984zM244.416 249.728c-27.008 0-54.528 17.984-54.528 45.44 0 26.912 27.456 44.896 54.528 44.896 27.456 0 45.536-17.984 45.536-44.896 0-27.52-18.016-45.44-45.536-45.44z m652.544 588L924.416 928l-99.52-54.368c-36.448 8.96-72.992 18.432-108.96 18.432-172.512 0-308.032-117.728-308.032-262.432s135.488-262.432 308.032-262.432c162.944 0 308.032 117.728 308.032 262.432 0.064 81.44-53.984 153.792-127.008 208.096zM498.464 249.728c-27.456 0-54.528 17.984-54.528 45.44 0 26.912 27.008 44.896 54.528 44.896 27.008 0 45.024-17.984 45.024-44.896-0.032-27.52-18.048-45.44-45.024-45.44z m117.472 262.304c-18.016 0-35.968 17.984-35.968 35.872 0 18.432 18.016 36.48 35.968 36.48 27.456 0 45.536-17.984 45.536-36.48-0.064-17.888-18.016-35.872-45.536-35.872z m199.584 0c-18.016 0-36.032 17.984-36.032 35.872 0 18.432 18.016 36.48 36.032 36.48 26.976 0 45.536-17.984 45.536-36.48-0.128-17.888-18.528-35.872-45.536-35.872z" fill="#707070"></path></symbol><symbol id="icon-fenxiang" viewBox="0 0 1024 1024"><path d="M753.344 615.456a171.84 171.84 0 0 0-145.024 79.648l-184.544-105.536c11.968-23.36 19.264-49.408 19.264-77.568 0-17.344-3.264-33.696-8.096-49.536l191.968-109.728a171.392 171.392 0 0 0 126.368 55.872c95.072 0 172.288-77.152 172.288-172.288S848.384 64 753.312 64a172.256 172.256 0 0 0-172.288 172.288c0 17.344 3.328 33.76 8.032 49.536l-191.968 109.696a171.328 171.328 0 0 0-126.304-55.84 172.288 172.288 0 1 0-0.064 344.576 171.008 171.008 0 0 0 104.064-35.776l-0.672 1.184 208.768 119.328c-0.8 6.112-1.856 12.192-1.856 18.752a172.32 172.32 0 0 0 344.576 0 172.224 172.224 0 0 0-172.256-172.288z m0-482.592a103.52 103.52 0 0 1 103.456 103.392 103.456 103.456 0 0 1-206.912 0 103.456 103.456 0 0 1 103.456-103.392zM270.752 615.456A103.328 103.328 0 0 1 167.424 512a103.36 103.36 0 1 1 206.72 0 103.36 103.36 0 0 1-103.392 103.456z m482.592 275.744a103.456 103.456 0 1 1 0-206.912 103.456 103.456 0 0 1 0 206.912z" fill=""></path></symbol><symbol id="icon-erweima" viewBox="0 0 1024 1024"><path d="M466.112 464.896H1.216V0h464.896v464.896z m0 557.888H1.216V557.888h464.896v464.896zM373.12 371.936V92.992H94.176v278.944h278.944z m0 557.152V650.88H94.176v278.24h278.944zM280.16 278.944H187.168V185.952h92.992v92.992z m0 557.888H187.168v-92.992h92.992v92.992zM1024 464.896H559.104V0H1024v464.896z m0 371.936h-278.944v-92.992h-92.992v278.944h-92.992V557.888h278.944v92.992h92.992v-92.992H1024v278.944z m-92.992-464.896V92.992h-278.944v278.944h278.944z m-92.96-92.992h-92.992V185.952h92.992v92.992z m0 743.84h-92.992v-92.992h92.992v92.992z m185.952 0h-92.992v-92.992H1024v92.992z"></path></symbol><symbol id="icon-daima" viewBox="0 0 1024 1024"><path d="M376.192 683.104a10.592 10.592 0 0 1-15.264 0l-154.656-154.656a10.624 10.624 0 0 1 0-15.264l154.656-154.656c2.016-2.048 4.768-3.232 7.648-3.232s5.632 1.152 7.616 3.232l16.608 16.608a10.624 10.624 0 0 1 0 15.264L262.4 520.832l130.432 130.432a10.752 10.752 0 0 1 3.232 7.648c0 2.88-1.152 5.632-3.232 7.616l-16.64 16.576z m88.96 57.728a10.56 10.56 0 0 1-12.928 7.296l-20.576-5.632a10.752 10.752 0 0 1-7.296-13.28L548.16 300.832a10.56 10.56 0 0 1 12.928-7.328l20.576 5.632c5.632 1.664 8.96 7.648 7.296 13.28l-123.808 428.416z m187.2-57.728a10.624 10.624 0 0 1-15.296 0l-16.576-16.576a10.592 10.592 0 0 1 0-15.264l130.4-130.432L620.48 390.4a10.624 10.624 0 0 1 0-15.264l16.576-16.608a10.624 10.624 0 0 1 15.296 0l154.624 154.656a10.624 10.624 0 0 1 0 15.264l-154.624 154.656z" fill="#707070"></path></symbol><symbol id="icon-pinglun" viewBox="0 0 1025 1024"><path d="M256 364.512c-35.328 0-64 29.76-64 66.496 0 36.736 28.672 66.496 64 66.496 35.36 0 64-29.76 64-66.496 0-36.736-28.64-66.496-64-66.496z m256.032 0c-35.36 0-64 29.76-64 66.496 0 36.736 28.64 66.496 64 66.496 35.328 0 63.968-29.76 63.968-66.496 0-36.736-28.64-66.496-63.968-66.496z m255.968 0c-35.328 0-64 29.76-64 66.496 0 36.736 28.672 66.496 64 66.496s64-29.76 64-66.496c0.032-36.736-28.672-66.496-64-66.496zM896.032 32h-768C57.312 32 0 91.552 0 165.024v498.752c0 73.44 58.56 141.12 130.88 141.12h195.104c33.952 36.288 174.72 182.208 174.72 182.208a15.488 15.488 0 0 0 22.592 0s103.072-116.992 170.176-182.208h199.616c72.32 0 130.88-67.712 130.88-141.12V165.024C1024 91.552 966.688 32 896.032 32zM960 663.776c0 36.704-30.752 75.264-66.88 75.264h-196.32c-23.808 0-45.184 24.48-45.184 24.48l-137.824 143.232-137.824-143.232s-26.208-24.48-48.704-24.48H130.88C94.752 739.008 64 700.48 64 663.776V165.024c0-36.736 28.64-66.496 64-66.496h768c35.328 0 63.968 29.76 63.968 66.496v498.752z m0 0" fill=""></path></symbol><symbol id="icon-xihuan-" viewBox="0 0 1024 1024"><path d="M1020.81017 296c-14.4-85.6-61.6-152.8-141.6-200-45.6-27.2-97.6-41.6-148.8-41.6-66.4 0-128.8 24-176.8 68-15.2 13.6-28 28.8-41.6 43.2-40.8-49.6-81.6-80-129.6-96-84-28-168-17.6-245.6 32C45.61017 158.4-0.78983 240.8 0.01017 345.6c0.8 61.6 20.8 120 62.4 178.4 44.8 62.4 100 126.4 172.8 200.8 49.6 50.4 100.8 100 149.6 148l48 47.2c4 4 8.8 8 12.8 12.8l5.6 4.8c10.4 8.8 32 23.2 60 23.2 23.2 0 45.6-9.6 65.6-28.8 84-79.2 173.6-164.8 258.4-256.8 44-48 94.4-104 136-166.4 44.8-68 61.6-140 49.6-212.8m-92 184c-39.2 59.2-85.6 111.2-130.4 160-84 91.2-172.8 176-256 254.4-10.4 9.6-20.8 14.4-30.4 14.4-12 0-21.6-7.2-25.6-9.6l-4-4c-4-4-8-8-12.8-12l-48-47.2c-49.6-48-100.8-97.6-149.6-148-72-72.8-124-133.6-168-194.4-35.2-49.6-52.8-98.4-52.8-148.8 0-86.4 36.8-152 113.6-200.8 40.8-25.6 83.2-39.2 126.4-39.2 24.8 0 49.6 4 75.2 12.8 40 13.6 74.4 40 110.4 84.8 2.4 3.2 15.2 16.8 36 16.8 8.8 0 22.4-3.2 34.4-16.8l2.4-2.4c13.6-14.4 25.6-28.8 39.2-41.6 38.4-36 88-54.4 141.6-54.4 42.4 0 84.8 12 123.2 34.4 67.2 40 105.6 93.6 116.8 164 9.6 62.4-4 120-41.6 177.6" fill=""></path><path d="M512.01017 957.6c-27.2 0-48-13.6-58.4-22.4l-5.6-4.8c-4-4-8.8-8-12.8-12.8l-51.2-50.4c-48.8-47.2-98.4-96-147.2-144.8-72.8-74.4-128-137.6-172.8-200.8-40.8-57.6-60.8-115.2-61.6-176-0.8-104 44.8-185.6 136-243.2 48.8-30.4 100-46.4 152.8-46.4 29.6 0 60 4.8 90.4 15.2 48 16 88.8 46.4 128.8 95.2l1.6 2.4 1.6-2.4c12-13.6 26.4-28.8 40.8-43.2 48-43.2 110.4-67.2 176-67.2 51.2 0 102.4 14.4 148 41.6 79.2 47.2 126.4 113.6 140 198.4 12 72.8-4 143.2-48.8 210.4-40.8 62.4-91.2 118.4-135.2 166.4-84.8 92-174.4 177.6-258.4 256.8-20 18.4-41.6 28-64 28z m-220.8-855.2c-43.2 0-86.4 13.6-128 39.2-77.6 49.6-114.4 116-114.4 203.2 0 51.2 17.6 100 53.6 149.6 44 61.6 96 121.6 168 195.2 48 48.8 98.4 97.6 147.2 145.6l50.4 49.6 9.6 9.6 7.2 6.4c4 3.2 14.4 10.4 27.2 10.4 10.4 0 21.6-4.8 32-15.2 83.2-78.4 172-164 256-254.4 44.8-48.8 92-100.8 130.4-160 38.4-57.6 52-116 41.6-177.6-12-71.2-50.4-125.6-118.4-166.4-38.4-22.4-81.6-35.2-124-35.2-54.4 0-104 19.2-143.2 55.2-13.6 12.8-25.6 26.4-39.2 40.8l-2.4 3.2c-12 12.8-24 16-32.8 16-19.2 0-31.2-13.6-33.6-16-36-44.8-71.2-72-112-85.6-25.6-8.8-50.4-13.6-75.2-13.6z" fill=""></path></symbol><symbol id="icon-jubao" viewBox="0 0 1024 1024"><path d="M507.2 345.6c-20.8 0-38.4 17.6-38.4 38.4v264c0 22.4 17.6 38.4 38.4 38.4h8c20.8 0 38.4-17.6 38.4-38.4V384c0-22.4-17.6-38.4-38.4-38.4h-8zM454.4 788.8c0 14.4 6.4 30.4 16 40 11.2 11.2 25.6 16 40 16 14.4 0 30.4-6.4 40-16 11.2-11.2 16-25.6 16-40 0-14.4-6.4-30.4-16-40-11.2-11.2-25.6-16-40-16-14.4 0-30.4 6.4-40 16-9.6 11.2-16 25.6-16 40z" fill=""></path><path d="M102.4 966.4C46.4 966.4 0 921.6 0 864c0-17.6 4.8-33.6 12.8-48 0 0 0-1.6 1.6-1.6L422.4 108.8s0-1.6 1.6-1.6c19.2-30.4 52.8-49.6 88-49.6s68.8 19.2 88 49.6c0 0 0 1.6 1.6 1.6l409.6 705.6s0 1.6 1.6 1.6c8 14.4 12.8 32 12.8 48 0 56-46.4 102.4-102.4 102.4H102.4zM64 841.6c-1.6 0-1.6 0 0 0-4.8 8-6.4 16-6.4 24 0 25.6 20.8 44.8 44.8 46.4h817.6c25.6 0 46.4-20.8 46.4-46.4 0-8-1.6-16-6.4-22.4l-408-704s0-1.6-1.6-1.6C544 123.2 528 113.6 512 113.6s-32 8-40 22.4c0 0 0 1.6-1.6 1.6L64 841.6z" fill=""></path></symbol><symbol id="icon-dashang-" viewBox="0 0 1024 1024"><path d="M977.883349 705.071646c0 307.614317-400.867476 318.928354-459.700467 318.928354-4.684967 0-7.202739-0.063741-7.202739-0.063741s-2.517772 0.063741-7.202739 0.063741c-58.832991 0-459.700467-11.314037-459.700467-318.928354 0-331.963399 372.407096-488.638904 372.407097-488.638904S291.679054 172.355805 291.679054 78.847681c0-75.851852 185.582073-78.847681 215.317273-78.847681h7.967632c29.67146 0 215.317274 3.0277 215.317273 78.847681 0 93.508123-124.83685 137.55319-124.83685 137.55319s372.438967 156.707376 372.438967 488.670775zM582.210769 271.983069a60.235294 60.235294 0 0 1 3.314534-112.311734c16.700156-6.08727 77.317896-35.631248 84.074448-73.844009-17.911236-11.569001-75.979334-25.496421-154.572051-25.49642h-8.031373c-78.656458 0-136.660815 13.92742-154.572051 25.49642 6.820293 38.531466 68.202926 68.266667 84.074448 73.844009a60.235294 60.235294 0 0 1 3.314535 112.311734c-3.250794 1.402303-335.501027 145.967009-335.501027 433.152318 0 246.231684 332.855773 258.693059 399.592654 258.69306l5.577342-0.063741H512.733022l5.513601 0.063741c66.736881 0 399.592655-12.461376 399.592655-258.69306C917.775537 416.484034 585.557174 273.385372 582.210769 271.983069z m36.555493 386.971926a24.890881 24.890881 0 0 1 21.512605 37.256645 24.763399 24.763399 0 0 1-21.512605 12.397635h-84.010706v65.238967a24.85901 24.85901 0 1 1-49.65428 0v-65.238967h-79.96315a24.85901 24.85901 0 1 1 0-49.718021h79.96315v-50.737877h-82.002863a24.890881 24.890881 0 0 1-21.512605-37.256645 24.763399 24.763399 0 0 1 21.512605-12.397635h42.579022l-41.049237-41.112978a24.922751 24.922751 0 0 1 17.528789-42.451541c6.533458 0 12.907563 2.645254 17.52879 7.26648l70.178898 70.306381 70.178898-70.306381a24.85901 24.85901 0 0 1 35.057579 35.185061l-41.049238 41.112978h42.579023a24.85901 24.85901 0 1 1 0 49.718021h-81.939122v50.737877h84.074447z"></path></symbol><symbol id="icon-shouqi" viewBox="0 0 1024 1024"><path d="M906.592 828.768a40.288 40.288 0 0 1-57.152 0L512 491.36 174.592 828.768a40.416 40.416 0 0 1-57.216 0L11.936 723.904a40.96 40.96 0 0 1 0-57.792L483.392 195.232a40.288 40.288 0 0 1 57.152 0l471.52 470.88a40.96 40.96 0 0 1 0 57.792l-105.472 104.864z" fill="#707070"></path></symbol><symbol id="icon-youjiantou" viewBox="0 0 1024 1024"><path d="M704 512a22.56 22.56 0 0 0-6.656-15.136l-307.456-307.488a22.72 22.72 0 0 0-15.136-6.56 22.592 22.592 0 0 0-15.136 6.56L326.592 222.4a22.72 22.72 0 0 0-6.56 15.136c0 5.28 2.624 11.232 6.56 15.136L585.888 512l-259.328 259.328a22.72 22.72 0 0 0-6.56 15.136c0 5.952 2.624 11.232 6.56 15.136l33.024 33.024a22.688 22.688 0 0 0 15.136 6.56 22.592 22.592 0 0 0 15.136-6.56l307.488-307.488A22.432 22.432 0 0 0 704 512z" fill="#707070"></path></symbol><symbol id="icon-zuojiantou" viewBox="0 0 1024 1024"><path d="M320 512c0-5.28 2.688-11.232 6.656-15.136l307.456-307.488a22.72 22.72 0 0 1 15.136-6.56c5.28 0 11.232 2.624 15.136 6.56l33.024 33.024a22.72 22.72 0 0 1 6.56 15.136 22.592 22.592 0 0 1-6.56 15.136L438.112 512l259.328 259.328a22.72 22.72 0 0 1 6.56 15.136 21.312 21.312 0 0 1-6.56 15.136l-33.024 33.024a22.688 22.688 0 0 1-15.136 6.56 22.592 22.592 0 0 1-15.136-6.56l-307.488-307.488A22.432 22.432 0 0 1 320 512z" fill="#707070"></path></symbol><symbol id="icon-xiajiantou" viewBox="0 0 1024 1024"><path d="M512 704a22.56 22.56 0 0 0 15.136-6.656l307.488-307.456a22.72 22.72 0 0 0 6.56-15.136 22.592 22.592 0 0 0-6.56-15.136l-33.024-33.024a22.72 22.72 0 0 0-15.136-6.56 22.592 22.592 0 0 0-15.136 6.56L512 585.888l-259.328-259.328A22.72 22.72 0 0 0 237.536 320a21.312 21.312 0 0 0-15.136 6.56l-33.024 33.024a22.688 22.688 0 0 0-6.56 15.136c0 5.28 2.624 11.232 6.56 15.136l307.488 307.488A22.432 22.432 0 0 0 512 704z" fill="#707070"></path></symbol><symbol id="icon-shangjiantou" viewBox="0 0 1024 1024"><path d="M512 320c5.28 0 11.232 2.688 15.136 6.656l307.488 307.456a22.72 22.72 0 0 1 6.56 15.136 22.592 22.592 0 0 1-6.56 15.136l-33.024 33.024a22.72 22.72 0 0 1-15.136 6.56 22.592 22.592 0 0 1-15.136-6.56L512 438.112l-259.328 259.328a22.72 22.72 0 0 1-15.136 6.56 21.312 21.312 0 0 1-15.136-6.56l-33.024-33.024a22.688 22.688 0 0 1-6.56-15.136c0-5.28 2.624-11.232 6.56-15.136l307.488-307.488A22.432 22.432 0 0 1 512 320z" fill="#707070"></path></symbol><symbol id="icon-shanghuadong" viewBox="0 0 1024 1024"><path d="M512 0c282.336 0 512 229.664 512 512s-229.664 512-512 512S0 794.336 0 512 229.664 0 512 0z m0 955.744c244.672 0 443.744-199.072 443.744-443.744S756.672 68.256 512 68.256 68.256 267.328 68.256 512 267.328 955.744 512 955.744z" fill=""></path><path d="M307.2 409.6c8.736 0 17.472 3.36 24.16 9.952L512 600.256l180.64-180.704a34.144 34.144 0 0 1 48.256 48.256l-204.8 204.8a34.144 34.144 0 0 1-48.256 0l-204.8-204.8A34.144 34.144 0 0 1 307.2 409.6z" fill=""></path></symbol><symbol id="icon-xiahuadong" viewBox="0 0 1024 1024"><path d="M512 1024C229.664 1024 0 794.336 0 512S229.664 0 512 0s512 229.664 512 512-229.664 512-512 512z m0-955.744C267.328 68.256 68.256 267.328 68.256 512S267.328 955.744 512 955.744 955.744 756.672 955.744 512 756.672 68.256 512 68.256z" fill=""></path><path d="M716.8 614.4c-8.736 0-17.472-3.36-24.16-9.952L512 423.744l-180.64 180.704a34.144 34.144 0 0 1-48.256-48.256l204.8-204.8a34.144 34.144 0 0 1 48.256 0l204.8 204.8A34.144 34.144 0 0 1 716.8 614.4z" fill=""></path></symbol><symbol id="icon-bokezhuanjia" viewBox="0 0 1024 1024"><path d="M984.544 604.736l38.944-95.168-38.944-92.896V315.904L911.808 243.2l-39.744-94.848-93.248-38.144-71.232-71.264h-102.848L509.568 0l-92.896 38.944H315.904L243.2 111.648 148.352 151.424 110.208 244.672 38.944 315.904v102.816L0 513.888l38.944 92.928v100.768l72.704 72.704 39.776 94.848 93.248 38.144 71.232 71.264h102.848l95.136 38.944 92.928-38.944h100.768l72.704-72.736 94.848-39.744 38.144-93.248 71.264-71.232z" fill="#F0D04D"></path><path d="M685.92 197.888A1280.352 1280.352 0 0 0 228.768 878.176a662.72 662.72 0 0 0 44.96-16.096A1280.544 1280.544 0 0 1 688.032 253.536a649.792 649.792 0 0 0-2.112-55.648z" fill="#B18C25"></path><path d="M569.312 472a448.608 448.608 0 0 0 230.08-68.64 450.24 450.24 0 0 0-28.8-270.016C496.448 223.104 310.848 477.856 305.376 762.464c44.416 5.088 90.304 3.648 136.512-5.216 151.904-29.12 271.264-131.232 328.832-263.04a683.968 683.968 0 0 1-201.408-22.208z" fill="#FFFFFF"></path><path d="M356.512 775.616c-17.408 0-35.008-0.992-52.32-2.976l-9.248-1.056 0.192-9.312A686.4 686.4 0 0 1 767.392 123.648l8.832-2.912 3.712 8.544c13.728 31.552 23.936 64.416 30.336 97.76 11.36 59.36 11.072 119.36-0.864 178.368l-0.864 4.288-3.712 2.336a457.12 457.12 0 0 1-157.824 62.112c-3.296 0.64-6.592 1.216-9.888 1.792 43.872 7.04 88.608 9.76 133.216 8.032l16.288-0.64-6.528 14.944a461.856 461.856 0 0 1-423.584 277.344z m-40.672-22.368a441.632 441.632 0 0 0 438.72-248.384c-3.456 0.064-6.912 0.064-10.368 0.064-59.968 0-119.712-7.744-177.536-23.072l-70.336-18.624 72.736-1.504a436.896 436.896 0 0 0 221.12-64.736c10.592-55.008 10.56-110.88-0.032-166.144a443.392 443.392 0 0 0-25.344-84.8A666.112 666.112 0 0 0 315.84 753.248z" fill="#CFA41E"></path><path d="M375.68 775.616c-17.408 0-35.008-0.992-52.32-2.976l-9.248-1.056 0.192-9.312A686.496 686.496 0 0 1 786.56 123.616l8.832-2.912 3.712 8.544c13.728 31.52 23.936 64.416 30.336 97.76 11.36 59.328 11.072 119.36-0.864 178.368l-0.864 4.288-3.712 2.336a457.12 457.12 0 0 1-157.824 62.112c-3.296 0.64-6.592 1.216-9.888 1.792a682.848 682.848 0 0 0 133.216 8.064l16.288-0.64-6.528 14.944a461.856 461.856 0 0 1-423.584 277.344z m-40.704-22.368a441.632 441.632 0 0 0 438.72-248.384 694.976 694.976 0 0 1-187.872-23.008l-70.336-18.624 72.736-1.504a436.896 436.896 0 0 0 221.12-64.736 437.664 437.664 0 0 0-0.032-166.144 443.392 443.392 0 0 0-25.344-84.8 666.144 666.144 0 0 0-448.992 607.2z" fill="#B18C25"></path><path d="M770.592 133.344a450.24 450.24 0 0 1 28.8 270.016 447.424 447.424 0 0 1-230.08 68.64c30.592 8.096 61.888 14.112 93.696 17.888 35.36 4.224 71.36 5.696 107.712 4.32-57.568 131.776-176.928 233.92-328.832 263.04a450.976 450.976 0 0 1-136.512 5.216c5.472-284.608 191.072-539.36 465.216-629.12" fill="#FFFFFF"></path><path d="M356.512 775.616c-17.408 0-35.008-0.992-52.32-2.976l-9.248-1.056 0.192-9.312A686.4 686.4 0 0 1 767.392 123.648l28-2.912-15.424 8.544c13.728 31.52 23.936 64.416 30.336 97.76 11.36 59.328 11.072 119.36-0.864 178.368l-0.864 4.288-3.712 2.336a457.12 457.12 0 0 1-157.824 62.112c-3.296 0.64-6.592 1.216-9.888 1.792a682.848 682.848 0 0 0 133.216 8.064l16.288-0.64-6.528 14.944a461.856 461.856 0 0 1-423.616 277.312z m-40.672-22.368a441.632 441.632 0 0 0 438.72-248.384 694.976 694.976 0 0 1-187.872-23.008l-70.336-18.624 72.736-1.504a436.896 436.896 0 0 0 221.12-64.736 437.664 437.664 0 0 0-0.032-166.144 443.392 443.392 0 0 0-25.344-84.8A666.08 666.08 0 0 0 315.84 753.248z" fill="#B18C25"></path><path d="M703.648 218.976c-203.68 172.48-361.472 392.832-458.72 653.856l78.624-30.016c75.328-238.688 186.144-416.192 380.64-573.856 0.064-18.432 0.928-31.36-0.544-49.984z" fill="#B18C25"></path><path d="M702.08 192.544A1280.224 1280.224 0 0 0 244.928 872.8a662.72 662.72 0 0 0 44.96-16.096A1280.544 1280.544 0 0 1 704.192 248.16c0.064-18.432-0.64-36.992-2.112-55.616z" fill="#EDEEEE"></path></symbol><symbol id="icon-yonghu" viewBox="0 0 1025 1024"><path d="M1023.664 962.048c-43.952-157.52-162.384-281.104-312.496-340 92.928-61.36 154.128-164.432 154.128-281.056C865.296 152.976 707.008 0 512.4 0 317.776 0 159.408 152.976 159.408 340.992c0 116.656 61.232 219.744 154.272 281.072C164.352 680.752 46.24 803.456 1.808 959.776c-7.36 26 8.48 52.848 35.408 60.016a52.096 52.096 0 0 0 38.448-4.608 49.072 49.072 0 0 0 23.744-29.552c50.848-178.896 220.656-303.808 413.008-303.808 193.312 0 363.344 125.664 413.504 305.616 7.296 26.032 35.04 41.44 62.032 34.464 26.96-7.04 42.944-33.808 35.712-59.856zM260.608 340.992c0-134.208 112.96-243.328 251.808-243.328 138.768 0 251.68 109.136 251.68 243.328 0 133.84-112.912 242.768-251.68 242.768-138.864 0-251.808-108.928-251.808-242.768z m0 0"></path></symbol><symbol id="icon-bianji" viewBox="0 0 1024 1024"><path d="M343.296 559.936c-0.576 0.768-1.184 1.568-1.44 2.528l-45.088 169.44a29.632 29.632 0 0 0 7.2 28 27.84 27.84 0 0 0 27.232 7.296l164.096-45.888c0.256 0 0.384 0.224 0.576 0.224a7.04 7.04 0 0 0 5.152-2.176L939.808 269.568c13.056-13.376 20.192-31.616 20.192-51.456a88.96 88.96 0 0 0-25.568-61.568l-41.44-42.56c-16.256-16.704-38.208-26.24-60.096-26.24a69.44 69.44 0 0 0-50.176 20.672L343.936 558.368c-0.448 0.416-0.32 1.056-0.64 1.568zM896.864 225.504l-43.584 44.64-70.656-73.6L825.6 152.512c6.784-7.008 19.968-5.984 27.744 2.048l41.472 42.56a23.456 23.456 0 0 1 6.784 16.16 17.184 17.184 0 0 1-4.736 12.224zM421.312 566.976l316.64-324.64 70.688 73.632L492.608 640l-71.296-73.024z m-57.696 131.648l22.88-86.112 61.024 62.592-83.904 23.52z m551.968-294.848c-16.608 0-30.24 13.856-30.304 31.104v419.36c0 21.984-17.408 39.872-38.912 39.872H163.488c-21.44 0-38.944-17.856-38.944-39.872V169.728c0-22.016 17.504-39.904 38.944-39.904h445.696a30.688 30.688 0 0 0 30.272-31.04 30.688 30.688 0 0 0-30.272-31.008H158.848C106.56 67.776 64 111.392 64 165.056v693.92c0 53.632 42.56 97.216 94.848 97.216h692.096c52.32 0 94.88-43.584 94.88-97.216v-424.32a30.656 30.656 0 0 0-30.24-30.88z" fill=""></path></symbol><symbol id="icon-shanchu" viewBox="0 0 1024 1024"><path d="M392.176 885.024c29.056 0 43.568-21.936 43.568-43.888v-563.2c0-29.264-21.792-43.888-43.568-43.888-29.056 0-43.584 21.936-43.584 43.888v555.888c0 29.264 21.792 51.2 43.584 51.2zM973.168 95.088H580.992v-51.2C580.992 21.936 559.2 0 530.16 0h-43.568c-29.056 0-50.832 21.936-50.832 43.888v43.888H43.568C21.792 95.088 0 117.024 0 138.976c0 29.264 21.792 43.888 43.568 43.888h72.624v746.064c0 51.2 43.568 95.088 94.416 95.088h602.784c50.832 0 94.416-43.888 94.416-95.088V182.864h72.624c29.056 0 43.584-21.936 43.584-43.888-0.016-21.952-29.072-43.888-50.848-43.888z m-167.04 789.936c0 29.264-21.792 43.888-43.584 43.888H254.192c-29.056 0-43.584-21.936-43.584-43.888V182.864h602.784v702.176h-7.264z m-181.568 0c29.056 0 43.568-21.936 43.568-43.888v-563.2c0-29.264-21.792-43.888-43.568-43.888-29.056 0-43.584 21.936-43.584 43.888v555.888c0.016 29.264 14.544 51.2 43.584 51.2z m0 0"></path></symbol><symbol id="icon-spinner" viewBox="0 0 1024 1024"><path d="M384 149.33333333333334a128 128 0 1 1 256 0 128 128 0 0 1-256 0z m271.52 112.48a128 128 0 1 1 256 0 128 128 0 0 1-256 0zM832 533.3333333333334a64 64 0 1 1 127.968-0.032A64 64 0 0 1 832 533.3333333333334z m-112.48 271.52a64 64 0 1 1 127.968-0.032 64 64 0 0 1-127.968 0.032zM448 917.3333333333334a64 64 0 1 1 128 0 64 64 0 1 1-128 0z m-271.52-112.48a64 64 0 1 1 128 0 64 64 0 1 1-128 0z m-32-543.04a96 96 0 1 1 192 0 96 96 0 1 1-192 0zM56 533.3333333333334a72 72 0 1 1 144 0 72 72 0 0 1-144 0z"></path></symbol><symbol id="icon-weiye" viewBox="0 0 1024 1024"><path d="M713.6 515.2c0 9.6-3.2 16-9.6 22.4L233.6 1008c-6.4 6.4-16 9.6-22.4 9.6-9.6 0-16-3.2-22.4-9.6l-51.2-51.2c-6.4-6.4-9.6-12.8-9.6-22.4 0-9.6 3.2-16 9.6-22.4l396.8-396.8L137.6 118.4C131.2 115.2 128 105.6 128 96c0-9.6 3.2-16 9.6-22.4L188.8 22.4c6.4-6.4 16-9.6 22.4-9.6 9.6 0 16 3.2 22.4 9.6L704 492.8c6.4 6.4 9.6 16 9.6 22.4z m0 0M860.8 1017.6c38.4 0 67.2-32 67.2-67.2V83.2c0-38.4-32-67.2-67.2-67.2-38.4 0-67.2 32-67.2 67.2v867.2c-3.2 35.2 28.8 67.2 67.2 67.2z"></path></symbol><symbol id="icon-shouye" viewBox="0 0 1024 1024"><path d="M342.4 515.2c0-9.6 3.2-16 9.6-22.4L822.4 22.4c6.4-6.4 16-9.6 22.4-9.6 9.6 0 16 3.2 22.4 9.6l51.2 51.2c6.4 6.4 9.6 16 9.6 22.4 0 9.6-3.2 16-9.6 22.4L521.6 515.2l396.8 396.8c6.4 6.4 9.6 16 9.6 22.4 0 9.6-3.2 16-9.6 22.4l-51.2 51.2c-6.4 6.4-16 9.6-22.4 9.6-9.6 0-16-3.2-22.4-9.6L352 537.6c-6.4-3.2-9.6-12.8-9.6-22.4z m0 0M195.2 1017.6c-38.4 0-67.2-32-67.2-67.2V83.2C128 44.8 160 16 195.2 16c38.4 0 67.2 32 67.2 67.2v867.2c3.2 35.2-28.8 67.2-67.2 67.2z"></path></symbol><symbol id="icon-yixihuan" viewBox="0 0 1024 1024"><path d="M755.26144 82.91328c-68.736 0-137.53856 26.24-190.01856 78.72l-47.45728 47.488h-0.03072l-5.43744 5.47328-5.47328-5.47328h-0.03072l-47.51872-47.488C406.75328 109.15328 337.92 82.91328 269.08672 82.91328c-68.864 0-137.728 26.24-190.23872 78.72-105.088 104.92928-105.088 275.10272 0 380.032l214.016 213.79072h0.03072l166.43072 166.20544c13.08672 13.056 30.17728 19.39456 47.32928 19.39456 1.92 0 3.80928-0.09728 5.72928-0.256 1.88928 0.15872 3.80928 0.256 5.69344 0.256 17.09056 0 34.176-6.33856 47.232-19.39456l166.24128-166.20544 0.22528-0.22528 166.04672-166.04672 47.488-47.488c104.92928-104.99072 104.92928-275.10272 0-380.032-52.51072-52.51072-121.27744-78.75072-190.04928-78.75072z"></path></symbol><symbol id="icon-yidianzan" viewBox="0 0 1024 1024"><path d="M267.296 500.992v469.44h586.88l116.256-515.872h-439.36l109.984-353.952-132.864-47.04z"></path><path d="M508.192 53.568l132.864 47.04-109.984 353.952h439.392l-116.256 515.872H267.296v-469.44l240.896-447.424m0-53.568c-19.232 0-37.6 10.4-47.168 28.16L220.128 475.616c-4.192 7.808-6.4 16.512-6.4 25.376v469.44c0 29.6 24 53.568 53.568 53.568h586.88c25.056 0 46.752-17.344 52.256-41.792l116.256-515.872a53.472 53.472 0 0 0-52.256-65.312H603.776l88.416-284.512a53.536 53.536 0 0 0-33.28-66.368L526.048 3.104A52.736 52.736 0 0 0 508.192 0z"></path><path d="M211.008 512v458.432H56.288V512h154.72m0-53.536H56.288C25.184 458.464 0 482.432 0 512v458.432C0 1000.032 25.184 1024 56.288 1024h154.72c31.072 0 56.288-23.968 56.288-53.568V512c0-29.568-25.216-53.536-56.288-53.536z"></path></symbol><symbol id="icon-dianzan" viewBox="0 0 1024 1024"><path d="M508.192 53.568l132.864 47.04-109.984 353.952h439.392l-116.256 515.872H267.296v-469.44l240.896-447.424m0-53.568c-19.232 0-37.6 10.4-47.168 28.16L220.128 475.616c-4.192 7.808-6.4 16.512-6.4 25.376v469.44c0 29.6 24 53.568 53.568 53.568h586.88c25.056 0 46.752-17.344 52.256-41.792l116.256-515.872a53.472 53.472 0 0 0-52.256-65.312H603.776l88.416-284.512a53.536 53.536 0 0 0-33.28-66.368L526.048 3.104A52.736 52.736 0 0 0 508.192 0z"></path><path d="M211.008 512v458.432H56.288V512h154.72m0-53.536H56.288C25.184 458.464 0 482.432 0 512v458.432C0 1000.032 25.184 1024 56.288 1024h154.72c31.072 0 56.288-23.968 56.288-53.568V512c0-29.568-25.216-53.536-56.288-53.536z"></path></symbol><symbol id="icon-yishoucang" viewBox="0 0 1024 1024"><path d="M865.6 1024c-27.2 0-51.2-11.2-68.8-32L520 704 243.2 992c-17.6 20.8-41.6 32-68.8 32-49.6 0-89.6-41.6-89.6-91.2V150.4C84.8 67.2 150.4 0 232 0h576c81.6 0 147.2 67.2 147.2 150.4v782.4c0 49.6-40 91.2-89.6 91.2z" fill=""></path></symbol><symbol id="icon-fenxianghover" viewBox="0 0 1024 1024"><path d="M787.00544 629.888c-69.504 0-130.36544 36.224-165.248 90.752l-210.304-120.25856c13.63456-26.624 21.95456-56.32 21.95456-88.38144 0-19.77856-3.712-38.4-9.216-56.448l218.752-125.056c35.90144 38.912 86.85056 63.67744 144 63.67744 108.34944 0 196.352-87.936 196.352-196.352S895.29344 1.46944 786.944 1.46944c-108.48256 0-196.352 87.936-196.352 196.352 0 19.77856 3.77344 38.46656 9.14944 56.448L380.98944 379.264C345.088 340.352 294.144 315.648 237.056 315.648 128.57856 315.648 40.64256 403.51744 40.64256 512s87.936 196.352 196.352 196.352c44.8 0 85.56544-15.616 118.59456-40.76544l-0.768 1.34144 237.88544 135.99744c-0.896 6.97856-2.10944 13.89056-2.10944 21.376 0 108.22144 87.86944 196.224 196.352 196.224 108.34944 0 196.352-88.00256 196.352-196.224 0.05632-108.53888-87.94112-196.41344-196.29568-196.41344z"></path></symbol><symbol id="icon-pinglunhover" viewBox="0 0 1024 1024"><path d="M896.54784 32h-768C57.8304 32 0.51712 91.55072 0.51712 165.02272v498.75456c0 73.44128 58.56256 141.11744 130.87744 141.11744H326.5024c33.95072 36.28544 174.72 182.20544 174.72 182.20544a15.488 15.488 0 0 0 22.59456 0s103.07072-116.992 170.17856-182.20544h199.61344c72.32 0 130.87744-67.712 130.87744-141.11744V165.02784c0.03072-73.472-57.28256-133.02784-127.93856-133.02784zM256.50176 497.50528c-35.328 0-64-29.75744-64-66.49344s28.672-66.49856 64-66.49856c35.35872 0 64 29.75744 64 66.49856 0 36.73088-28.64128 66.49344-64 66.49344z m256.03072 0c-35.35872 0-64-29.75744-64-66.49344s28.64128-66.49856 64-66.49856c35.328 0 63.96928 29.75744 63.96928 66.49856 0 36.73088-28.64128 66.49344-63.96928 66.49344z m255.96928 0c-35.328 0-64-29.75744-64-66.49344s28.672-66.49856 64-66.49856 64.03072 29.75744 64 66.49856c0 36.73088-28.672 66.49344-64 66.49344z"></path></symbol></svg><div class="switchDOM " data-poputype="feed" data-feed-show="false" style="height: 35px; background: rgb(250, 250, 250); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 2px 0px; margin-bottom: 1px;">                      <div class="switch-text" style="padding-left:94.5px;padding-right:16px;"><span style="line-height:35px;font-size: 14px;color: #4F4F4F;"><a href="http://blog.csdn.net/" target="_blank">CSDN新首页上线啦，邀请你来立即体验！</a></span>                        <div class="switch-bottom csdn-tracking-statistics" style="float:right">                          <a class="switch-old" href="javascript:void(0);" style="padding: 5px 10px; line-height: 35px; font-size: 12px; display: none;" target="_self">旧版</a>                          <a class="switch-new switch-activation" href="javascript:void(0);" style="padding-bottom: 5px;padding-top: 5px;line-height:35px;font-size:12px;padding-left:10px;padding-right:10px;" target="_self">立即体验</a>                        </div>                      </div>                      <style>                      .switch-old,.switch-new,.switch-new:link,.switch-new:visited,.switch-old:link,.switch-old:visited{color:#999;}                      body .switch-activation{border-radius: 16px;background-color: #5B5B5B;color:#fff !important}                      body .switch-old:hover,body .switch-new:hover{color: #4F4F4F;}                      body .switch-activation:hover{color:#999;}                       </style>                    </div><div class="csdn-toolbar csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <ul class="col-md-5 pull-left left-menu clearfix">            <li>              <a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank">              <svg class="icon" aria-hidden="true">                  <use xlink:href="#toolbar-csdnlogo"></use>              </svg>                </a>            </li>            <li><a href="http://blog.csdn.net/?ref=toolbar" class="toolbar_to_feed" title="博客" target="_blank" style="position: relative;">博客<div class="toolbar_speck"></div></a></li>            <li><a href="http://edu.csdn.net/?ref=toolbar" title="学院" target="_blank">学院</a></li>            <li><a href="http://download.csdn.net/?ref=toolbar" title="下载" target="_blank">下载</a></li>            <li class="show-more">            <a href="javascript:;">更多<i class="iconfont-toolbar toolbar-xiajiantou"></i></a>              <div class="more">                <div><a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></div>                <div><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">问答</a></div>                <div><a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></div>                <div><a href="https://gitee.com/?utm_source=csdn_toolbar" target="_blank">码云</a></div>                <div><a href="http://mall.csdn.net/?ref=toolbar" target="_blank">商城</a></div>                <div><a href="http://www.iteye.com/?ref=toolbar" target="_blank">ITeye</a></div>                <div><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></div>              </div>            </li>          </ul>          <div class="pull-right login-wrap unlogin">            <ul class="btns">            <li class="toolbar-tracking"><a href="http://blog.csdn.net/matthewei6/article/details/50709212#" style="padding:0" target="_blank"></a></li>              <li>                <div class="search_bar">                  <input type="text" class="input_search" name="">                  <a href="javascript:;" class="btn btn-nobg-noborder btn-search ico_search" target="_blank"><i class="iconfont-toolbar toolbar-sousuo"></i></a>                </div>              </li>              <li class="write-bolg-btn"><a class="" href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" style="position: relative;"><i class="iconfont-toolbar toolbar-icon_boke"></i><div class="toolbar-prompt-box" style="left: -17px;">                  <div class="arrow" style="left: 24px;"></div>                  <span style="left: 24px;">写博客</span>                </div></a></li>              <li class="gitChat"><a class="" href="http://gitbook.cn/new/gitchat/activity?utm_source=csdnblog1" target="_blank" style="position: relative;"><i class="iconfont-toolbar toolbar-icon_gitchatx"></i><div class="toolbar-prompt-box" style="left: -25px;">                  <div class="arrow" style="left: 32px;"></div>                  <span style="left: 32px;">发布Chat</span>                </div></a></li>              <li class="userinfo"><a href="https://passport.csdn.net/account/login?ref=toolbar">登录</a><span></span><a href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">注册</a></li>              <li class="userLogin">                <div class="loginCenter"><a href="http://my.csdn.net/?ref=toolbar" target="_blank"><img class="login_img" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/100x100.jpg"><div class="toolbar-circle"></div><span class="userName"></span></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><i class="iconfont-toolbar toolbar-xiajiantou"></i></div>                <div class="userControl">                  <div><a href="http://blog.csdn.net/?ref=toolbar" target="_blank">我的博客</a></div>                  <div><a class="xiaoxi" href="http://msg.csdn.net/?ref=toolbar" target="_blank">消息<span class="toolbar-newsL">(3)</span></a></div>                  <div><a href="http://my.csdn.net//my/account/changepwd?ref=toolbar" target="_blank">设置</a></div>                  <div><a href="http://bbs.csdn.net/forums/Service?ref=toolbar" target="_blank">反馈</a></div>                  <div><a href="http://passport.csdn.net/account/logout?ref=toolbar">退出</a></div>                </div>              </li>            </ul>          </div>        </div>    </div><script class="toolbar-s" type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/iconfont.js(1).下载"></script>
+<script id="toolbar-tpl-scriptId" prod="download" skin="black" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/content_toolbar.js.下载" type="text/javascript" domain="http://blog.csdn.net/"></script>
+<div class="container clearfix">
+  <main>
+    <article>
+        <h1 class="csdn_top">单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？</h1>
+        <div class="article_bar clearfix">
+            <div class="artical_tag">
+                <span class="original">
+                原创                </span>
+                <span class="time">2016年02月21日 19:56:13</span>
+            </div>
+
+            <ul class="article_tags clearfix csdn-tracking-statistics" data-mod="popu_377">
+                <li class="tit">标签：</li>
+
+<!--          [startarticletags]-->
+                                                            <li><a href="http://so.csdn.net/so/search/s.do?q=cas&amp;t=blog" target="_blank">cas</a> <span>/</span></li>
+                                            <li><a href="http://so.csdn.net/so/search/s.do?q=%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95&amp;t=blog" target="_blank">单点登录</a> <span>/</span></li>
+                                            <li><a href="http://so.csdn.net/so/search/s.do?q=REST&amp;t=blog" target="_blank">REST</a> <span style="display: none;">/</span></li>
+                                    <!--          [endarticletags]-->
+            </ul>
+            <ul class="right_bar">
+                <li><button class="btn-noborder"><i class="icon iconfont icon-read"></i><span class="txt">5993</span></button></li>
+                <li class="edit" style="display: none;">
+                    <a class="btn-noborder" href="http://write.blog.csdn.net/postedit/50709212">
+                        <i class="icon iconfont icon-bianji"></i><span class="txt">编辑</span>
+                    </a>
+                </li>
+                <li class="del" style="display: none;">
+                    <a class="btn-noborder" onclick="javascript:deleteArticle(fileName);return false;">
+                        <i class="icon iconfont icon-shanchu"></i><span class="txt">删除</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="article_content" class="article_content csdn-tracking-statistics" data-mod="popu_519" data-dsm="post">
+                                    
+<span style="color:#FF0000">cas-server-support-rest子项目有什么用</span>：如果一个android app要接入cas中心系统，就需要用到这个子项目。<br>
+引入的前提条件是，<span style="">cas</span>项目已经启用了，通常不会启用一部分项目，如<span style="">cas-server-webapp</span>。<br>
+引入步骤：<br>
+1、将<span style="background-color:inherit; line-height:1.5">cas-server-support-rest模块导入到自己的<span style="background-color:inherit; line-height:1.5">cas</span>项目中</span>
+<span style="background-color:inherit; line-height:1.5">2、修改cas目录下的pom.xml，解开注释</span><span style="background-color:inherit; line-height:1.5">&lt;module&gt;cas-server-support-rest&lt;/module&gt;</span>
+<span style="background-color:inherit; line-height:1.5">3、在cas/cas-server-webapp/pom.xml中添加依赖</span>
+
+&nbsp; &nbsp; &lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.jasig.cas&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;cas-server-support-rest&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;${project.version}&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependency&gt;
+
+<span style="background-color:inherit; line-height:1.5">4、编译安装<a target="_blank" href="http://blog.csdn.net/matthewei6/article/details/50704677">cas</a>（这部的目的是将<span style="background-color:inherit; line-height:1.5">cas-server-support-<a target="_blank" href="http://blog.csdn.net/matthewei6/article/details/50709212">rest</a></span>打成jar包，安装到maven中，供<span style=""><a target="_blank" href="http://blog.csdn.net/matthewei6/article/details/50704677">cas</a>-server-webapp</span>使用）</span>
+<span style="background-color:inherit; line-height:1.5">&nbsp; &nbsp; mvn install<br>
+<br>
+</span>
+<span style="background-color:inherit; line-height:1.5"><span style="color:#FF0000"><span style="background-color:inherit; line-height:1.5">cas-server-support-rest</span>的引入就完成了，下面测试一下</span><br>
+<br>
+<span style="background-color:inherit; line-height:1.5">5、<span style="background-color:inherit; line-height:1.5"></span></span>启动webapp</span>
+<span style="background-color:inherit; line-height:1.5">&nbsp; &nbsp; mvn jetty:run</span>
+<span style="background-color:inherit; line-height:1.5">6、测试</span>
+curl&nbsp;-i&nbsp;-X&nbsp;&nbsp;POST&nbsp;-d&nbsp;"username=myname&amp;password=111111&amp;service=<a target="_blank" href="http://bbs.picovr.com/" style="background-color:inherit">http://www.ittenyear.com</a>"&nbsp;<a target="_blank" href="http://172.31.93.16:8080/cas/v1/tickets" style="background-color:inherit">http://172.31.93.16:8080/cas/v1/tickets</a>
+这步是完成登陆，拿到TGT
+<br style="background-color:inherit">
+
+curl&nbsp;-i&nbsp;&nbsp;-X&nbsp;POST&nbsp;-d&nbsp;"service=<a target="_blank" href="http://bbs.picovr.com/" style="background-color:inherit">http://www.ittenyear.com</a>"&nbsp;<a target="_blank" href="http://172.31.93.16:8080/cas/v1/tickets/" style="background-color:inherit">http://172.31.93.16:8080/cas/v1/tickets/TGT-xxxxxxxxxxxxxxxxxx</a>
+这步会拿到ST
+<br style="background-color:inherit">
+
+curl&nbsp;-i&nbsp;&nbsp;-X&nbsp;DELETE&nbsp;<a target="_blank" href="http://172.31.93.16:8080/cas/v1/tickets/" style="background-color:inherit">http://172.31.93.16:8080/cas/v1/tickets/</a><a target="_blank" href="http://172.31.93.16:8080/cas/v1/tickets/" style="background-color:inherit">TGT-xxxxxxxxxxxxxxxxxx</a>
+测试登出：删除TGT
+<br style="background-color:inherit">
+
+                    </div>
+    </article>
+      <div class="readall_box csdn-tracking-statistics readall_box_nobg" data-mod="popu_376" style="display: none;">
+          <div class="read_more_mask"></div>
+          <a class="btn btn-large btn-gray-fred read_more_btn" target="_self">阅读全文</a>
+      </div>
+      <div class="article_copyright">
+        版权声明：本文为博主原创文章，转载请注明出处。      </div>
+      <ul class="article_collect clearfix csdn-tracking-statistics" data-mod="popu_378" style="display: none;">
+          <li class="tit">本文已收录于以下专栏：</li>
+<!--          [startarticlecolumns]-->
+                                <!--          [endarticlecolumns]-->
+      </ul>
+      <div class="comment_box clearfix">
+          <div id="comment_form">
+              <div id="commentsbmitarear"><div class="guest_link"><span class="log_ico"><i class="icon iconfont icon-yonghu"></i></span><span class="txt">目前您尚未登录，请 <a href="https://passport.csdn.net/account/login?from=http%3A%2F%2Fblog.csdn.net%2Fmatthewei6%2Farticle%2Fdetails%2F50709212">登录</a> 或 <a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fmatthewei6%2Farticle%2Fdetails%2F50709212">注册</a> 后进行评论</span></div></div>
+          </div>
+      </div>
+      <div class="comment_li_outbox">
+          <div id="comment_list"> <div class="comment_li_box clearfix">         <dl class="comment_list clearfix" id="comment_item_6707386">           <dt>               <a href="http://blog.csdn.net/meshowmeshow"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_meshowmeshow.jpg" alt="meshowmeshow"></a></dt>           <dd>             <ul class="com_r clearfix">               <li class="top clearfix">                 <h4><a href="http://blog.csdn.net/meshowmeshow">meshowmeshow</a></h4>                 <span class="time">2017-03-28 10:35</span>                 <span class="floor_num" floor="2">2楼</span>               </li>               <li class="mid clearfix">                 <div class="comment_p">然后呢，要校验ST吗？</div>               </li>               <li class="bot clearfix">                   <div>                     <a href="http://blog.csdn.net/matthewei6/article/details/50709212#reply" class="com_reply btn btn-noborder reply_btn" title="回复" commentid="6707386" floor="2">回复</a>                   </div>                </li>              </ul>            </dd>          </dl><div class="child_comment" data-listshow="false">   <div class="autoHeight clearfix">   </div></div>       </div> <div class="comment_li_box clearfix">         <dl class="comment_list clearfix" id="comment_item_6296551">           <dt>               <a href="http://blog.csdn.net/xiaomo008"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_xiaomo008.jpg" alt="xiaomo008"></a></dt>           <dd>             <ul class="com_r clearfix">               <li class="top clearfix">                 <h4><a href="http://blog.csdn.net/xiaomo008">xiaomo008</a></h4>                 <span class="time">2016-09-28 18:24</span>                 <span class="floor_num" floor="1">1楼</span>               </li>               <li class="mid clearfix">                 <div class="comment_p">您有没有安卓端，cas 的例子呢？</div>               </li>               <li class="bot clearfix">                   <div>                     <a href="http://blog.csdn.net/matthewei6/article/details/50709212#reply" class="com_reply btn btn-noborder reply_btn" title="回复" commentid="6296551" floor="1">回复</a>                   </div>                </li>              </ul>            </dd>          </dl><div class="child_comment" data-listshow="false">   <div class="autoHeight clearfix">   </div></div>       </div><div class="clear"></div></div>
+      </div>
+
+      <div class="more_comment" style="display: block;">
+          <div id="comment_bar" class="trackgin-ad" data-mod="popu_385" style="display: none;"><a id="load_comments" class="btn btn-large more_comment_btn" page="2">查看 <span>2</span> 条热评<i class="icon iconfont icon-xiajiantou"></i></a></div>
+      </div>
+
+      <h3 class="recommend_tit">相关文章推荐</h3>
+      <div class="recommend_list clearfix" id="rasss">
+                                                                                      <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/jxlmz/article/details/51034722" target="_blank" strategy="BlogCommendFromBaidu_0">CAS Server 4.0 + RESTfull + Services调用 完全使用文档</a></h2>
+                          <div class="summary">
+                              这里面走了许多弯路， 帖出来供大家使用借鉴。
+大家配置的时候参加官网（我一开始进入了没有维护的官网导致走了很多弯路）：http://jasig.github.io/cas/4.0.x/protoco...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/jxlmz" target="_blank" strategy="BlogCommendFromBaidu_0"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_jxlmz.jpg" alt="jxlmz" title="jxlmz"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/jxlmz" target="_blank">jxlmz</a></li>
+                              <li class="time">2016年04月01日 10:35</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1973</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/yuwenruli/article/details/6608338" target="_blank" strategy="BlogCommendFromBaidu_1">CAS配置（一）-集成RESTFul</a></h2>
+                          <div class="summary">
+                              CAS单点登录服务器很多时候都是被B/S的应用使用，那么对已有些系统是CS的那么怎么去调用呢，这个时候就需要使用webservice来给CS的系统调用了，我们先来说说先决条件吧：1）集成需要的jar包...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/yuwenruli" target="_blank" strategy="BlogCommendFromBaidu_1"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_yuwenruli.jpg" alt="yuwenruli" title="yuwenruli"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/yuwenruli" target="_blank">yuwenruli</a></li>
+                              <li class="time">2011年07月15日 13:28</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>11912</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                      <script>
+                      (function() {
+                          var s = "_" + Math.random().toString(36).slice(2);
+                          document.write('<div id="' + s + '"></div>');
+                          (window.slotbydup=window.slotbydup || []).push({
+                              id: '4765209',
+                              container: s,
+                              size: '808,120',
+                              display: 'inlay-fix'
+                          });
+                      })();
+                  </script><div id="_hj0pfsiusnu6d6ykgnv78pvi"></div>
+                                                                <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/matthewei6/article/details/50704677" target="_blank" strategy="BlogCommendFromBaidu_2">单点登录cas常见问题(七) - 各子项目是做什么的？</a></h2>
+                          <div class="summary">
+                              cas-management-webapp &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;这是一个管理service的web项目，没有管理用户的功能
+
+
+cas-server-core &nbsp; &nbsp; &nbsp; &nbsp; ...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/matthewei6" target="_blank" strategy="BlogCommendFromBaidu_2"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_matthewei6.jpg" alt="matthewei6" title="matthewei6"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/matthewei6" target="_blank">matthewei6</a></li>
+                              <li class="time">2016年02月20日 14:41</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>4091</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/q383965374/article/details/54909063" target="_blank" strategy="BlogCommendFromBaidu_3">单点登录(六)-----遇到问题-----cas server 源码部署导入gradle后有感叹号---错误信息A cycle was detected in the build path of pr</a></h2>
+                          <div class="summary">
+                              cas server 源码部署导入gradle后有感叹号---错误信息A cycle was detected in the build path of project 'cas-server-cor...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/q383965374" target="_blank" strategy="BlogCommendFromBaidu_3"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_q383965374.jpg" alt="q383965374" title="q383965374"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/q383965374" target="_blank">q383965374</a></li>
+                              <li class="time">2017年02月07日 14:17</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1669</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/luenxin/article/details/50143723" target="_blank" strategy="BlogCommendFromBaidu_4">安装配置CAS server</a></h2>
+                          <div class="summary">
+                              Maven的CAS服务端模板，在这个基础上修改配置文件，作为CAS的服务端
+下载地址：https://github.com/UniconLabs/simple-cas4-overlay-templa...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/luenxin" target="_blank" strategy="BlogCommendFromBaidu_4"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_luenxin.jpg" alt="luenxin" title="luenxin"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/luenxin" target="_blank">luenxin</a></li>
+                              <li class="time">2015年12月02日 09:24</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1629</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                        <!-- 广告位：PC端-博客详情通栏7（feed流）-808*120 -->
+                  <script>
+                      (function() {
+                          var s = "_" + Math.random().toString(36).slice(2);
+                          document.write('<div id="' + s + '"></div>');
+                          (window.slotbydup=window.slotbydup || []).push({
+                              id: '4983339',
+                              container: s,
+                              size: '808,120',
+                              display: 'inlay-fix'
+                          });
+                      })();
+                  </script><div id="_g636a9d809w9hjh4lghus1yvi"></div>
+                                                                              <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/jingqiang521/article/details/50570632" target="_blank" strategy="BlogCommendFromBaidu_5">4、CAS单点登录源码解析之【用户认证】</a></h2>
+                          <div class="summary">
+                              前期准备
+
+已经搭建好了集成了CAS客户端的应用系统和CAS服务器
+
+
+1.应用系统webapp（http://127.0.0.1:8090/webapp/main.do）
+2.CAS单点...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/jingqiang521" target="_blank" strategy="BlogCommendFromBaidu_5"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_jingqiang521.jpg" alt="jingqiang521" title="jingqiang521"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/jingqiang521" target="_blank">jingqiang521</a></li>
+                              <li class="time">2016年01月23日 17:43</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>832</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/frinder/article/details/7969925" target="_blank" strategy="BlogCommendFromBaidu_6">CAS单点登录(SSO)完整教程</a></h2>
+                          <div class="summary">
+                              CAS单点登录(SSO)完整教程(2012-02-01更新)
+
+一、教程说明
+前言
+
+教程目的：从头到尾细细道来单点登录服务器及客户端应用的每个步骤单点登录（SSO）：请看百科解释猛击这里打...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/frinder" target="_blank" strategy="BlogCommendFromBaidu_6"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_frinder.jpg" alt="frinder" title="frinder"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/frinder" target="_blank">frinder</a></li>
+                              <li class="time">2012年09月12日 10:05</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>97970</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/forlong401/article/details/24151931" target="_blank" strategy="BlogCommendFromBaidu_7">android的cas客户端demo开发</a></h2>
+                          <div class="summary">
+                              http://www.2cto.com/kf/201401/270088.html
+周六的时候去参观了36小时编程比赛现场，
+ 气氛很是激烈， 里面有一个团队要做了一个移动应用，需要接入公司内域账...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/forlong401" target="_blank" strategy="BlogCommendFromBaidu_7"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_forlong401.jpg" alt="forlong401" title="forlong401"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/forlong401" target="_blank">forlong401</a></li>
+                              <li class="time">2014年04月20日 00:45</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>3198</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics downloadElement" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dt><a href="http://download.csdn.net/detail/chenxh/3" target="_blank" strategy="BlogCommendFromBaidu_8"><img class="maxwidth" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/zip.svg" alt="" title=""></a></dt>
+                      <dd>
+                          <div class="summary">
+                              <h2><a href="http://download.csdn.net/detail/chenxh/3" target="_blank" strategy="BlogCommendFromBaidu_8">Delphi7高级应用开发随书源码</a></h2>
+                              <div class="summary">
+                                  <ul>
+                                      <li class="time">2003年04月30日 00:00</li>
+                                      <li class="visited_num fileSize">676KB</li>
+                                      <li class="download_btn"><a href="http://download.csdn.net/detail/chenxh/3" target="_blank">下载</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </dd>
+                  </dl>
+                                                                                                    <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                      <dd>
+                          <h2><a href="http://blog.csdn.net/u012116457/article/details/53133052" target="_blank" strategy="BlogCommendFromBaidu_9">CAS单点登录(四)--cas server返回中文用户名时乱码的原因及解决方式</a></h2>
+                          <div class="summary">
+                              今天，在单点登录系统中，使用中文用户名登录系统时，出现了返回的用户名乱码的问题。通过阅读cas_client源码，找到了具体的原因。获取用户名的操作是在ticket验证的过程中，下面，我先按照流程描述...                          </div>
+                          <ul>
+                              <li class="avatar_img"><a href="http://blog.csdn.net/u012116457" target="_blank" strategy="BlogCommendFromBaidu_9"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_u012116457.jpg" alt="u012116457" title="u012116457"></a></li>
+                              <li class="user_name"><a href="http://blog.csdn.net/u012116457" target="_blank">u012116457</a></li>
+                              <li class="time">2016年11月11日 21:43</li>
+                              <li class="visited_num"><i class="icon iconfont icon-read"></i><span>3153</span></li>
+                          </ul>
+                      </dd>
+                  </dl>
+                                                                                <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/gobitan/article/details/77727175" target="_blank" strategy="BlogCommendFromBaidu_10">基于CAS的单点登录SSO[5]: 基于Springboot实现CAS客户端的前后端分离</a></h2>
+                    <div class="summary">
+                        基于CAS的单点登录SSO[5]: 基于Springboot实现CAS客户端的前后端分离
+作者：家辉，日期：2017-08-24 CSDN博客： 
+http://blog.csdn.net/gob...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/gobitan" target="_blank" strategy="BlogCommendFromBaidu_10"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_gobitan.jpg" alt="gobitan" title="gobitan"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/gobitan">gobitan</a></li>
+                        <li class="time">2017年08月30日 23:16</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1660</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/jxlmz/article/details/51034908" target="_blank" strategy="BlogCommendFromBaidu_11">CAS+RESTful WebService 使用文档</a></h2>
+                    <div class="summary">
+                        CAS+RESTful WebService 使用文档                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/jxlmz" target="_blank" strategy="BlogCommendFromBaidu_11"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_jxlmz.jpg" alt="jxlmz" title="jxlmz"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/jxlmz">jxlmz</a></li>
+                        <li class="time">2016年04月01日 10:38</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1529</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/small_love/article/details/6664831" target="_blank" strategy="BlogCommendFromBaidu_12">CAS实现单点登录（SSO）经典完整教程</a></h2>
+                    <div class="summary">
+                        一、简介
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1、cas是有耶鲁大学研发的单点登录服务器
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2、本教材所用环境
+
+
+Tomcat7.2JDK6CAS ...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/small_love" target="_blank" strategy="BlogCommendFromBaidu_12"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_small_love.jpg" alt="small_love" title="small_love"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/small_love">small_love</a></li>
+                        <li class="time">2011年08月06日 11:01</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>130875</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/javaloveiphone/article/details/52439613" target="_blank" strategy="BlogCommendFromBaidu_13">CAS实现单点登录SSO执行原理探究(终于明白了)</a></h2>
+                    <div class="summary">
+                        一、不落俗套的开始1、背景介绍单点登录：Single Sign On,简称SSO，SSO使得在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。CAS框架：CAS（Central A...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/javaloveiphone" target="_blank" strategy="BlogCommendFromBaidu_13"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_javaloveiphone.jpg" alt="javaloveiphone" title="javaloveiphone"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/javaloveiphone">javaloveiphone</a></li>
+                        <li class="time">2016年09月05日 13:56</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>42275</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/lifetragedy/article/details/43817903" target="_blank" strategy="BlogCommendFromBaidu_14">单点登录之CAS SSO从入门到精通（第一天）</a></h2>
+                    <div class="summary">
+                        啊。。。。。。it's quite a long time。好久没更新博客了，有一年之久了，一直在忙于公司的一些项目。2014年到2015年工作太忙，对于一些经常跟我博客的读者们深深说一声抱歉。同时，...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/lifetragedy" target="_blank" strategy="BlogCommendFromBaidu_14"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_lifetragedy.jpg" alt="lifetragedy" title="lifetragedy"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/lifetragedy">lifetragedy</a></li>
+                        <li class="time">2015年02月14日 20:05</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>28918</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/jxlmz/article/details/51075509" target="_blank" strategy="BlogCommendFromBaidu_15">CAS 整合/v1/tickets/{TGT id} 与/serviceValidate ,生成ST时直接验证其合法性。</a></h2>
+                    <div class="summary">
+                        CAS 整合/v1/tickets/{TGT id} 与/serviceValidate ,生成ST时直接验证其合法性。
+其目的是模拟客户端（C/S结构）调用服务器去验证TGT的合法性，省略调用/se...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/jxlmz" target="_blank" strategy="BlogCommendFromBaidu_15"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_jxlmz.jpg" alt="jxlmz" title="jxlmz"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/jxlmz">jxlmz</a></li>
+                        <li class="time">2016年04月06日 15:51</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1918</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/u011503625/article/details/52388772" target="_blank" strategy="BlogCommendFromBaidu_16">多系统单点登录（CAS整合）</a></h2>
+                    <div class="summary">
+                        声明：本文章仅是本人记录作以后备用，不建议作为学习cas的参考文章，毕竟每人的思路不一样，此文章会有好多地方写得过于简单，网路上很多关于cas的文章写得比此文好好多。
+首先CAS有服务器端（本人用4....                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/u011503625" target="_blank" strategy="BlogCommendFromBaidu_16"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_u011503625.jpg" alt="u011503625" title="u011503625"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/u011503625">u011503625</a></li>
+                        <li class="time">2016年08月31日 21:06</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>2020</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/A7695895/article/details/53262494" target="_blank" strategy="BlogCommendFromBaidu_17">让Cas单点登录系统在移动端，PC端，javaweb以及前后端分离等场景下适用</a></h2>
+                    <div class="summary">
+                        说在前面：本来的cas单点登录系统是专门为javaweb所开发的，所以在支持javaweb，这样说好别扭，还是直接用Jsp代替吧，也就是说，我们在jsp方面是基本不用做太大改动的，需要修改认证方式，以...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/A7695895" target="_blank" strategy="BlogCommendFromBaidu_17"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_a7695895.jpg" alt="A7695895" title="A7695895"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/A7695895">A7695895</a></li>
+                        <li class="time">2016年11月22日 10:14</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>3012</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/Ronux/article/details/47319903" target="_blank" strategy="BlogCommendFromBaidu_18">cas客户端验证流程</a></h2>
+                    <div class="summary">
+                        cas客户端配置与流程讲解                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/Ronux" target="_blank" strategy="BlogCommendFromBaidu_18"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_ronux.jpg" alt="Ronux" title="Ronux"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/Ronux">Ronux</a></li>
+                        <li class="time">2015年08月06日 17:10</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>2895</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                                          <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed" data-feed-show="false" data-dsm="post">
+                <dd>
+                    <h2><a href="http://blog.csdn.net/magic_wz/article/details/17953191" target="_blank" strategy="BlogCommendFromBaidu_19">使用CAS的RESTFUL接口使CS系统单点登录BS系统</a></h2>
+                    <div class="summary">
+                        首先参考前面文章来配置好CAS，并且配置好RESTFUL，参考：
+http://blog.csdn.net/happyteafriends/article/details/7450120
+
+
+场景如下...                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/magic_wz" target="_blank" strategy="BlogCommendFromBaidu_19"><img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_magic_wz.jpg" alt="magic_wz" title="magic_wz"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/magic_wz">magic_wz</a></li>
+                        <li class="time">2014年01月07日 10:13</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>7621</span></li>
+                    </ul>
+                </dd>
+            </dl>
+                      </div>
+  </main>
+<aside>
+  <div class="right_box user_info">
+      <dl class="inf_bar clearfix">
+          <dt class="csdn-tracking-statistics" data-mod="popu_381">
+              <a href="http://blog.csdn.net/matthewei6" target="_blank">
+                  <img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/3_matthewei6.jpg" class="avatar_pic">
+              </a>
+              <span class="medals" title="">
+                  </span>
+          </dt>
+          <dd>
+              <h3 class="csdn-tracking-statistics" data-mod="popu_380"><a href="http://blog.csdn.net/matthewei6" target="_blank" id="uid">IT十年</a></h3>
+              <span class="csdn-tracking-statistics" data-mod="popu_379"><a class="btn btn-redborder-small " id="span_add_follow" target="_self">＋关注</a></span>
+          </dd>
+      </dl>
+      <div class="inf_number_box clearfix">
+          <dl>
+              <dt>原创</dt>
+              <dd>89</dd>
+          </dl>
+          <dl>
+              <dt>粉丝</dt>
+              <dd id="fan">343</dd>
+          </dl>
+          <dl>
+              <dt>喜欢</dt>
+              <dd>81</dd>
+          </dl>
+          <dl>
+        <dt>码云</dt>
+        <dd><a class="thinFont" href="https://gitee.com/?utm_source=csdn_blog" target="_blank">未开通</a></dd>
+      </dl>
+
+      </div>
+  <div class="writings">
+        <div class="public_signal clearfix">
+          <h3>他的最新文章</h3>
+          <a href="http://blog.csdn.net/matthewei6" target="_blank" class="more"><span>更多文章</span></a>
+        </div>
+          <ul class="inf_list clearfix csdn-tracking-statistics" data-mod="popu_382">
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/matthewei6/article/details/78570522" target="_blank">scala基础</a>
+              </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/matthewei6/article/details/78549697" target="_blank">远程连接hive server</a>
+              </li>
+                            <li class="clearfix">
+                  <a href="http://blog.csdn.net/matthewei6/article/details/70038180" target="_blank">《hive编程指南》阅读笔记摘要（九）</a>
+              </li>
+                        </ul>
+      </div>
+  </div>
+  <div class="extension_other csdn-tracking-statistics" data-mod="popu_389" style="position: relative;">
+     <!--u3032528-->
+    <div class="flashrecommend">
+        <script type="text/javascript" src="http://mpb1.iteye.com/bwocoltlyzdec.js"></script>
+    </div>
+  <img class="append_mark_img" style="display:block;position:absolute;left:0;bottom:0;width:30px;height:16px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAABGdBTUEAALGPC/xhBQAAAhpJREFUOBHFVU2L2lAUHU0nExNHbRq1BkSrSFH8QBdu3QnuxYUr3bj2f/gHRPwrdmVdCLqxIK0KighqWz+mNVPaavtuhgtqnpnposyD5N53z7k57yX33RhKpdK7q2cYxmfQVCUfFU6n06/z+fwbvQWaTCYml8t5gBOJRKzZbFb19XJenIPhcNgaj8dfYZxlWSYWizkZhjFgDGyr1VqMRqMd+JlMRrbZbDd2u/3G4XBwTqeTBx8wGLvd7reiKPuH2cNdI+zz+W4FQbjudrtfkNjr9Vboo91sNr/A9/v9QjKZlFer1X2xWHxLclnIBx+5nU5n0Wg0FjgHqxGG4Hw+V9rt9lfw9YbRaDQUCoVgtVr9MB6P1d2TRYjRaFSq1+uf9HKpwnoJx5jL5eKazebM4/EIcAHmdrvNkiSZUqmU45g7HA6/zWaze4xphDmOY7bb7U8k6FmLxXItiiJ3zNnv938mk8mdLMvqQhBbLpc/dIXNZjM7nU6/Y4Ke7ff7d3AFAoFbUoQnxYd5h8PhCjg4R6vZMQiTQnnSjvEhpAmFB4OBpgABD4VCUrlcfo9ctBphcgx4eC1IeKqt1WofadxKpSLS4ifC5Ltw5Bsd1uu1elRoCZdiiUTiJQ2DyqfFT4SDwaCVnNnPNOJjMdKxqDs7bzz4HMP5T4Lneea8yyD5kvV6vTw5xwoNv4RpevW/ioLYJVE9TCNMW/X/iP0FJ9WyNfNE5tcAAAAASUVORK5CYII="></div>
+
+<!--    [StartShowSelfColumn]-->
+    <!--    [EndShowSelfColumn]-->
+    <div class="fixRight">
+        <div class="right_box padb0 csdn-tracking-statistics" data-mod="popu_391">
+            <h3 class="tit"><span><em>在线课程</em></span></h3>
+            <ul class="edu_li clearfix">
+<!--            [starteducourses]-->
+                                                            <li>
+                            <div>
+                                <a href="http://blog.csdn.net/matthewei6/article/details/50709212" target="_blank">
+                                    <img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/201711281713051168.png" alt="腾讯云容器服务架构实现介绍" title="腾讯云容器服务架构实现介绍">
+                                </a>
+                            </div>
+                            <div>
+                                <p><a href="http://blog.csdn.net/matthewei6/article/details/50709212" target="_blank">腾讯云容器服务架构实现介绍</a></p>
+                                <p>讲师：董晓杰</p>
+                            </div>
+                        </li>
+                                            <li>
+                            <div>
+                                <a href="http://edu.csdn.net/huiyiCourse/series_detail/73?utm_source=blog9" target="_blank">
+                                    <img src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/201711281706431295.png" alt="容器技术在58同城的实践" title="容器技术在58同城的实践">
+                                </a>
+                            </div>
+                            <div>
+                                <p><a href="http://edu.csdn.net/huiyiCourse/series_detail/73?utm_source=blog9" target="_blank">容器技术在58同城的实践</a></p>
+                                <p>讲师：姚远</p>
+                            </div>
+                        </li>
+                                    <!--            [endeducourses]-->
+            </ul>
+            </div>
+        <div class="extension_other csdn-tracking-statistics bottomRcom" data-mod="popu_389" style="position: absolute; z-index: -5; opacity: 0; pointer-events: none; left: 954.5px;">
+            <!--u3032528-->
+            <div class="flashrecommend">
+                <!-- 请置于所有广告位代码之前 -->
+                <script src="http://dup.baidustatic.com/js/dm.js"></script>
+
+                <!-- 广告位：PC端-博客详情页右侧视窗1（feed流）-300*250 -->
+                <script>
+                    (function() {
+                        var s = "_" + Math.random().toString(36).slice(2);
+                        document.write('<div id="' + s + '"></div>');
+                        (window.slotbydup=window.slotbydup || []).push({
+                            id: '4770930',
+                            container: s,
+                            size: '300,250',
+                            display: 'inlay-fix'
+                        });
+                    })();
+                </script><div id="_auwwr53butikrd9pzg6kmrhpvi"></div>
+            </div>
+        <img class="append_mark_img" style="display:block;position:absolute;left:0;bottom:0;width:30px;height:16px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAABGdBTUEAALGPC/xhBQAAAhpJREFUOBHFVU2L2lAUHU0nExNHbRq1BkSrSFH8QBdu3QnuxYUr3bj2f/gHRPwrdmVdCLqxIK0KighqWz+mNVPaavtuhgtqnpnposyD5N53z7k57yX33RhKpdK7q2cYxmfQVCUfFU6n06/z+fwbvQWaTCYml8t5gBOJRKzZbFb19XJenIPhcNgaj8dfYZxlWSYWizkZhjFgDGyr1VqMRqMd+JlMRrbZbDd2u/3G4XBwTqeTBx8wGLvd7reiKPuH2cNdI+zz+W4FQbjudrtfkNjr9Vboo91sNr/A9/v9QjKZlFer1X2xWHxLclnIBx+5nU5n0Wg0FjgHqxGG4Hw+V9rt9lfw9YbRaDQUCoVgtVr9MB6P1d2TRYjRaFSq1+uf9HKpwnoJx5jL5eKazebM4/EIcAHmdrvNkiSZUqmU45g7HA6/zWaze4xphDmOY7bb7U8k6FmLxXItiiJ3zNnv938mk8mdLMvqQhBbLpc/dIXNZjM7nU6/Y4Ke7ff7d3AFAoFbUoQnxYd5h8PhCjg4R6vZMQiTQnnSjvEhpAmFB4OBpgABD4VCUrlcfo9ctBphcgx4eC1IeKqt1WofadxKpSLS4ifC5Ltw5Bsd1uu1elRoCZdiiUTiJQ2DyqfFT4SDwaCVnNnPNOJjMdKxqDs7bzz4HMP5T4Lneea8yyD5kvV6vTw5xwoNv4RpevW/ioLYJVE9TCNMW/X/iP0FJ9WyNfNE5tcAAAAASUVORK5CYII="></div>
+
+    </div>
+    <div class="user-hotArticle">
+        <h3>他的热门文章</h3>
+        <ul class="hotArticle-list csdn-tracking-statistics" data-mod="popu_521">
+<!--            [StartHotArticles]-->
+                                                <li>
+                        <a href="http://blog.csdn.net/matthewei6/article/details/50579249" target="_blank">Java开源电商项目比较</a>
+                        <div class="read list-left"><i class="icon iconfont icon-read"></i><span>14157</span></div>
+                    </li>
+                                    <li>
+                        <a href="http://blog.csdn.net/matthewei6/article/details/50520719" target="_blank">大数据(三) - YARN</a>
+                        <div class="read list-left"><i class="icon iconfont icon-read"></i><span>10176</span></div>
+                    </li>
+                                    <li>
+                        <a href="http://blog.csdn.net/matthewei6/article/details/50620600" target="_blank">solr常用命令总结</a>
+                        <div class="read list-left"><i class="icon iconfont icon-read"></i><span>9902</span></div>
+                    </li>
+                                    <li>
+                        <a href="http://blog.csdn.net/matthewei6/article/details/50636301" target="_blank">单点登录方案的比较和选择</a>
+                        <div class="read list-left"><i class="icon iconfont icon-read"></i><span>9800</span></div>
+                    </li>
+                                    <li>
+                        <a href="http://blog.csdn.net/matthewei6/article/details/50573592" target="_blank">Linux前台、后台、挂起、退出、查看命令汇总</a>
+                        <div class="read list-left"><i class="icon iconfont icon-read"></i><span>7497</span></div>
+                    </li>
+                            <!--            [EndHotArticles]-->
+        </ul>
+    </div>
+<!--    [startcustom]-->
+    <!--    [endcustom]-->
+</aside></div>
+
+<div class="left_fixed" style="left: 44.5px;">
+    <div class="left_show_button">
+        <span>
+          <i class="icon iconfont icon-youjiantou"></i>
+        </span>
+    </div>
+    <ul class="left_menu">
+        <li>
+            <button class="left-fixed-btn btn-like csdn-tracking-statistics" data-mod="popu_373" target="_self">
+                <a href="javascript:void(0);" class="iconbox border_red" target="_blank"><i class="icon iconfont icon-dianzan"></i></a>
+                <a class="txt" href="javascript:void(0);" target="_blank">0</a>
+            </button>
+        </li>
+        <li id="blog_artical_directory" style="display: none;">
+            <button class="left-fixed-btn left_menu_btn csdn-tracking-statistics" data-mod="popu_372" target="_self">
+                <a href="javascript:void(0);" class="iconbox border_black" target="_blank"><i class="icon iconfont icon-mulu"></i></a>
+            </button>
+        </li>
+        <li class="menu_con" style="display: none; overflow: hidden; height: 0px;">
+            <div class="list_father">
+                <div class="arr_box">
+                    <button class="btn-noborder arr-btn scroll-down  left_scroll_down"><i class="icon iconfont icon-xiajiantou"></i></button>
+                    <button class="btn-noborder arr-btn scroll-up left_scroll_top"><i class="icon iconfont icon-shangjiantou"></i></button>
+                </div>
+                <div class="arr"></div>
+                <div id="csdnBlogDir"></div>
+            </div>
+        </li>
+        <!--        <li>-->
+        <!--            <button class="left-fixed-btn btn-like tracking-ad" data-mod="popu_373" target="_self">-->
+        <!--                <span class="iconbox border_red"><i class="icon iconfont icon-xihuan-"></i></span>-->
+        <!--                <span class="txt">喜欢</span>-->
+        <!--                <span class="untxt">取消喜欢</span>-->
+        <!--            </button>-->
+        <!--        </li>-->
+        <li>
+            <button class="left-fixed-btn csdn-tracking-statistics" data-mod="popu_374" id="com-quick-collect" target="_self">
+                <a href="javascript:void(0);" class="iconbox border_purple" target="_blank"><i class="icon iconfont icon-shoucang"></i></a>
+            </button>
+        </li>
+        <li>
+            <button class="left-fixed-btn btn-pinglun csdn-tracking-statistics" data-mod="popu_544">
+                <a href="javascript:void(0);" class="iconbox border_purple" target="_blank"><i class="icon iconfont icon-pinglun"></i></a>
+            </button>
+        </li>
+        <li id="share_box">
+            <button class="left-fixed-btn  csdn-tracking-statistics" data-mod="popu_375" target="_self">
+                <a href="javascript:void(0);" class="iconbox border_orange" target="_blank"><i class="icon iconfont icon-fenxiang"></i></a>
+            </button>
+            <div class="bdsharebuttonbox csdn-tracking-statistics bdshare-button-style0-16" data-mod="popu_172" data-bd-bind="1511955576562">
+                <div class="outside">
+                    <span class="iconbox border_red2"><i class="icon iconfont icon-xinlang"></i></span>
+                    <a href="http://blog.csdn.net/matthewei6/article/details/50709212#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" target="_blank"> </a>
+                </div>
+                <div class="outside">
+                    <span class="iconbox border_green"><i class="icon iconfont icon-weixin"></i></span>
+                    <a href="http://blog.csdn.net/matthewei6/article/details/50709212#" class="bds_weixin" data-cmd="weixin" title="分享到微信" target="_blank"> </a>
+                </div>
+                <div class="outside">
+                    <span class="iconbox border_blue"><i class="icon iconfont icon-QQ"></i></span>
+                    <a href="http://blog.csdn.net/matthewei6/article/details/50709212#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" target="_blank"> </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="right_fixed" style="right: 1%;">
+    <div class="r_ico">
+        <i class="icon iconfont icon-jubao"></i>
+        <span class="txt" id="reportBtn">内容举报</span>
+    </div>
+    <div class="returnTop">
+        <i class="icon iconfont icon-fanhuidingbu"></i>
+        <span>返回顶部</span>
+    </div>
+</div>
+<div id="pop_win"></div>
+<div id="popup_mask"></div>
+<div class="pop_CA_cover"></div>
+<div class="pop pop_CA">
+    <div class="CA_header">
+        收藏助手
+        <span class="cancel_icon" id="fapancle"></span>
+    </div>
+    <iframe src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/saved_resource.html" id="collectIframe" frameborder="0" width="100%" height="360" scrolling="no"></iframe>
+</div>
+<!--举报-->
+<div id="report_dialog" style="top: 250px; left: 343.5px;"><div id="panel_report">
+    <div class="panel_head">不良信息举报</div>
+    <form method="post" id="frmReport" class="panel_body">
+        <table border="0" cellpadding="0" cellspacing="4" class="pop_table">
+            <tbody><tr><td colspan="2">您举报文章：<a href="http://blog.csdn.net/matthewei6/article/details/50709212" target="_blank">单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？</a></td></tr>
+            <tr>
+                <th style="width:60px;">举报原因：</th>
+                <td id="panel_reporttype">
+                    <label><input type="radio" class="report_type" id="report_sex" name="report_type" value="1">色情</label>
+                    <label><input type="radio" class="report_type" id="report_Politics" name="report_type" value="2">政治</label>
+                    <label><input type="radio" class="report_type" id="report_copy" name="report_type" value="3">抄袭</label>
+                    <label><input type="radio" class="report_type" id="report_ad" name="report_type" value="4">广告</label>
+                    <label><input type="radio" class="report_type" id="report_want" name="report_type" value="5">招聘</label>
+                    <label><input type="radio" class="report_type" id="report_call" name="report_type" value="6">骂人</label>
+                    <br>
+                    <label><input type="radio" class="report_type" id="report_other" name="report_type" value="7">其他</label>
+                    <input type="text" name="report_other_content" id="report_other_content" maxlength="30" style="display: none;">
+                </td>
+            </tr>
+            <tr id="panel_originalurl" style="display: none;">
+                <th>原文地址：</th>
+                <td>
+                    <input id="originalurl" value="http://" name="originalurl" type="text" style="width: 90%;">
+                </td>
+            </tr>
+            <tr>
+                <th id="sp_reason">原因补充：</th>
+                <td>
+                    <textarea id="report_description" style="width: 300px;" rows="3" name="report_description"></textarea>
+                    <p id="sp_n" style="color:#999;margin:0px;padding:0px;">(最多只允许输入30个字)</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="btnSubmitReport" name="submit" type="image" align="middle" class="btn_1" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/btn_submit.jpg">
+                    <span style="padding-left:20px;"></span>
+                    <img id="btnCloseReportDialog" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/btn_cancel.jpg" align="middle">
+                    <div id="error" style="color: Red">
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+    </form>
+</div>
+    <script language="javascript" type="text/javascript">
+        var isComment=0;
+        //显示隐藏地址
+        $(function () {
+          console.log("version:phoenix");
+            if(isComment){
+                $("#report_description").attr("disabled",true);
+                $("#sp_n").hide();
+                $("#sp_reason").html("评论内容：");
+            }
+            $(".report_type").click(function () {
+                $("#panel_originalurl,#report_other_content").hide();
+                switch ($(this).val()) {
+                    case '3':
+                        $("#panel_originalurl").show();
+                        $("#originalurl").focus();
+                        break;
+                    case '7':
+                        if(isComment){
+                            $("#report_other_content").show().focus();
+                        }
+                        break;
+                }
+
+            });
+
+            $("#frmReport").submit(function () {
+                if (!currentUserName) {
+
+                    if (confirm("您的操作必须登录，是否登录？")) {
+                        location.href = "http://passport.csdn.net/account/login?from=" + encodeURIComponent(location.href);
+                        return false;
+                    }
+                    return false;
+                }
+
+                var reportType = $("input[name=report_type]:checked").val();
+                if(!reportType){
+                    alert("请选择举报原因！");
+                    return false;
+                }
+                var otherInfo = "";
+                switch (reportType) {
+                    case '3':
+                        otherInfo = $("#originalurl").val();
+                        if (otherInfo == ""||otherInfo=="http://") {
+                            alert("举报抄袭必须提供原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        } else if(!checkeURL(otherInfo)) {
+                            alert("请输入正确的原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        }
+                        break;
+                    case '7':
+                        otherInfo = $("#report_other_content").val();
+                        if (isComment && !otherInfo) {
+                            alert("请填写举报的具体原因！");
+                            $("#report_other_content").focus();
+                            return false;
+                        }
+                        if(!isComment){
+                            if(!$("#report_description").val()){
+                                alert("请填写举报的具体原因！");
+                                $("#report_description").focus();
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                if(!isComment){
+                    if($("#report_description").val().length>30){
+                        alert("举报原因最多只允许输入30个字！");
+                        return false;
+                    }
+                }
+	            nowTime = {
+		            year: new Date().getFullYear(),
+		            month: parseInt(new Date().getMonth())+1,
+		            day: new Date().getDate(),
+		            hours: parseInt(new Date().getHours())+1,
+		            minutes: parseInt(new Date().getMinutes())+1,
+		            seconds: parseInt(new Date().getSeconds())+1
+	            };
+	            var data = {
+		            articleId: fileName,
+		            commentId: 0,
+		            reportType: reportType,
+		            originalurl: $("#originalurl").val(),
+		            report_other_content: $("#report_other_content").val(),
+		            report_description: $("#report_description").val(),
+		            currentUserName: currentUserName,
+		            updatetime: nowTime.year+'/'+nowTime.month+'/'+nowTime.day+' '+ nowTime.hours+':'+nowTime.minutes+':'+seconds,
+		            blogUser: username
+	            };
+	            if(!isComment){//如果是举报文章
+		            data.report_other_content = data.report_description;
+		            // data.report_description = "1. 神经网络这是一个常见的神经网络的图：这是一个常见的三层神经网络的基本构成，Layer L1是输入层，Layer L2是隐含层";
+	            }
+
+	            $.post(blog_address + "/common/report?id="+fileName+"&t=2", data, function (data) {
+		            if (data.result == 1){
+			            SetError("感谢您的举报，我们会尽快审核！");
+		            }else{
+			            if (data.content) alert(data.content);
+		            }
+
+	            });
+                return false;
+            });
+
+            $("#btnCloseReportDialog").click(function () {
+                CloseDiv();
+            });
+
+        });
+
+        //提示后关闭方法
+        function SetError(error) {
+            $("#btnCloseReportDialog").trigger("click");
+            alert(error);
+            CloseDiv();
+        }
+
+        //关闭方法
+        function CloseDiv() {
+
+            $.removeMask();
+            $("#report_dialog").hide();
+            return false;
+        }
+
+        //验证url
+        function checkeURL(url){
+            return /^http(s)?:\/\/([\w-]+\.)+[\w-]+/i.test(url);
+        }
+    </script>
+</div>
+<!--  fixme 后期清理掉  -->
+<div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+    <script id="adJs52b5334" src="http://ads.csdn.net/js/opt/52b5334.js?t=0.8427383897991987"></script>
+    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+</div>
+<script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/bootstrap.min.js.下载" type="text/javascript"></script>
+<script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/MathJax.js.下载"></script>
+<script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/login.js.下载"></script>
+<script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/blog_ver.js.下载"></script>
+<script type="text/javascript" src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/skin2017.js.下载"></script>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<script type="text/javascript">
+    if($(".article_collect li").length==1){$(".article_collect").hide();}
+    if($(".article_tags li").length==1){$(".article_tags").hide();}
+    $(".edit a").attr("href","http://write.blog.csdn.net/postedit/"+fileName);
+    $.each($(".edu_li a"),function(){$(this).attr("href",$(this).attr("href").replace("blog7","blog9"))});
+    new CNick('#uid').showNickname();
+
+    if($("#fan").html()=="")
+    {
+	    $("#fan").html(0);
+    }
+</script>
+<script src="./单点登录cas常见问题(九) - android app怎么接入cas单点登录系统？ - CSDN博客_files/appendMark.min.js.下载" type="text/javascript"></script>
+<script type="text/javascript">
+    appendMark($('.recommend_list').children('a').find('dt'),$('.extension_other'))
+</script>
+
+<div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div></body></html>
