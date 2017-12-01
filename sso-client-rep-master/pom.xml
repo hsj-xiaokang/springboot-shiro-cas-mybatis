@@ -36,6 +36,8 @@
 	    <jquery.version>2.1.4</jquery.version>
 	    <!-- log4jdbc-remix -->
 	    <log4jdbc.remix.version>0.2.7</log4jdbc.remix.version>
+	     <slf4j.version>1.7.21</slf4j.version>
+        <logback.version>1.1.7</logback.version>
     </properties>
     
     <dependencies>
@@ -173,6 +175,23 @@
         </dependency>
 		<!-- ================JavaWeb相关========== -->
 		
+		<!-- ======日志相关========== -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+		<!-- ======日志相关========== -->
     </dependencies>
     
     <build>

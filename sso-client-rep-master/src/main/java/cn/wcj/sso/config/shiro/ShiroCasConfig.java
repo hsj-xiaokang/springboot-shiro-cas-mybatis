@@ -242,6 +242,7 @@ public class ShiroCasConfig {
 		filterChainMap.put("/userGet", "authc");
 		filterChainMap.put("/casLogin", "authc");
 		filterChainMap.put("/user/edit/**", "authc,perms[user:edit]");
+		filterChainMap.put("/restlogin", "anon");
 		filterChainMap.put("/**", "anon");
 		factoryBean.setFilterChainDefinitionMap(filterChainMap);
 	}
