@@ -1,0 +1,247 @@
+// zjf20171011
+var commonBtn = true;
+$('.you-like-list li:odd').css({'margin-left': '10%'});
+// 点赞
+setPraise($('.comment-1 .bot .zan'))
+setPraise($('.more-list .praise span'))
+$('.comment-number .time').click(function(){//排序
+	$('.comment-number .time').removeClass('on')
+	$(this).addClass('on')
+})
+$('.more-list .favorites').click(function(){//收藏
+  var me = $(this)
+  if(me.hasClass('on'))return false;
+  $.get(collect_url+'?blog_id='+blog_id,function(e){
+    if(e.status == 0){//成功
+      me.addClass('on')
+      new AutoBox({content:e.msg,img:'remind',mask:"#000",autoClose:3})
+    }else if(e.status == -1){//登录
+      Login()
+    }else{//其他
+      new AutoBox({content:e.msg,mask:"#000",autoClose:3})
+    }
+  },'JSON')
+});
+//目录
+(function(){
+  function getLv(n){
+    return parseInt(n.replace('H',''))
+  }
+  var directory_con = $('<div class="directoryBox"><h3 class="BoxTil right-top-till">目录</h3><div class="list directory"><span class="top-icon"></span><ul class="directory-list"></ul><span class="bot-icon"></span></div></div>');
+  var list = directory_con.find('ul')
+  var ts = []
+  var jts = $(".artical-content").find('h1,h2,h3')
+  if(jts.length>0){
+    $('.artical-Right').append(directory_con);
+  }else{
+    return false;
+  }
+  jts.each(function(i,e){
+    ts.push(e)
+  })
+  var sort = [0,1,1,1]
+  $.each(ts,function(i,e){
+    var Lv = 1
+    var item = $('<li>'+$(e).text()+'</li>').click(function(){
+      $(window).scrollTop($(e).offset().top)
+      $(this).addClass('on').siblings().removeClass('on')
+    })
+    list.append(item)
+    if(item.prev().hasClass('lv2')){Lv++;};
+    if(ts[i-1]&&getLv($(ts[i-1])[0].tagName)<getLv(e.tagName)){Lv++;};
+    if(e.tagName=='H1'){Lv=1;}
+    if(ts[i-1]&&getLv($(ts[i-1])[0].tagName)>getLv(e.tagName)){Lv=1;};
+    item.addClass('lv'+Lv)
+  })
+  var fixTop = directory_con.offset().top
+  $(window).scroll(function(){
+    if($(window).scrollTop()+10>fixTop){
+      directory_con.addClass('on')
+    }else{
+      directory_con.removeClass('on')
+    }
+    jts.each(function(i,e){
+      if($(window).scrollTop()-30 < $(e).offset().top){
+        var ch = list.children().eq(i)
+        ch.addClass('on').siblings().removeClass('on')
+        directory_con.scrollTop(ch.position().top-list.height()/2)
+        return false;
+      }
+    })
+  });
+})();
+var reply_text = '<div class="comment-creat fitst-reply"><textarea class="textareadiv" name="" id="" cols="30" rows="10" maxlength="500"></textarea><div class="comment-push"><p class="msg fl">Ctrl+Enter&nbsp;发布</p><p class="publish-btn blue-btn fr" flag="2">发布</p><p class="cancel-btn cancel-btn-2 fr">取消</p><div class="clear"></div></div><div class="clear"></div></div>';
+setReply()
+setreplayDown() //ctrl+enter发表评论
+setreplay() //发表评论
+$('.textareadiv-publish').focus(function(){
+    if(isLogin != 1){
+      Login()
+      $(this).blur()
+    }
+})
+function setReply(){
+  $('.reply-btn').click(function(){//二级回复
+    var me = $(this)
+    var first_reply = me.parent().parent().find(".textareadiv")
+    if(isLogin == 1){
+      if(first_reply.length < 1) {
+        me.parent().after(reply_text);
+        cancel_reply_btn()
+        setreplay()
+        setreplayDown()
+      }
+    }else{
+       Login()
+    }
+  })
+}
+function cancel_reply_btn(){//取消回复
+  $('.cancel-btn-2').click(function(){
+    $(this).parent().parent().find('#textareadiv').val('')
+    $(this).parent().parent().remove();
+  })
+}
+function setreplayDown(){
+  $('.textareadiv').keydown(function(e){//ctrl+enter发表评论
+    if(e.ctrlKey && e.keyCode == 13){
+      if(commonBtn == false)return false;
+      commonBtn = false
+      setTimeout(function(){commonBtn = true;},3000)
+      var me = $(this)
+      var content = me.val()
+      var user_id = me.parents().find('.publish_user_id .user_id').val()
+      var parent_id = me.parent().parent().find('.reply_id').val() 
+      var flag = me.attr('flag')
+      var first_pid = me.parent().parent().find('.first_pid').val()
+      var data = {
+        'resource_id': blog_id,
+        'content': $.trim(content),
+        'parent_id': parent_id,
+        'first_pid': first_pid,
+        'blog_id': blog_id,
+        'user_id': user_id,
+        'url': window.location.href
+      }
+      replayAjax(data)
+    }
+  });  
+}
+function setreplay(){//发表评论
+  $('.publish-btn').unbind().bind('click',function(){
+    if(commonBtn == false)return false;
+    commonBtn = false
+    setTimeout(function(){commonBtn = true;},3000)
+    var me = $(this)
+    var content = me.parent().parent().find('.textareadiv').val()
+    var user_id = me.parent().parent().parent().find('.user_id').val() 
+    var parent_id = me.parent().parent().parent().find('.reply_id').val()
+    var flag = me.attr('flag')
+    var first_pid = ''
+    if(flag==2){
+      first_pid = me.parents().find('.reply_id_box .first_pid').val()
+    }
+    var data = {
+      'resource_id': blog_id,
+      'content': $.trim(content),
+      'parent_id': parent_id,
+      'first_pid': first_pid,
+      'blog_id': blog_id,
+      'user_id': user_id,
+      'url': window.location.href
+    }
+    replayAjax(data)
+  })
+}
+function replayAjax(data){
+  if(isLogin != 1){
+    Login()
+    return false;
+  }
+  if(data.content.length==0){
+    new AutoBox({content:'评论内容不能为空~',mask:"#000",autoClose:3})
+  }else{
+    $.ajax({
+      url: addReply_url,
+      data: data,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(e){
+        commonBtn = true
+        if(e.status == 1){
+          window.location.href = e.data;
+          if(window.location.href == e.data) location.reload()
+        }else if(e.status == -1){
+          new AutoBox({content:'<div style="padding: 0 40px;">'+e.msg+'</div>',mask:"#000",autoClose:3})
+        }else if(e.status == -9){
+          Login()
+        }else{
+          new AutoBox({content:'<div style="padding: 0 40px;">'+e.msg+'</div>',mask:"#000",autoClose:3})
+        }
+      }
+    })
+  }
+}
+function cancel_reply_btn(){//取消回复
+  $('.cancel-btn-2').click(function(){
+    $(this).parent().parent().find('#textareadiv').val('')
+    $(this).parent().parent().remove();
+  })
+}
+$('.cancel-btn-1').click(function(){//取消评论
+  $(this).parent().parent().find('.textareadiv').val('')
+})
+$('.cancel-btn-3').click(function(){//取消评论
+  $(this).parent().parent().find('.textareadiv').val('')
+  $(this).parent().parent().hide();
+})
+$('.add-new-publish').click(function(){//添加发布框子
+  $(this).parent().parent().find('.first-publish').show()
+})
+$('.comment-2').find('.open-btn').click(function() {
+  if($(this).text() == "展开查看") {
+    $(this).parents(".comment-2").find(".comment-2-list-none").css({"display":"block"});
+    $(this).text("收起");
+    $(".open-more").hide();
+  } else {
+    $(this).parents(".comment-2").find(".comment-2-list-none").css({"display":"none"});
+    $(this).text("展开查看");
+    $(".open-more").show();
+  }
+})
+$('.remove').click(function(){//删除回复
+  var me = $(this)
+  var id = me.parent().parent().find('.reply_id').val(); 
+  var pobj = me.parents(".commentList-box");
+  var oldLen = $('.comment_number-list').length
+  var ridArr = '';
+  if(isLogin == 1){
+    new AutoBox({content:'<div style="padding: 0 30px 30px 30px;">是否要删除发布的评论？</div>',img:'remind',mask:"#000",Yes:'确定',No:'取消',yc:function(){
+      $.get(removeUrl,{blog_id: blog_id,id: id},function(e){
+        if(e.status == 1){
+          if(e.data) {
+            for (var i = 0; i < e.data.length; i++) {
+              var class_name = "cbox-" + e.data[i];
+              $("." + class_name).remove();
+            }
+          }
+          if(me.parent().parent().hasClass("comment-1")) {
+          } else {
+            var cm_1 = pobj.find(".comment_number_1").html();
+            var n_cm = parseInt(cm_1) - e.data.length;
+            pobj.find(".comment_number_1").html(n_cm);
+          }
+          var newLen = $('.comment_number-list').length
+          var comment_number = $('.comment_number').html() 
+          var nowLen = parseInt(comment_number-(oldLen-newLen))
+          $('.comment_number').html(nowLen)
+        }else{
+          new AutoBox({content:e.msg,img:'remind',mask:"#000",autoClose:3})
+        }
+      },'json')
+    }})
+  }
+})
+function Login(){
+  new AutoBox({noCon:true,ADD:$('<iframe src="http://home.51cto.com/index/iframe-login?reback='+location.href+'"  iframeboder="0" scrolling="no" allowtransparency="true" height="350" width="380" id="login_form" name="login_form" style="border: none;"></iframe>'),mask:"#000",W:380,H:403})
+}

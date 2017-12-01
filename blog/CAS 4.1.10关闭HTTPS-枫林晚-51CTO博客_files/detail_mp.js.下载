@@ -1,0 +1,33 @@
+// H5和Pc同用（解析博文展示）zjf20171011
+(function(){
+  setTimeout(function(){
+    $(".main-content").find('a').css({'color':'#4285f4'})
+    $(".main-content").find('.cnblogs_code_copy').remove()
+  },50)
+  $(".main-content").find('img').css('cursor','pointer')
+  $(".main-content").find('img').click(function(){//img新页面打开
+    var img_src = $(this).attr('src')
+    window.open(img_src); 
+    return false;
+  })
+  if(is_old != 1){
+    marked.setOptions({//new edit add style
+      renderer: marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: true,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
+    var mde_text = $("#show-blog-content").val();
+    var mde_html = marked(mde_text);
+    function setBrForContent(str) {//处理空行及换行
+        str = str.replace(/\n/g, '<br>');
+        return str;
+    }
+    $(".artical-content").html(mde_html);
+    hljs.initHighlightingOnLoad();
+  }
+})();

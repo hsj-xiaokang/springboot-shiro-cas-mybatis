@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://blog.51cto.com/fengwan/1876603 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="favicon" rel="shortcut icon" href="http://blog.51cto.com/favicon.ico">
+        <title>CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客</title>
+    <meta name="keywords" content="https,cas">
+<meta name="description" content="1.修改WEB-INF/deployerConfigContext.xml&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;bean&amp;nbsp;id=&quot;proxyAuthenticationHandler&quot;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;class=&quot;org.jasig.cas.authenticati">    <link href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/header.css" rel="stylesheet"><link href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/right.css" rel="stylesheet"><link href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/blog_details.css" rel="stylesheet"><link href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/highlight.css" rel="stylesheet">
+    <script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/push.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/hm.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/jquery.min.js.下载"></script><style type="text/css" abt="234"></style><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/common.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/mbox.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/share.js.下载"></script><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style><link rel="stylesheet" href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/share_style0_16.css"><link id="syntaxhighlighter_css" rel="stylesheet" type="text/css" href="http://blog.51cto.com/fengwan/1876603"></head>
+<body>
+<img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/share_default.jpg" border="0" style="width:0; height:0; position:absolute;">
+<div class="Header">
+  <div class="Page ">
+    <h1 class="Logo"><a href="http://blog.51cto.com/">Logo</a></h1>
+    <ul class="Navigates fl">
+      <li><a href="http://blog.51cto.com/">首页</a></li>
+      <li><a href="http://blog.51cto.com/original">文章</a></li>
+            <li class="more ">
+        <a href="javascript:void(0);">专家</a>
+        <div>
+          <a href="http://blog.51cto.com/expert">专家博客</a>
+          <a href="http://blog.51cto.com/blogstar">博客之星</a>
+          <a href="http://blog.51cto.com/blogcommend">推荐博客</a>
+        </div>
+      </li>
+            <li><a href="http://blog.51cto.com/blogger/index">我的博客</a></li>
+    </ul>
+    <ul class="Navigates fr">
+      <li class="more maps">
+        <a href="javascript:void(0);">网站导航</a>
+        <div>
+            <a href="http://edu.51cto.com/" target="_blank">学院</a>
+            <a href="http://blog.51cto.com/" target="_blank">博客</a>
+            <a href="http://down.51cto.com/" target="_blank">下载</a>
+            <a href="http://home.51cto.com/" target="_blank">家园</a>
+            <a href="http://bbs.51cto.com/" target="_blank">论坛</a>
+            <a href="http://x.51cto.com/" target="_blank">CTO训练营</a>
+            <a href="http://wot.51cto.com/" target="_blank">WOT</a>
+            <a href="http://www.51cto.com/" target="_blank">51CTO</a>
+            <i class="arrow"></i>
+        </div>
+      </li>
+            <li><a href="http://home.51cto.com/user/register?reback=http%3A%2F%2Fblog.51cto.com%2Ffengwan%2F1876603" target="_self">注册</a></li>
+      <li class="login"><a href="http://home.51cto.com/index?reback=http%3A%2F%2Fblog.51cto.com%2Ffengwan%2F1876603" target="_self">登录</a></li>
+                  <li class="mRead">
+        <a href="javascript:;">手机阅读</a>
+        <div>
+          <img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/blog_qr.png">
+          <p>扫一扫体验手机阅读</p>
+          <i class="arrow"></i>
+        </div>
+      </li>
+          </ul>
+    <div class="clear"></div>
+  </div>
+</div>
+<script>
+    var isLogin = '0';
+    var imgpath = 'http://i2.51cto.com/';
+    var BLOG_URL = 'http://blog.51cto.com/';
+    var msg_num_url = 'http://blog.51cto.com/index/ajax-msg-num';
+    setTimeout(function(){
+            $.ajax({
+                url:msg_num_url,
+                type:"get",
+                dataType:'json',
+                success:function(res){
+                    if(res.status == '0'){
+                       //
+                       var hasNewMsg = false;
+                       if(res.data.msgNum > 0 && !$('#myMsg i').hasClass('dot')){
+                            $('#myMsg i').addClass('dot');
+                            hasNewMsg = true;
+                       }
+                       if(res.data.notifyNum > 0 && !$('#myNotify i').hasClass('dot')){
+                           $('#myNotify i').addClass('dot');
+                           hasNewMsg = true;
+                       }
+                       if(res.data.recommend_new > 0 && !$('#myRecommend i').hasClass('dot')){
+                           $('#myRecommend i').addClass('dot');
+                           hasNewMsg = true;
+                       }
+                       if(hasNewMsg && !$('#myAllMsg i').hasClass('dot')){
+                           $('#myAllMsg i').addClass('dot');
+                       }
+                    }
+                    
+                }
+            });
+    },70);
+</script><div class="Content-box" style="min-height: 574px;">
+    	<link rel="stylesheet" href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/fck_editorarea.css">
+	<link rel="stylesheet" href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/shCoreDefault.css">
+<div class="Content Index" style="padding-bottom: 50px;">
+	<div class="Page">
+		<!-- left start -->
+		<div class="Left fl">
+			<div class="artical-Left">
+				<div class="crumbs">
+                													<span><a href="http://blog.51cto.com/fengwan" target="_blank">枫林晚</a></span>
+                							<em>&gt;</em>						<span><a href="http://blog.51cto.com/fengwan/category12.html" target="_blank">CAS</a></span>
+                							<em>&gt;</em>						<span>正文</span>
+                						<div class="clear"></div>
+				</div>
+				<h1 class="artical-title">CAS 4.1.10关闭HTTPS									</h1>
+				<div class="artical-title-list">
+										<a href="javascript:;" class="tab original fl">原创</a>
+					<a href="http://blog.51cto.com/fengwan" class="name fl">rong341233</a>
+					<span class="fl"></span>
+					<a href="javascript:;" class="time fl">2016-11-25 15:27</a>
+					<span class="fl"></span>
+					<a href="http://blog.51cto.com/fengwan/1876603#comment" class="comment fl">评论(1)</a>
+					<a href="javascript:;" class="read fr">133人阅读</a>
+					<div class="clear"></div>
+				</div>
+									<div class="artical-content-bak main-content editor-side-new">
+						<div class="con editor-preview-side"><p>1.修改WEB-INF/deployerConfigContext.xml</p><div><div id="highlighter_884034" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">bean</code>&nbsp;<code class="xml color1">id</code><code class="xml plain">=</code><code class="xml string">"proxyAuthenticationHandler"</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:httpClient-ref</code><code class="xml plain">=</code><code class="xml string">"supportsTrustStoreSslSocketFactoryHttpClient"</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:requireSecure</code><code class="xml plain">=</code><code class="xml string">"false"</code>&nbsp;<code class="xml plain">/&gt;</code></div></div></td></tr></tbody></table></div></div><p>在p:httpClient-ref="supportsTrustStoreSslSocketFactoryHttpClient"后</p><p>增加<span style="color:rgb(255,0,0);">p:requireSecure="false"</span></p><p><br></p><p>2.修改WEB-INF/spring-configuration/ticketGrantingTicketCookieGenerator.xml</p><div><div id="highlighter_211857" class="syntaxhighlighter  xml "><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">bean</code>&nbsp;<code class="xml color1">id</code><code class="xml plain">=</code><code class="xml string">"ticketGrantingTicketCookieGenerator"</code>&nbsp;<code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"org.jasig.cas.web.support.CookieRetrievingCookieGenerator"</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">c:casCookieValueManager-ref</code><code class="xml plain">=</code><code class="xml string">"cookieValueManager"</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieSecure</code><code class="xml plain">=</code><code class="xml string">"false"</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieMaxAge</code><code class="xml plain">=</code><code class="xml string">"-1"</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieName</code><code class="xml plain">=</code><code class="xml string">"TGC"</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookiePath</code><code class="xml plain">=</code><code class="xml string">""</code><code class="xml plain">/&gt;</code></div></div></td></tr></tbody></table></div></div><p>将p:cookieSecure="true"修改为<span style="color:rgb(255,0,0);">p:cookieSecure="false"</span></p><p><br></p><p>3.修改WEB-INF/spring-configuration/warnCookieGenerator.xml</p><div><div id="highlighter_984193" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">bean</code>&nbsp;<code class="xml color1">id</code><code class="xml plain">=</code><code class="xml string">"warnCookieGenerator"</code>&nbsp;<code class="xml color1">class</code><code class="xml plain">=</code><code class="xml string">"org.jasig.cas.web.support.CookieRetrievingCookieGenerator"</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieHttpOnly</code><code class="xml plain">=</code><code class="xml string">"false"</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieSecure</code><code class="xml plain">=</code><code class="xml string">"false"</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieMaxAge</code><code class="xml plain">=</code><code class="xml string">"-1"</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookieName</code><code class="xml plain">=</code><code class="xml string">"CASPRIVACY"</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">p:cookiePath</code><code class="xml plain">=</code><code class="xml string">""</code><code class="xml plain">/&gt;</code></div></div></td></tr></tbody></table></div></div><p>将p:cookieSecure="true"修改为<span style="color:rgb(255,0,0);">p:cookieSecure="false"</span></p><p><span style="color:rgb(255,0,0);"><br></span></p><p><strong><span style="color:rgb(0,0,0);">4.修改注册服务WEB-INF/classes/services/HTTPSandIMAPS-10000001.json</span></strong></p><p><strong><span style="color:rgb(0,0,0);">将"serviceId" : "^(https|imaps)://.*"修改为<span style="color:rgb(255,0,0);">"serviceId" : "^(https|http|imaps)://.*"</span></span></strong></p><p><br></p><p><span style="color:rgb(0,0,0);">5.测试HTTP/HTTPS</span></p><p><span style="color:rgb(0,0,0);"><a href="http://192.168.10.102:8080/cas/login?service=http://www.abc.com" target="_blank" style="color: rgb(66, 133, 244);">http://192.168.10.102:8080/cas/login?service=http://www.a.com</a></span></p><p><span style="color:rgb(0,0,0);"> <a href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/wKioL1g35rPwNMwCAAFKgMZKaFc573.png" target="_blank" style="color: rgb(66, 133, 244);"><img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/wKioL1g35rPwNMwCAAFKgMZKaFc573.png" title="11.png" alt="wKioL1g35rPwNMwCAAFKgMZKaFc573.png" style="cursor: pointer;"></a></span></p><p><span style="color:rgb(0,0,0);"><br></span></p><p><br></p><p>网上很多资料只提示修改前面3个配置，却没有更改注册服务配置，所以就会出现</p><h2 style="margin:0px;padding:0px;border:0px;font-size:12px;vertical-align:baseline;color:rgb(187,0,0);font-family:Verdana, sans-serif;line-height:16.8px;white-space:normal;background:rgb(255,255,255);">Application Not Authorized to Use CAS</h2><p style="margin-top:0px;margin-bottom:1.4em;padding:0px;border:0px;font-size:12px;vertical-align:baseline;color:rgb(187,0,0);font-family:Verdana, sans-serif;line-height:16.8px;white-space:normal;background:rgb(255,255,255);">The application you attempted to authenticate to is not authorized to use CAS.</p><p><a href="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/wKioL1g355fzxJuZAAC_YtKcIGA432.png" target="_blank" style="color: rgb(66, 133, 244);"><img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/wKioL1g355fzxJuZAAC_YtKcIGA432.png" title="123.png" alt="wKioL1g355fzxJuZAAC_YtKcIGA432.png" style="cursor: pointer;"></a></p><p><br></p></div>
+					</div>
+																	<div class="artical-copyright">版权声明：原创作品，如需转载，请注明出处。否则将追究法律责任</div>
+												<div class="for-tag">
+											<span>https</span>
+											<span>cas</span>
+										<div class="clear"></div>
+				</div>
+								<div class="more-list">
+					<p class="praise fl "><span type="1" blog_id="1876603" userid="508652">1</span></p>
+					<div class="share-box fr">
+						<p class="share">分享</p>
+						<div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1512009708767">
+						  <span></span>
+						  <a href="javascript:;" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ分享</a>
+						  <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">微博分享</a>
+						  <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信扫一扫</a>
+						  <img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/qr-url">
+						</div>
+					</div>
+					<p class="favorites fr">收藏</p>
+										<div class="clear"></div>
+				</div>
+									<div class="artical-list">
+                    						<a class="fl" href="http://blog.51cto.com/fengwan/1876088" title="CAS 5.0.0的安装及配置">上一篇：CAS 5.0.0的安装及配置</a>
+                                        						<a class="fr" href="http://blog.51cto.com/fengwan/1890948" title="PHP 7.1.0安装Zabbix 3.0.7问题处理">下一篇：PHP 7.1.0安装Zabbix 3.0.7问题处理</a>
+                    						<div class="clear"></div>
+					</div>
+							</div>
+						<h2 class="artical-other-title">猜你喜欢</h2>
+			<div class="artical-Left artical-border">
+				<ul class="you-like-list">
+											<li><a href="http://blog.51cto.com/wangqingpei557/2044336" target="_blank">spring rest 容易被忽视的后端服务 chunked 性能问题</a></li>
+										<div class="clear"></div>
+				</ul>
+			</div>
+						<h2 class="artical-other-title" id="comment">发表评论</h2>
+			<div class="artical-Left artical-border">
+				<!-- 发布评论 -->
+				<div class="comment-creat">
+					<a href="javascript:;" class="header-img fl">
+						<img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/avatar.php">
+					</a>
+					<div class="first-publish fr publish_user_id">
+						<textarea class="textareadiv textareadiv-publish" name="" id="" placeholder="写下你的评论" maxlength="500"></textarea>
+						<div class="comment-push">
+							<p class="msg fl">Ctrl+Enter&nbsp;发布</p>
+															<p class="publish-btn blue-btn fr" flag="1">发布</p>
+														<p class="cancel-btn cancel-btn-1 fr">取消</p>
+							<div class="clear"></div>
+						</div>
+						<input type="hidden" class="user_id" value="508652">
+						<input type="hidden" class="reply_id" value="1876603">
+						<input type="hidden" class="first_pid" value="">
+					</div>
+					<div class="clear"></div>
+				</div>
+								<div class="comment-number">
+					<p class="number fl"><span class="comment_number">1</span>条评论</p>
+											<a href="http://blog.51cto.com/fengwan/1876603?sort=desc#comment"><p class="time-last time fr">按时间倒序</p></a>
+						<p class="time-first time on fr">按时间正序</p>
+										<div class="clear"></div>
+				</div>
+								<div class="commentList">
+								  					<div class="commentList-box cbox-676083" id="676083">
+				  		<!-- 一级回复 -->
+						<div class="comment-1 publish_user_id reply_id_box comment_number-list" rid="676083">
+							<div class="top">
+								<a href="http://blog.51cto.com/11615253" class="header-img fl">
+									<img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/avatar(1).php">
+								</a>
+								<div class="fl">
+									<p class="name"><a href="http://blog.51cto.com/11615253">xlicto</a>
+																		</p>
+									<p class="time">
+																			1楼&nbsp;.&nbsp;
+									2016-12-27 15:49									</p>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="con">google是个好东西，能找到这么棒的博客！谢谢博主</div>
+							<div class="bot ">
+								<p class="zan" blog_id="676083" type="2" userid="11605253">0人赞</p>
+																<p class="answer reply-btn"><span class="comment_number_1">0</span>人回复</p>
+																								<div class="clear"></div>
+							</div>
+							<input type="hidden" class="reply_id" value="676083">
+							<input type="hidden" class="user_id" value="11605253">
+							<input type="hidden" class="first_pid" value="676083">
+						</div>
+						<!-- 二级回复 -->
+										    </div>	
+				  								</div>
+				<!-- page -->
+							</div>
+
+		</div>
+		<!-- end left -->
+		<!-- right start -->
+		<div class="Right artical-Right fr">
+			<!-- 博客名称 -->
+			<div class="Box articles blogger-name">
+				<div class="list">	
+					<h4 class="BoxTil2 fl"><a href="http://blog.51cto.com/fengwan">枫林晚</a></h4>
+					<div class="BoxTil2-box fr">
+						<span></span>
+						<div>
+			              <img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/qr">
+			              <p>分享到朋友圈</p>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul class="number-list">
+						<li>
+							<a class="num" href="javascript:;">156</a>
+							<p>文章</p>
+						</li>
+						<li>
+							<a class="num" href="javascript:;">82</a>
+							<p>评论</p>
+						</li>
+						<li>
+							<a class="num" href="javascript:;">125</a>
+							<p>点赞</p>
+						</li>
+						<li>
+							<a class="num" href="javascript:;">24W+</a>
+							<p>人气</p>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+			</div>
+			<!-- 博主信息 -->
+			<div class="Box articles">
+				<div class="list blogger">
+					<div class="top">
+						<a class="left fl" href="http://blog.51cto.com/fengwan">
+							<img src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/avatar(2).php">
+						</a>
+						<div class="right">
+							<a href="http://blog.51cto.com/fengwan" class="tit">rong341233</a>
+							<div class="name-box">
+				                				                				                																								<div class="clear"></div>
+							</div>
+							<div class="name-btn">
+								<a href="http://blog.51cto.com/fengwan" class="name-index blue-btn">TA的主页</a>
+								<a href="http://home.51cto.com/space?uid=508652" class="name-msg gray-btn">私信</a>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="bottom">
+						<div class="msg-title"><i class="l"></i>喜欢我的文章，请分享到朋友圈<i class="r"></i></div>
+						<h4 class="title"><a href="javascript:;">TA的其他文章</a></h4>
+						<ul class="seven-list">
+							        						<li class="s2"><a href="http://blog.51cto.com/fengwan/1876088" target="_blank">CAS 5.0.0的安装及配置</a></li>
+        					        						<li class="s2"><a href="http://blog.51cto.com/fengwan/2045525" target="_blank">Docker Swarm使用NFS作为共享存储</a></li>
+        					        						<li class="s2"><a href="http://blog.51cto.com/fengwan/1979922" target="_blank">CentOS7下Apache2.4.6使用MySQL5.7验证</a></li>
+        					        						<li class="s2"><a href="http://blog.51cto.com/fengwan/1979267" target="_blank">Nginx指定IP无须通过认证</a></li>
+        					        						<li class="s2"><a href="http://blog.51cto.com/fengwan/1964058" target="_blank">ASP.NET修改ASP.NET_SessionId头部隐藏开发语言</a></li>
+        					      					</ul>
+					</div>	
+				</div>
+			</div>
+			<!-- 七日热门 -->
+            			<h3 class="BoxTil">七日热门</h3>
+		    <div class="Box articles">
+		        <div class="list">
+		        <ul class="seven-list">
+	            	            <li class="s1"><a href="http://blog.51cto.com/lizhenliang/2045272" target="_blank">高级运维工程师的打怪升级之路</a></li>
+	            	            <li class="s2"><a href="http://blog.51cto.com/xiaogongju/2043812" target="_blank">Windows下常用的100个CMD指令以及常见的操作</a></li>
+	            	            <li class="s3"><a href="http://blog.51cto.com/wzlinux/2044797" target="_blank">Docker镜像的内部结构(四)</a></li>
+	            	            <li class="s4"><a href="http://blog.51cto.com/13497208/2044138" target="_blank">经验之谈：Linux运维工程师所需技能</a></li>
+	            	            <li class="s5"><a href="http://blog.51cto.com/000011211684/2044260" target="_blank">【14】Python100例基础练习（1）</a></li>
+	                
+	            </ul>
+	            </div>
+	        </div>
+	        	        <div class="update-top"></div>
+		</div>
+		<!-- end right  -->
+		<div class="clear"></div>
+	</div>
+</div>
+<div style="display:none" id="abstract_bdshare"></div>
+<!-- 老博文美观处理 -->
+	<script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/shCores.js.下载"></script>
+<script>
+	var praise_url = 'http://blog.51cto.com/praise/praise'
+	var addReply_url = 'http://blog.51cto.com/comments/add'
+	var removeUrl = 'http://blog.51cto.com/comments/del'
+	var blog_id = '1876603'
+	var is_comment = '0'
+	var collect_url = 'http://blog.51cto.com/collect/add'
+	var is_old = '1'
+	var myself = window.location.href
+	window._bd_share_config={
+    "common":{
+      "bdText":"CAS 4.1.10关闭HTTPS",
+      "bdDesc":$("#abstract_bdshare").text(),
+      "bdMini":"2",
+      "bdMiniList":false,
+      "bdPic":"https://s1.51cto.com/images/201710/25/bd540a4f14d822f6e69087758699358b.jpg",
+      "bdStyle":"0",
+      "bdSize":"16"
+    },
+    "share":{}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+</div>
+<script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/marked.min.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/highlight.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/detail_mp.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/detail.js.下载"></script><div class="Footer">
+    <p class="copy tc">Copyright © 2005-2017 <a href="http://www.51cto.com/" target="_blank">51CTO.COM</a> 版权所有 京ICP证060544号</p>
+  </div>
+<div class="rightTools">
+      <a href="http://blog.51cto.com/blogger/publish" class="aa">写博文</a>
+    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=779791804&amp;site=qq&amp;menu=yes" class="qq"></a>
+  <a href="javascript:void(0);" class="gotop"></a>
+</div>
+<div style="display:none">
+<iframe frameborder="0" scrolling="no" width="0" height="0" src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/pageview.html"></iframe>
+</div>
+<script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/pvlog.js.下载"></script>
+<script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/count.js.下载"></script><script src="./CAS 4.1.10关闭HTTPS-枫林晚-51CTO博客_files/count.php"></script>
+        <script type="text/javascript">
+    $(".gotop").click(function(){$(window).scrollTop(0)})
+    //百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2283d46608159c3b39fc9f1178809c21";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+    <script>
+    //自动推送链接
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <script>
+    (function(){
+        var wh=$(window).height(),fh=$('.Footer').outerHeight(true),hh=$('.Header').outerHeight(true)
+        $('.Content-box').css({'min-height': wh-fh-hh})
+    })()
+</script>
+
+
+</body></html>
