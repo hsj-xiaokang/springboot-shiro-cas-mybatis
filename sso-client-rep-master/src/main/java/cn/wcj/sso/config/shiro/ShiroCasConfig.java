@@ -239,6 +239,8 @@ public class ShiroCasConfig {
 		Map<String, String> filterChainMap = new LinkedHashMap<String, String>();
 		filterChainMap.put(casConfig.getCasFilterUrlPattern(), CAS_FILTER);//shiro集成cas后，首先添加该规则
 		filterChainMap.put("/user", "authc");
+		filterChainMap.put("/userGet", "authc");
+		filterChainMap.put("/casLogin", "authc");
 		filterChainMap.put("/user/edit/**", "authc,perms[user:edit]");
 		filterChainMap.put("/**", "anon");
 		factoryBean.setFilterChainDefinitionMap(filterChainMap);

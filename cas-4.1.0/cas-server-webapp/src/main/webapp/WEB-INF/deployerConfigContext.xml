@@ -64,7 +64,8 @@
 	<!-- Required for proxy ticket mechanism. -->
 	<bean id="proxyAuthenticationHandler"
 		class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
-		p:httpClient-ref="supportsTrustStoreSslSocketFactoryHttpClient" />
+		p:httpClient-ref="supportsTrustStoreSslSocketFactoryHttpClient"
+		p:requireSecure="false" />
 
 	<!-- | TODO: Replace this component with one suitable for your enviroment. 
 		| | This component provides authentication for the kind of credential used 
@@ -144,7 +145,7 @@
 	<bean id="primaryAuthenticationHandler"
 		class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler"
 		p:dataSource-ref="dataSource" p:passwordEncoder-ref="passwordEncoder"
-		p:sql="select password from t_user where account=? and status = 'active'" />
+		p:sql="select password from tb_user where username = ? and active = 1" />
 
 	<!-- 设置数据源 -->
 	<!-- <bean id="dataSource"
@@ -160,10 +161,10 @@
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="url" 
-		          value="jdbc:mysql://127.0.0.1:3306/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true">
+		          value="jdbc:mysql://127.0.0.1:3306/testredisshiro?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true">
 		</property>
 		<property name="username" value="root" />
-		<property name="password" value="HSJissmart" />
+		<property name="password" value="123456" />
 		<property name="initialSize" value="10" />
 		<property name="maxActive" value="500" />
 		<property name="maxWait" value="60000" />
