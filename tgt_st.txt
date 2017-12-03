@@ -1,0 +1,14 @@
+﻿【=======--------->>登录的用户名和密码：username = hsjhsj,password = hsjhsj】
+
+【=======--------->>rest登录获取TGT地址的服务前缀！=http://localhost:8080/cas/v1/tickets】
+
+【=======--------->>rest登录获取TGT地址的用户名和密码编码encode_username_password=username=hsjhsj&password=hsjhsj 】
+
+【=======--------->>得到Tgt is = TGT-5-fPKM9kkb6vsox05eZ3c50wPd7V6hPdidhwGy245ylbQ2k7muGY-cas01.example.org 】
+
+ 【=======--------->>根据tgt获取 st 地址的前缀  = http://localhost:8080/cas/v1/tickets/TGT-5-fPKM9kkb6vsox05eZ3c50wPd7V6hPdidhwGy245ylbQ2k7muGY-cas01.example.org 】
+
+ 【=======--------->>根据tgt获取 st 地址的编码服务Service url is  = service=http%3A%2F%2Flocalhost%3A8989%2Fsso-client%2Frestlogin 】
+
+【=======--------->>获取st打印响应line  = ST-3-gx4u3Z2KfhgDfUz1WaPp-cas01.example.org 】
+

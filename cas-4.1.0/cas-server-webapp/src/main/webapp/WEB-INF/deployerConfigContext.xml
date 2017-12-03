@@ -164,7 +164,7 @@
 		          value="jdbc:mysql://127.0.0.1:3306/testredisshiro?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true">
 		</property>
 		<property name="username" value="root" />
-		<property name="password" value="123456" />
+		<property name="password" value="HSJissmart" />
 		<property name="initialSize" value="10" />
 		<property name="maxActive" value="500" />
 		<property name="maxWait" value="60000" />
@@ -172,5 +172,5 @@
 			<value>select 1</value>
 		</property>
 	</bean>
-
+     <!-- 公司mysql:123456;自己MySQL:HSJissmart -->
 </beans>

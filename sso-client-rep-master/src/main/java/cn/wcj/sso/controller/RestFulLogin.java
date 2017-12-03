@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;  
   /**
    * 前后端分离的情况之下rest风格登录获取TGT ST
+   * 下面代码可以给android端使用，具体的前后端分离使用ajax的方式获取tgt和st，方便浏览器保存有全局的tgt和sso服务认证中心端保持
    * blog:http://equalxx.iteye.com/blog/2336030
    * @Description:TODO
    * @author:hsj qq:2356899074
@@ -29,16 +30,20 @@ public class RestFulLogin {
         validateFromCAS(username, password);  
     }  
   
-    public static boolean validateFromCAS(String username, String password) throws Exception {  
-    	LOGGER.info("username = {},password = {}",username,password);
+    public static boolean validateFromCAS(String username, String password) throws Exception { 
+    	
+    	LOGGER.info("###########################################start#####################################################");
+    	
+    	LOGGER.info("【=======--------->>登录的用户名和密码：username = {},password = {}】",username,password);
         String url = "http://localhost:8080/cas/v1/tickets";  
-        LOGGER.info("cas/v1/tickets={} ",url);
+        
         try {  
             HttpURLConnection hsu = (HttpURLConnection) openConn(url);  
             String s = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");  
             s += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");  
   
-            LOGGER.info("rest 登录获取TGT！={}",hsu); 
+            LOGGER.info("【=======--------->>rest登录获取TGT地址的服务前缀！={}】",url); 
+            LOGGER.info("【=======--------->>rest登录获取TGT地址的用户名和密码编码encode_username_password={} 】",s);
             OutputStreamWriter out = new OutputStreamWriter(hsu.getOutputStream());  
             BufferedWriter bwr = new BufferedWriter(out);  
             bwr.write(s);  
@@ -47,11 +52,8 @@ public class RestFulLogin {
             out.close();  
   
             String tgt = hsu.getHeaderField("location");  
-            System.out.println(hsu.getResponseCode());  
             if (tgt != null && hsu.getResponseCode() == 201) {  
-                System.out.println(tgt);  
-  
-                System.out.println("Tgt is : " + tgt.substring(tgt.lastIndexOf("/") + 1));  
+            	LOGGER.info("【=======--------->>得到Tgt is = {} 】",tgt.substring(tgt.lastIndexOf("/") + 1));
                 tgt = tgt.substring(tgt.lastIndexOf("/") + 1);  
                 bwr.close();  
                 closeConn(hsu);  
@@ -59,10 +61,12 @@ public class RestFulLogin {
                 String serviceURL = "http://localhost:8989/sso-client/restlogin";  
                 String encodedServiceURL = URLEncoder.encode("service", "utf-8") + "="  
                         + URLEncoder.encode(serviceURL, "utf-8");  
-                System.out.println("Service url is : " + encodedServiceURL);  
-  
+                
+                
                 String myURL = url + "/" + tgt;  
-                System.out.println(myURL);  
+                LOGGER.info("【=======--------->>根据tgt获取 st 地址的前缀  = {} 】",myURL);
+                LOGGER.info("【=======--------->>根据tgt获取 st 地址的编码服务Service url is  = {} 】",encodedServiceURL);
+                
                 hsu = (HttpURLConnection) openConn(myURL);  
                 out = new OutputStreamWriter(hsu.getOutputStream());  
                 bwr = new BufferedWriter(out);  
@@ -71,14 +75,13 @@ public class RestFulLogin {
                 bwr.close();  
                 out.close();  
   
-                System.out.println("Response code is:  " + hsu.getResponseCode());  
   
                 BufferedReader isr = new BufferedReader(new InputStreamReader(hsu.getInputStream()));  
                 String line;  
-                System.out.println(hsu.getResponseCode());  
                 while ((line = isr.readLine()) != null) {  
-                    System.out.println(line);  
+                    LOGGER.info("【=======--------->>获取st打印响应line  = {} 】",line);
                 }  
+                LOGGER.info("###########################################end#####################################################");
                 isr.close();  
                 hsu.disconnect();  
                 return true;  
