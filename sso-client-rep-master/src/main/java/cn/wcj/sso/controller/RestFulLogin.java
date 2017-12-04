@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;  
   /**
    * 前后端分离的情况之下rest风格登录获取TGT ST
-   * 下面代码可以给android端使用，具体的前后端分离使用ajax的方式获取tgt和st，方便浏览器保存有全局的tgt和sso服务认证中心端保持
+   * ???下面代码可以给android端使用，具体的前后端分离使用ajax的方式获取tgt和st，方便浏览器保存有全局的tgt和sso服务认证中心端保持???
    * blog:http://equalxx.iteye.com/blog/2336030
    * @Description:TODO
    * @author:hsj qq:2356899074
@@ -23,12 +23,6 @@ import org.slf4j.LoggerFactory;
    */
 public class RestFulLogin {  
 	private final static Logger LOGGER = LoggerFactory.getLogger(RestFulLogin.class);
-  
-    public static void main(String... args) throws Exception {  
-        String username = "hsjhsj";  
-        String password = "hsjhsj";  
-        validateFromCAS(username, password);  
-    }  
   
     public static String validateFromCAS(String username, String password) throws Exception { 
     	String st = "";

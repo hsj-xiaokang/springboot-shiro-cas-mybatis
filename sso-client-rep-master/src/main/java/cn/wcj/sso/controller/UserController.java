@@ -15,6 +15,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,16 +41,17 @@ import cn.wcj.sso.service.impl.UserServiceImpl;
  */
 @Controller
 public class UserController {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserServiceImpl userService;
 	@Autowired
 	private CasConfig casConfig;
 
 	@RequestMapping(value = "/casLogin", method = RequestMethod.GET)
-	public String loginForm(Model model){
-		model.addAttribute("user", new TbUser()) ;
-		return "redirect:http://10.88.20.84:8888";
-//		return "redirect:" + casConfig.getLocalServerLoginUrl();
+	public String loginForm(){
+		Subject currentUser = SecurityUtils.getSubject();
+		return (String) currentUser.getPrincipal();
 	}
 
 	/**
@@ -95,7 +98,6 @@ public class UserController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(RedirectAttributes attributes){
 		SecurityUtils.getSubject().logout();
-//		attributes.addFlashAttribute("message", "您已安全退出");
 //		return "redirect:/login";
 		return "redirect:" + casConfig.getCasServerLogoutUrl();
 	}
@@ -108,8 +110,6 @@ public class UserController {
 	@RequestMapping("/user")
 	public String getUserList(Map<String, Object> model,HttpServletRequest req,HttpServletResponse respon)throws Exception{
 		model.put("userList", userService.findAll());
-	      // 通过 CAS HttpServletRequest Wrapper Filter 获取用户信息  
-        
 		return "user";
 	}
 	
@@ -123,7 +123,7 @@ public class UserController {
 	@ResponseBody
 	public String userGet(HttpServletRequest req,HttpServletResponse respon)throws Exception{
 		Subject currentUser = SecurityUtils.getSubject();
-		  System.out.println("userinfo------->"+JSON.toJSONString(currentUser.getPrincipal()));
+		LOGGER.info("userinfo------->{}",JSON.toJSONString(currentUser.getPrincipal()));
 		/*      String userNameString = req.getRemoteUser();  
 	          System.out.println("username---->"+userNameString);
 	        AttributePrincipal principal = (AttributePrincipal) req.getUserPrincipal();
