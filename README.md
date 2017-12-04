@@ -3,6 +3,10 @@
 
 这个是一个springboot工程
 
+配置了Windows  C:\Windows\System32\drivers\etc\hosts下面
+127.0.0.1 www.cas.com   模拟cas认证中心
+127.0.0.1 www.ssoclient.com   cas客户端
+
 blog是一些网上参考的博客
 
 cas-4.1.0是sso认证服务端的官方代码
