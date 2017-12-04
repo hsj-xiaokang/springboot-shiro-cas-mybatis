@@ -21,7 +21,6 @@ public class RestController {
 	@RequestMapping("/restlogin")
 	@ResponseBody
 	public String restlogin(HttpServletRequest req,HttpServletResponse respon)throws Exception{
-		RestFulLogin.validateFromCAS("hsjhsj", "hsjhsj");        
-		return "hsjhsj";
+		return RestFulLogin.validateFromCAS("hsjhsj", "hsjhsj");
 	}
 }

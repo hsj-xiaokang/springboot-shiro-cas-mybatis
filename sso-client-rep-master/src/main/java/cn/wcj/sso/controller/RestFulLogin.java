@@ -30,12 +30,12 @@ public class RestFulLogin {
         validateFromCAS(username, password);  
     }  
   
-    public static boolean validateFromCAS(String username, String password) throws Exception { 
-    	
+    public static String validateFromCAS(String username, String password) throws Exception { 
+    	String st = "";
     	LOGGER.info("###########################################start#####################################################");
     	
     	LOGGER.info("【=======--------->>登录的用户名和密码：username = {},password = {}】",username,password);
-        String url = "http://localhost:8080/cas/v1/tickets";  
+        String url = "http://www.cas.com:8080/cas/v1/tickets";  
         
         try {  
             HttpURLConnection hsu = (HttpURLConnection) openConn(url);  
@@ -58,7 +58,7 @@ public class RestFulLogin {
                 bwr.close();  
                 closeConn(hsu);  
   
-                String serviceURL = "http://localhost:8989/sso-client/restlogin";  
+                String serviceURL = "http://www.ssoclient.com:8989/sso-client/restlogin";  
                 String encodedServiceURL = URLEncoder.encode("service", "utf-8") + "="  
                         + URLEncoder.encode(serviceURL, "utf-8");  
                 
@@ -80,14 +80,15 @@ public class RestFulLogin {
                 String line;  
                 while ((line = isr.readLine()) != null) {  
                     LOGGER.info("【=======--------->>获取st打印响应line  = {} 】",line);
+                    st = st+line.trim();
                 }  
                 LOGGER.info("###########################################end#####################################################");
                 isr.close();  
                 hsu.disconnect();  
-                return true;  
+                return st.trim();  
   
             } else {  
-                return false;  
+                return st;  
             }  
   
         } catch (MalformedURLException mue) {  

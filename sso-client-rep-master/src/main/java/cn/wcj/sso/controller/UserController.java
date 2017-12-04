@@ -112,6 +112,11 @@ public class UserController {
         
 		return "user";
 	}
+	
+	@RequestMapping("/inde")
+	public String inde()throws Exception{
+		return "index.html";
+	}
 
 	
 	@RequestMapping("/userGet")

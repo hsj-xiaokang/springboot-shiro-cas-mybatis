@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>用户列表</title>
+        <script src="jquery.min.js">
+        </script>
     </head>
     <body>
         <#--<h1>${message}</h1>-->
@@ -27,5 +29,43 @@
                 <li>用户名：${user.username}---密码：${user.password}---<a href="${context.contextPath}/user/edit/${user.id}">修改用户</a></li>
             </#list>
         </ul>
+        
+        <br/><br/><br/>
+        <button>向页面发送 HTTP POST 请求，并获得返回的结果</button>
     </body>
+    <script>
+$(document).ready(function(){
+  $("button").click(function(){
+  
+  
+   $.ajax({
+    url:'http://www.ssoclient.com:8989/sso-client/userGet',
+    type:'get', //GET
+    //async:true,    //或false,是否异步
+	contentType: 'application/json',
+    timeout:5000,    //超时时间
+    //dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+    beforeSend:function(xhr){
+        console.log(xhr)
+        console.log('发送前')
+    },
+    success:function(data,textStatus,jqXHR){
+        console.log(data)
+        console.log(textStatus)
+        console.log(jqXHR)
+    },
+    error:function(xhr,textStatus){
+        console.log('错误')
+        console.log(xhr.getAllResponseHeaders())
+        console.log(textStatus)
+    },
+    complete:function(){
+        console.log('结束')
+    }
+})
+	
+	
+  });
+});
+</script>
 </html>
