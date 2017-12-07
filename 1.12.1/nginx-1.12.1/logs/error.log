@@ -1,0 +1,22 @@
+2017/12/07 20:49:43 [emerg] 5096#5360: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:142
+2017/12/07 20:53:43 [emerg] 6064#4432: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:50
+2017/12/07 20:54:20 [emerg] 3908#6016: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:50
+2017/12/07 20:54:54 [emerg] 5032#4468: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:50
+2017/12/07 20:54:58 [emerg] 3992#5836: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:50
+2017/12/07 20:55:00 [emerg] 1188#4700: invalid URL prefix in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:50
+2017/12/07 20:56:03 [emerg] 6024#5816: "location" directive is not allowed here in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:59
+2017/12/07 20:56:05 [emerg] 4680#2536: "location" directive is not allowed here in E:\nginx-config-study\1.12.1\nginx-1.12.1/conf/nginx.conf:59
+2017/12/07 20:56:34 [notice] 3444#4932: signal process started
+2017/12/07 20:56:34 [error] 3444#4932: CreateFile() "E:\nginx-config-study\1.12.1\nginx-1.12.1/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2017/12/07 20:56:36 [notice] 3600#4188: signal process started
+2017/12/07 20:56:36 [error] 3600#4188: CreateFile() "E:\nginx-config-study\1.12.1\nginx-1.12.1/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2017/12/07 21:19:49 [notice] 4784#5480: signal process started
+2017/12/07 21:19:49 [error] 4784#5480: CreateFile() "E:\nginx-config-study\1.12.1\nginx-1.12.1/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2017/12/07 21:21:24 [error] 4320#5332: *1 CreateFile() "E:\nginx-config-study\1.12.1\nginx-1.12.1/html/sso/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: www.ssoclient.com, request: "GET /favicon.ico HTTP/1.1", host: "www.ssoclient.com:7010", referrer: "http://www.ssoclient.com:7010/"
+2017/12/07 21:35:49 [notice] 4540#2256: signal process started
+2017/12/07 21:35:51 [notice] 2076#4044: signal process started
+2017/12/07 21:36:02 [error] 2392#2156: *19 CreateFile() "E:\nginx-config-study\1.12.1\nginx-1.12.1/html/sso/sso-client/cuserGet" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: www.ssoclient.com, request: "GET /sso-client/cuserGet HTTP/1.1", host: "www.ssoclient.com:7010", referrer: "http://www.ssoclient.com:7010/"
+2017/12/07 21:37:53 [notice] 6096#4284: signal process started
+2017/12/07 21:37:54 [notice] 4228#5572: signal process started
+2017/12/07 21:40:31 [notice] 5024#4280: signal process started
+2017/12/07 21:40:32 [notice] 4276#2804: signal process started

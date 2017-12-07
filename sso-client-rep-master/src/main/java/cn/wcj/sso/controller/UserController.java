@@ -51,7 +51,7 @@ public class UserController {
 	@RequestMapping(value = "/casLogin", method = RequestMethod.GET)
 	public String loginForm(){
 		Subject currentUser = SecurityUtils.getSubject();
-		return (String) currentUser.getPrincipal();
+		return "redirect:http://www.ssoclient.com:7010";
 	}
 
 	/**

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>rlogin</title>
+<script type="text/javascript" src="./jquery.min.js"></script>
+<script type="text/javascript" src="./login.js"></script>
+</head>
+<body>
+<!--<iframe style="display:none;width:0;height:0" id="rlogin" name="rlogin"/>-->
+
+<div id="sec-login">
+	<form id="login-form" name="login-form" action="http://www.cas.com:8080/cas/login"
+		  method="post" >
+		<div>
+			<input name="username" id="username" type="text" autocomplete="off" class="login-ipt" placeholder="邮箱/手机号" />
+		</div>
+		<div>
+			<input name="password" type="password" id="password" class="login-ipt" placeholder="密码" />
+		</div>
+		<input type="hidden" name="lt" value="" id="lt" />
+		<input type="hidden" name="execution" value="" id="execution" />
+		<input type="hidden" name="_eventId" value="submit" />
+		<input type="button" value="登录" class="login-bnt" onclick="javascript:login();" />
+	</form>
+</div>
+<br/>
+<h1>${message} 你好啊！ <a href="http://www.cas.com:8080/cas/logout">登出</a></h1>
+
+
+</body>
+</html>
