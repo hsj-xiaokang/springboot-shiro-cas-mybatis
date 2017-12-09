@@ -14,6 +14,8 @@ cas-4.1.0是sso认证服务端的官方代码
 sso-client-rep-master是客户端shiro-cas(1.2.4)的代码-使用了Redis作为shiro的缓存
 
 
+springboot_shiro_cas_forkUse_jpa :原作地址：https://github.com/maojun2016/springboot_cas_shiro
+
 testredisshiro.sql是数据库代码-mysql----/cas-4.1.0/cas-server-webapp/src/main/webapp/WEB-INF/deployerConfigContext.xml------md5加密
 【<!-- 通过数据库验证身份，这个得自己去实现 admin  admin -->
 	<bean id="primaryAuthenticationHandler"
