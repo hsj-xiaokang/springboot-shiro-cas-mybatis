@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- base.xml in the spring-boot jar, -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--
+    <logger name="org.springframework.web" level="DEBUG"/>
+    -->
+
+    <!-- 输出hibernate的sql，会同时记录在文件日志中去，所以使用：spring.jpa.show-sql 配置比较好 -->
+    <!--<logger name="org.hibernate.SQL" level="DEBUG" />-->
+</configuration>
