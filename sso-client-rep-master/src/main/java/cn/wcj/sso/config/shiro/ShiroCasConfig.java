@@ -17,12 +17,18 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.jasig.cas.client.session.SingleSignOutFilter;
+import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import cn.wcj.sso.config.redis.RedisConfig;
@@ -170,6 +176,36 @@ public class ShiroCasConfig {
 		realm.setCasService(casConfig.getCasService());
 		return realm;
 	}
+	
+	
+	/** 
+     * 注册单点登出的listener 
+     * @return 
+     */  
+  /*  @SuppressWarnings({ "rawtypes", "unchecked" })  
+    @Bean  
+//    @Order(Ordered.HIGHEST_PRECEDENCE)// 优先级需要高于Cas的Filter  
+    public ServletListenerRegistrationBean<?> singleSignOutHttpSessionListener(){  
+        ServletListenerRegistrationBean bean = new ServletListenerRegistrationBean();  
+        bean.setListener(new SingleSignOutHttpSessionListener());  
+        bean.setEnabled(true);  
+        return bean;  
+    } */
+  
+    /** 
+     * 注册单点登出filter 
+     * @return 
+     */  
+ /*   @Bean 
+//    @Order(Ordered.HIGHEST_PRECEDENCE)// 优先级需要高于Cas的Filter  
+    public FilterRegistrationBean singleSignOutFilter(){  
+        FilterRegistrationBean bean = new FilterRegistrationBean();  
+        bean.setName("singleSignOutFilter");  
+        bean.setFilter(new SingleSignOutFilter());  
+//        bean.addUrlPatterns("/*");  
+        bean.setEnabled(true);  
+        return bean;  
+    }*/ 
 
 	/**
 	 * 注册shiroFilter
@@ -189,13 +225,36 @@ public class ShiroCasConfig {
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
 		return new LifecycleBeanPostProcessor();
 	}
+	
+	 /** 
+     * 下面两个配置主要用来开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持; 
+     * @return 
+     */  
+    @Bean  
+    @DependsOn("lifecycleBeanPostProcessor")  
+    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {  
+        DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();  
+        daap.setProxyTargetClass(true);  
+        return daap;  
+    }  
+      
+    /** 
+     * @param securityManager 
+     * @return 
+     */  
+    @Bean  
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {  
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();  
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);  
+        return authorizationAttributeSourceAdvisor;  
+    } 
 
-	@Bean
+	/*@Bean
 	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
 		DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
 		creator.setProxyTargetClass(true);
 		return creator;
-	}
+	}*/
 
 	@Bean(name = "securityManager")
 	public DefaultWebSecurityManager defaultWebSecurityManager(ShiroCasRealm realm){
@@ -208,12 +267,12 @@ public class ShiroCasConfig {
 		return securityManager;
 	}
 
-	@Bean
+	/*@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
 		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
 		advisor.setSecurityManager(securityManager);
 		return advisor;
-	}
+	}*/
 
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasConfig casConfig, CasFilter casFilter){
@@ -238,6 +297,7 @@ public class ShiroCasConfig {
 		/**下面这些规则配置最好配置到配置文件中*/
 		Map<String, String> filterChainMap = new LinkedHashMap<String, String>();
 		filterChainMap.put(casConfig.getCasFilterUrlPattern(), CAS_FILTER);//shiro集成cas后，首先添加该规则
+		
 		filterChainMap.put("/user", "authc");
 		filterChainMap.put("/inde", "authc");
 		filterChainMap.put("/userGet", "authc");
@@ -245,6 +305,8 @@ public class ShiroCasConfig {
 		filterChainMap.put("/user/edit/**", "authc,perms[user:edit]");
 		filterChainMap.put("/restlogin", "anon");
 		filterChainMap.put("/**", "anon");
+//		filterChainMap.put("/shiro-cas", "cas");
+		
 		factoryBean.setFilterChainDefinitionMap(filterChainMap);
 	}
 
@@ -257,6 +319,8 @@ public class ShiroCasConfig {
 		casFilter.setName(CAS_FILTER);
 		casFilter.setEnabled(true);
 		casFilter.setFailureUrl(casConfig.getLocalServerLoginUrl());
+//		casFilter.setSuccessUrl("/user");
+//		casFilter.setLoginUrl(casConfig.getLocalServerLoginUrl());
 		return casFilter;
 	}
 	

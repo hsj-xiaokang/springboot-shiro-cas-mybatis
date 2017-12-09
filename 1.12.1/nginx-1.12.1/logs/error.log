@@ -20,3 +20,18 @@
 2017/12/07 21:37:54 [notice] 4228#5572: signal process started
 2017/12/07 21:40:31 [notice] 5024#4280: signal process started
 2017/12/07 21:40:32 [notice] 4276#2804: signal process started
+2017/12/09 13:38:05 [emerg] 2288#13528: CreateDirectory() "E:\springboot-shiro-cas-mybatis\1.12.1\nginx-1.12.1/temp/client_body_temp" failed (3: The system cannot find the path specified)
+2017/12/09 13:38:36 [notice] 14256#6600: signal process started
+2017/12/09 13:38:36 [error] 14256#6600: OpenEvent("Global\ngx_stop_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:38:49 [notice] 13016#1436: signal process started
+2017/12/09 13:38:49 [error] 13016#1436: OpenEvent("Global\ngx_reload_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:38:51 [notice] 6532#4360: signal process started
+2017/12/09 13:38:51 [error] 6532#4360: OpenEvent("Global\ngx_reload_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:38:55 [emerg] 1768#13184: CreateDirectory() "E:\springboot-shiro-cas-mybatis\1.12.1\nginx-1.12.1/temp/client_body_temp" failed (3: The system cannot find the path specified)
+2017/12/09 13:38:58 [notice] 8128#10416: signal process started
+2017/12/09 13:38:58 [error] 8128#10416: OpenEvent("Global\ngx_reload_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:39:03 [notice] 5872#13596: signal process started
+2017/12/09 13:39:03 [error] 5872#13596: OpenEvent("Global\ngx_reload_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:39:50 [notice] 4980#8624: signal process started
+2017/12/09 13:39:50 [error] 4980#8624: OpenEvent("Global\ngx_reload_1596") failed (2: The system cannot find the file specified)
+2017/12/09 13:41:32 [emerg] 11344#10220: CreateDirectory() "E:\springboot-shiro-cas-mybatis\1.12.1\nginx-1.12.1/temp/client_body_temp" failed (3: The system cannot find the path specified)
