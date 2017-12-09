@@ -97,7 +97,7 @@ public class UserController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(RedirectAttributes attributes){
-		SecurityUtils.getSubject().logout();
+//		SecurityUtils.getSubject().logout();
 //		return "redirect:/login";
 		return "redirect:" + casConfig.getCasServerLogoutUrl();
 	}
