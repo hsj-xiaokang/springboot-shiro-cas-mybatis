@@ -95,9 +95,17 @@ public class UserController {
 		}
 	}*/
 
+	/**
+	 *  需要注意的是，这样单点退出Shiro中的用户信息是不会清除的，也就是说就算你点击退出了。各个应用还是能够正常访问。
+	 * @Description:TODO
+	 * @author:hsj qq:2356899074
+	 * @time:2017年12月9日 下午5:32:59
+	 * @param attributes
+	 * @return
+	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(RedirectAttributes attributes){
-//		SecurityUtils.getSubject().logout();
+		SecurityUtils.getSubject().logout();
 //		return "redirect:/login";
 		return "redirect:" + casConfig.getCasServerLogoutUrl();
 	}
