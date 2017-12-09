@@ -23,7 +23,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <!-- shiro安全框架 -->
-        <shiro.version>1.2.4</shiro.version>
+        <shiro.version>1.4.0</shiro.version>
         <shiro.freemarker.version>0.1</shiro.freemarker.version>
         <shiro.redis.version>2.4.2.1-RELEASE</shiro.redis.version>
         <!-- 德鲁伊数据库连接池 -->
