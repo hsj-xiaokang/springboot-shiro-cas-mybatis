@@ -45,7 +45,14 @@ import io.buji.pac4j.filter.CallbackFilter;
 import io.buji.pac4j.filter.SecurityFilter;
 import io.buji.pac4j.subject.Pac4jSubjectFactory;
 
+/**
+ * Shiro生命周期处理器,开启了就会启动报错不知道为什么？---设置为优先启动！！见：LifecycleBeanPostProcessorConfig
+ * @Description:TODO
+ * @author:hsj qq:2356899074
+ * @time:2017年12月13日 上午11:34:49
+ */
 @Configuration
+@Order(2)
 public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
 	
     @Value("#{ @environment['cas.prefixUrl'] ?: null }")
@@ -282,20 +289,20 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
     }
     //--------------------------------------------开启Shiro的注解(如@RequiresRoles,@RequiresPermissions)--------------------------------------------------------
    /**
-    * Shiro生命周期处理器,开启了就会启动报错不知道为什么？
+    * Shiro生命周期处理器,开启了就会启动报错不知道为什么？---设置为优先启动！！见：LifecycleBeanPostProcessorConfig
     * @return
     */
-   /*@Bean
-   public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
-       return new LifecycleBeanPostProcessor();
-   }*/
+//   @Bean
+//   public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+//       return new LifecycleBeanPostProcessor();
+//   }
    /**
     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
     * @return
     */
    @Bean
-//   @DependsOn({"lifecycleBeanPostProcessor"})
+   @DependsOn({"lifecycleBeanPostProcessor"})
    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
        advisorAutoProxyCreator.setProxyTargetClass(true);
