@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="../plugins/jquery-2.2.0.min.js">
+    </script>
+    <script>
+    function functionCall(){
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: 'http://localhost:8081/user/1',
+            success: function(data) {
+                $('#result').text(data);
+            }
+        });
+    }
+	</script>
+  </head>
+  
+  <body>
+    <center style="margin-top:50px;">
+            系统主页c！
+    </center>
+  </body>
+</html>

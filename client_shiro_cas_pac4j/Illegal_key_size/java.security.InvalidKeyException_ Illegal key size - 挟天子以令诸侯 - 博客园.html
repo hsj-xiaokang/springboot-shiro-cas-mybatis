@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/gdayq/p/5919252.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>java.security.InvalidKeyException: Illegal key size - 挟天子以令诸侯 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/bundle-SimpleMemory.css">
+<link type="text/css" rel="stylesheet" href="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/225490.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/bundle-SimpleMemory-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/gdayq/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/gdayq/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/gdayq/wlwmanifest.xml">
+<script async="" src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/analytics.js.下载"></script><script src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/jquery.js.下载" type="text/javascript"></script><style type="text/css" abt="234"></style>  
+<script type="text/javascript">var currentBlogApp = 'gdayq', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+<script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/gdayq/"><img id="blogLogo" src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/gdayq/">挟天子以令诸侯</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/gdayq/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E6%8C%9F%E5%A4%A9%E5%AD%90%E4%BB%A5%E4%BB%A4%E8%AF%B8%E4%BE%AF">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/gdayq/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/gdayq/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 21&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 3</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/gdayq/p/5919252.html">java.security.InvalidKeyException: Illegal key size</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>今天遇到一个奇怪的问题。</p>
+<p>自己做的加签验签功能已经没有问题了，本地测试通过，同事放到服务器上测试也没问题。</p>
+<p>然后我将包放到自己搭建的环境上，会报这样一个错误：</p>
+<p>&nbsp;java.security.InvalidKeyException: Illegal key size</p>
+<p><img src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/750327-20160929112025781-1975019774.png" alt=""></p>
+<p>然后就各种百度。</p>
+<p>原来是jdk不兼容的问题，我本地以及同事的测试环境都是jdk1.7，而我搭建的环境用的是jdk1.8</p>
+<p>解决方案如下：</p>
+<p>处理办法: 在官方网站下载JCE无限制权限策略文件</p>
+<p>JDK7的下载地址:&nbsp;<a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html</a><br>JDK8的下载地址:&nbsp;<a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a>&nbsp;<br>下载后解压，可以看到local_policy.jar和US_export_policy.jar以及readme.txt<br>如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件<br>如果安装了JDK，还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件</p></div><div id="MySignature" style="display: block;"><p style="background: rgb(230, 250, 230); padding: 10px 10px 10px 10px; border: 1px dashed rgb(224, 224, 224); font-family: 微软雅黑; font-size: 13px; text-indent: 0em;">
+作者：<a href="http://www.cnblogs.com/gdayq/" target="_blank">挟天子以令诸侯</a>
+<br>
+出处：<a href="http://www.cnblogs.com/gdayq/" target="_blank">http://www.cnblogs.com/gdayq/</a>
+<br>
+本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。
+</p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/gdayq/category/873105.html" target="_blank">java</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/gdayq/tag/%E5%8A%A0%E7%AD%BE%E9%AA%8C%E7%AD%BE/">加签验签</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5919252,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;b9e6599c-2fec-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/gdayq/" target="_blank"><img src="./java.security.InvalidKeyException_ Illegal key size - 挟天子以令诸侯 - 博客园_files/20160826104908.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/gdayq/">挟天子以令诸侯</a><br>
+            <a href="http://home.cnblogs.com/u/gdayq/followees">关注 - 2</a><br>
+            <a href="http://home.cnblogs.com/u/gdayq/followers">粉丝 - 3</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;b9e6599c-2fec-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5919252,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(5919252,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/gdayq/p/5868130.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/gdayq/p/5868130.html" title="发布于2016-09-13 13:24">关闭eclipse自动弹出console的功能</a><br><a href="http://www.cnblogs.com/gdayq/p/5866306.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/gdayq/p/5866306.html" title="发布于2016-10-11 10:51">winPcap编程之打开适配器并捕获数据包(四 转)</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2016-09-29 11:23</span> <a href="http://www.cnblogs.com/gdayq/">挟天子以令诸侯</a> 阅读(<span id="post_view_count">7691</span>) 评论(<span id="post_comment_count">2</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5919252" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/gdayq/p/5919252.html#" onclick="AddToWz(5919252);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=225490,cb_entryId=5919252,cb_blogApp=currentBlogApp,cb_blogUserGuid='b9e6599c-2fec-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2016/9/29 11:23:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/gdayq/p/5919252.html#3719468" class="layer">#1楼</a><a name="3719468" id="comment_anchor_3719468"></a>  <span class="comment_date">2017-06-21 14:23</span> <a id="a_comment_author_3719468" href="http://www.cnblogs.com/idcenter/" target="_blank">@earth</a> <a href="http://msg.cnblogs.com/send/%40earth" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3719468" class="blog_comment_body">美国加密算法出口限制</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3719468,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3719468,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/gdayq/p/5919252.html#3840468" class="layer">#2楼</a><a name="3840468" id="comment_anchor_3840468"></a><span id="comment-maxId" style="display:none;">3840468</span><span id="comment-maxDate" style="display:none;">2017/11/14 17:04:08</span>  <span class="comment_date">2017-11-14 17:04</span> <a id="a_comment_author_3840468" href="http://home.cnblogs.com/u/1278123/" target="_blank">dingdingmei0415</a> <a href="http://msg.cnblogs.com/send/dingdingmei0415" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3840468" class="blog_comment_body">我按照这个方法配置了，还是不行是什么原因？<br>org.bouncycastle.openpgp.PGPException: Exception creating cipher<br>java.security.InvalidKeyException: Illegal key size<br>	at javax.crypto.Cipher.checkCryptoPerm(Cipher.java:1039)<br>	at javax.crypto.Cipher.init(Cipher.java:1393)<br>	at javax.crypto.Cipher.init(Cipher.java:1327)</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3840468,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3840468,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/gdayq/p/5919252.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/gdayq/p/5919252.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/584615/" target="_blank">董明珠考察LYC轴承与中航光电 格力布局河南制造业</a><br> ·  <a href="https://news.cnblogs.com/n/584614/" target="_blank">王石为独角兽们支招：不要为大而大，要站在巨人肩膀上借鉴前行</a><br> ·  <a href="https://news.cnblogs.com/n/584613/" target="_blank">“帽子推销员”马斯克戏真多：卖完帽子后 还要再卖喷火器</a><br> ·  <a href="https://news.cnblogs.com/n/584612/" target="_blank">苹果私下演示最新无人驾驶技术 展示技术实力吸引人才</a><br> ·  <a href="https://news.cnblogs.com/n/584611/" target="_blank">苹果谷歌和微软为何会成为美国市值最高的公司</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/531409/" target="_blank">以操作系统的角度述说线程与进程</a><br> ·  <a href="http://kb.cnblogs.com/page/141729/" target="_blank">软件测试转型之路</a><br> ·  <a href="http://kb.cnblogs.com/page/177402/" target="_blank">门内门外看招聘</a><br> ·  <a href="http://kb.cnblogs.com/page/112506/" target="_blank">大道至简，职场上做人做事做管理</a><br> ·  <a href="http://kb.cnblogs.com/page/563790/" target="_blank">关于编程，你的练习是不是有效的？</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><embed width="160" height="70" align="middle" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" name="honehoneclock" bgcolor="#ffffff" quality="high" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock01.swf" wmode="transparent"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/gdayq/">挟天子以令诸侯</a><br>园龄：<a href="http://home.cnblogs.com/u/gdayq/" title="入园时间：2015-04-27">2年7个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/gdayq/followers/">3</a><br>关注：<a href="http://home.cnblogs.com/u/gdayq/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;b9e6599c-2fec-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/11/01&#39;);return false;">&lt;</a></td><td align="center">2017年12月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/01/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td class="CalWeekendDay" align="center">9</td></tr><tr><td class="CalWeekendDay" align="center">10</td><td class="CalTodayDay" align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td class="CalWeekendDay" align="center">16</td></tr><tr><td class="CalWeekendDay" align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center">23</td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/gdayq/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/gdayq/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/gdayq/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/gdayq/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/gdayq/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/gdayq/tag/winPcap/">winPcap</a>(5)</li><li><a href="http://www.cnblogs.com/gdayq/tag/eclipse/">eclipse</a>(3)</li><li><a href="http://www.cnblogs.com/gdayq/tag/java%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B/">java字符类型</a>(3)</li><li><a href="http://www.cnblogs.com/gdayq/tag/maven/">maven</a>(2)</li><li><a href="http://www.cnblogs.com/gdayq/tag/TCP%2FIP/">TCP/IP</a>(2)</li><li><a href="http://www.cnblogs.com/gdayq/tag/Unicode/">Unicode</a>(2)</li><li><a href="http://www.cnblogs.com/gdayq/tag/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/">编码格式</a>(2)</li><li><a href="http://www.cnblogs.com/gdayq/tag/%E5%8A%A0%E7%AD%BE%E9%AA%8C%E7%AD%BE/">加签验签</a>(2)</li><li><a href="http://www.cnblogs.com/gdayq/tag/%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B/">领域模型</a>(1)</li><li><a href="http://www.cnblogs.com/gdayq/tag/%E6%97%B6%E9%92%9F/">时钟</a>(1)</li><li><a href="http://www.cnblogs.com/gdayq/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/gdayq/category/876261.html">eclipse(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/gdayq/category/873105.html">java(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/gdayq/category/871251.html">TCP/IT协议学习(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/gdayq/category/873141.html">tools(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/gdayq/category/876098.html">winPcap编程(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/gdayq/category/872646.html">微信开发(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/gdayq/archive/2017/09.html">2017年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/gdayq/archive/2016/10.html">2016年10月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/gdayq/archive/2016/09.html">2016年9月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/gdayq/archive/2016/08.html">2016年8月 (8)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlecategory" class="catListArticleCategory sidebar-block">
+<h3 class="catListTitle">文章分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/gdayq/category/870865.html">TCP/IT协议学习</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gdayq/p/5919252.html#3840468">1. Re:java.security.InvalidKeyException: Illegal key size</a></li>
+        <li class="recent_comment_body">我按照这个方法配置了，还是不行是什么原因？org.bouncycastle.openpgp.PGPException: Exception creating cipherjava.security.I......</li>
+        <li class="recent_comment_author">--dingdingmei0415</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gdayq/p/5817367.html#3811078">2. Re:JAVA几种常见的编码格式（转）</a></li>
+        <li class="recent_comment_body">原理讲的非常清楚</li>
+        <li class="recent_comment_author">--Sinte-Beuve</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gdayq/p/5919252.html#3719468">3. Re:java.security.InvalidKeyException: Illegal key size</a></li>
+        <li class="recent_comment_body">美国加密算法出口限制</li>
+        <li class="recent_comment_author">--@earth</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/gdayq/p/5797645.html">1. TCP/IP四层模型与OSI参考模型(13424)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5919252.html">2. java.security.InvalidKeyException: Illegal key size(7691)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5817367.html">3. JAVA几种常见的编码格式（转）(7598)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5868083.html">4. 使用svn与maven管理的项目导入Eclipse，但是与本地svn客户端关联不上？(2148)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5955756.html">5. 对加签验签的理解(2062)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/gdayq/p/5919252.html">1. java.security.InvalidKeyException: Illegal key size(2)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5817367.html">2. JAVA几种常见的编码格式（转）(1)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/gdayq/p/5797645.html">1. TCP/IP四层模型与OSI参考模型(1)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5817367.html">2. JAVA几种常见的编码格式（转）(1)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5955756.html">3. 对加签验签的理解(1)</a></li><li><a href="http://www.cnblogs.com/gdayq/p/5919252.html">4. java.security.InvalidKeyException: Illegal key size(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 挟天子以令诸侯
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

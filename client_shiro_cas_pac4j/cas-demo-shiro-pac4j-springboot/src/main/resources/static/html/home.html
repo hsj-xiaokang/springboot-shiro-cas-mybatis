@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="../plugins/jquery-2.2.0.min.js">
+    </script>
+    <script>
+    function logout(){
+    	$.ajax({
+	        type: 'get',
+	        dataType: 'json',
+	        url: 'http://localhost:8081/logout',
+	        success: function(data) {
+	        	window.location.href=data.logoutUrl;
+	        }
+	    });
+    }
+    function functionCall(){
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: 'http://localhost:8081/user/1',
+            success: function(data) {
+            	$('#result').text(data);
+            }
+        });
+    }
+	</script>
+  </head>
+  
+  <body>
+    <center style="margin-top:50px;">
+      C登录成功！
+      <div>
+          <input type="button" style="margin-top:20px;width:200px;height:40px;font-size:18px;" value="方法调用" onclick="functionCall();"/>
+      </div>
+      <div style="margin-top:20px;width:200px;height:40px;font-size:18px;">
+         <a href="http://www.cas.com:8080/cas/logout?service=http://localhost:8081">单点退出</a>
+      </div>
+      <input type="button" style="margin-top:20px;width:200px;height:40px;font-size:18px;" value="ajax单点退出" onclick="logout();"/>
+      <div id="result" style="color:red;font-size:20px;"></div>
+    </center>
+  </body>
+</html>
