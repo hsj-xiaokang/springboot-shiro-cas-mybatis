@@ -46,7 +46,7 @@ import io.buji.pac4j.filter.SecurityFilter;
 import io.buji.pac4j.subject.Pac4jSubjectFactory;
 
 @Configuration
-public class ShiroConfiguration_copy extends AbstractShiroWebFilterConfiguration {
+public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
 	
     @Value("#{ @environment['cas.prefixUrl'] ?: null }")
     private String prefixUrl;

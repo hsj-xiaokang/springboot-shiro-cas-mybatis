@@ -1,23 +1,50 @@
-# springboot-shiro-cas-mybatis
-参考来源-https://github.com/zzuhub/sso-client-rep.git    【cas-shiro-redis-mybatis-springboot】
 
 这个是一个springboot工程
+
+
 
 配置了Windows  C:\Windows\System32\drivers\etc\hosts下面
 127.0.0.1 www.cas.com   模拟cas认证中心
 127.0.0.1 www.ssoclient.com   cas客户端
 
+
+
 blog是一些网上参考的博客
 
+
+
+
 cas-4.1.0是sso认证服务端的官方代码
+思路：前后端分离部署的方式请借助Nginx。
+app接入请用pac4j。
 
+
+
+
+**************************************************************************************************************************************
 sso-client-rep-master是客户端shiro-cas(1.2.4)的代码-使用了Redis作为shiro的缓存,【但是没有实现app接入和rest登录，没有实现单点登录登出！】
-shiroTest 仅仅是测试shiro在Springboot里面集成！
-springboot_cas_shiro_forkUse_jpa是客户端shiro-cas(1.2.4)的代码-jpa数据层，实现单点登录登出，【但是没有实现app接入和rest登录！】
-client_shiro_cas_pac4j-不使用shiro-cas(1.2.4)，rest登录换成pac4j,实现单点登录登出，实现app接入和rest登录！
+controller是一些测试获取信息
+RestController.java是模拟rest登录获取tgt和st
 
+
+**************************************************************************************************************************************
+shiroTest 仅仅是测试shiro在Springboot里面集成！
+
+
+**************************************************************************************************************************************
+springboot_cas_shiro_forkUse_jpa是客户端shiro-cas(1.2.4)的代码-jpa数据层，实现单点登录登出，【但是没有实现app接入和rest登录！】
 springboot_shiro_cas_forkUse_jpa :原作地址：https://github.com/maojun2016/springboot_cas_shiro
 
+
+**************************************************************************************************************************************
+client_shiro_cas_pac4j-不使用shiro-cas(1.2.4)，rest登录换成pac4j,实现单点登录登出，实现app接入和rest登录！
+
+
+
+
+
+
+**************************************************************************************************************************************
 testredisshiro.sql是数据库代码-mysql----/cas-4.1.0/cas-server-webapp/src/main/webapp/WEB-INF/deployerConfigContext.xml------md5加密
 【<!-- 通过数据库验证身份，这个得自己去实现 admin  admin -->
 	<bean id="primaryAuthenticationHandler"
@@ -52,9 +79,7 @@ testredisshiro.sql是数据库代码-mysql----/cas-4.1.0/cas-server-webapp/src/m
 	</bean>】
 
 
-controller是一些测试获取信息
 
-RestController.java是模拟rest登录获取tgt和st
 
 
 
