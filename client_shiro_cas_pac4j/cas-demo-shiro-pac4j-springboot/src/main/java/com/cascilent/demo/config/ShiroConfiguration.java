@@ -280,7 +280,7 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         definition.addPathDefinition("/**", "anon");
         return definition;
     }
-    
+    //--------------------------------------------开启Shiro的注解(如@RequiresRoles,@RequiresPermissions)--------------------------------------------------------
    /**
     * Shiro生命周期处理器,开启了就会启动报错不知道为什么？
     * @return
