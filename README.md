@@ -17,6 +17,7 @@ blog是一些网上参考的博客
 cas-4.1.0是sso认证服务端的官方代码
 思路：前后端分离部署的方式请借助Nginx。
 app接入请用pac4j。
+如果shiro的session 和cache 外置 请使用一个好的开源https://github.com/alexxiyang/shiro-redis
 
 
 
