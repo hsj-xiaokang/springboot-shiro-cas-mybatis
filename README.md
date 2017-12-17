@@ -1,9 +1,18 @@
 目前该项目所有代码资源搭建测试来源于互联网或咨询于公司同事，然后测试整理发布给大家使用，避免大家重复搜索查找搭建，如有疑问，欢迎QQ：2356899074详谈，互相学习！
 
-目前该项目集成了好几个客户端项目[springboot工程]，最好的是/client_shiro_cas_pac4j该客户端项目，集成shiro cas_client pac4j 能够满足web和APP的登录需求，还没有集成mybatis,如果shiro的session 和cache 外置请使用一个好的开源https://github.com/alexxiyang/shiro-redis。sso服务端使用cas4.1.x版本，具体可以配置返回更多用户信息[已经配置了返回更多信息]。
+sso服务端需要的模块如下：
+ cas-server-core             //核心模块
+ cas-server-webapp           //核心模块web支持，sso项目打包成war的模块，部署到容器，如Tomcat！！！！
+ cas-server-webapp-support   //核心模块web支持
+ cas-server-support-jdbc     //jdbc数据库验证用户名密码
+ cas-server-support-rest     //rest功能，APP接入使用pac4j就是rest方式登录sso验证，成功创建返回token
+ cas-server-integration-restlet //好像3.x的rest方式模块，不管了，加上
+
+目前该项目集成了好几个客户端项目[springboot工程]，最好的是/client_shiro_cas_pac4j该客户端项目，集成shiro cas_client pac4j 能够满足web和APP的登录需求，web端任然是shiro的session机制，APP端使用了pac4j集成功能的jwt方式，APP rest登录业务服务返回token，以后携带token访问业务服务，退出只要丢弃token。还没有集成mybatis,如果shiro的session 和cache 外置请使用一个好的开源https://github.com/alexxiyang/shiro-redis。sso服务端使用cas4.1.x版本，具体可以配置返回更多用户信息[已经配置了返回更多信息]。
 
 
-
+1.考虑传统单体项目（jsp、freemaker、vilocity等），2.前后端分离一起一个项目下部署，3.前后端分离分开部署情况。
+我的思路是请使用强大的NGINX代理所有客户请求解决cookie同域问题。
 
 
 
