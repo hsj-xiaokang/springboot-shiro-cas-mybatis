@@ -173,10 +173,16 @@ cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/506
 
 
 
+参考引用到的相关资源
+https://github.com/kawhii/sso;  
 
-经典教程
-参考博客：http://m.blog.csdn.net/u010475041/article/details/78140643
-github:https://github.com/kawhii/sso
+http://m.blog.csdn.net/u010475041/article/details/78140643;    
+
+https://github.com/zzuhub/sso-client-rep.git   
+
+http://m.blog.csdn.net/u010475041/article/details/78140643  
+
+https://github.com/kawhii/sso  
 
 http://blog.csdn.net/a7695895/article/details/53262494
 
