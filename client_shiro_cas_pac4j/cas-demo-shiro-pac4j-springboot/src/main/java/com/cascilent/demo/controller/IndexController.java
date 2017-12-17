@@ -42,16 +42,6 @@ import net.minidev.json.JSONObject;
 /**
  * 
  * @author hsj
- * 
- * 
- * 3.由于我使用shiro ,所以client 中获取代码如下:
-   Subject subject = SecurityUtils.getSubject();
-   Map attributes = (Map) subject.getPrincipals().asList().get(1);
-	//获取id
-    String userId=(String) attributes.get("id");
-	String telPhone=(String) attributes.get("username")
-	String telPhone=(String) attributes.get("password")
-	String telPhone=(String) attributes.get("active")
  *
  */
 @RestController
