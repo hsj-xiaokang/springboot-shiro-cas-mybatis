@@ -1,8 +1,11 @@
 package com.cascilent.demo.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.profile.CasProfile;
 import org.pac4j.cas.profile.CasRestProfile;
@@ -17,6 +22,8 @@ import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.credentials.TokenCredentials;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.jwt.profile.JwtGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -26,11 +33,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.cascilent.demo.config.CustomPac4jRealm;
+
 import net.minidev.json.JSONObject;
 
-
+/**
+ * 
+ * @author hsj
+ * 
+ * 
+ * 3.由于我使用shiro ,所以client 中获取代码如下:
+   Subject subject = SecurityUtils.getSubject();
+   Map attributes = (Map) subject.getPrincipals().asList().get(1);
+	//获取id
+    String userId=(String) attributes.get("id");
+	String telPhone=(String) attributes.get("username")
+	String telPhone=(String) attributes.get("password")
+	String telPhone=(String) attributes.get("active")
+ *
+ */
 @RestController
 public class IndexController {
+	private final static String SPL = "|";
+	private final static Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
     @SuppressWarnings("rawtypes")
 	@Autowired
@@ -52,9 +79,16 @@ public class IndexController {
 
     @RequiresPermissions(value = { "user:edit" })
     @GetMapping("/user/{id}")
-    public Object user(@PathVariable(value = "id") String id) {
-    	PrincipalCollection  principalCollection = SecurityUtils.getSubject().getPrincipals();
-        return "users page:" + id + SecurityUtils.getSubject().getPrincipals();
+    public Object user(@PathVariable(value = "id") String id,HttpServletRequest request) {
+    	   Subject subject = SecurityUtils.getSubject();
+    	   //gonson解析
+    	   PrincipalCollection att = subject.getPrincipals();
+    	   LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>> {}",att);
+//    	   JSONArray ja = JSON.parseArray(subject.getPrincipals().toString());
+//    	   LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>> {}",ja);
+    	   
+
+        return SecurityUtils.getSubject().getPrincipals();
     }
 
     @RequiresPermissions(value = { "user:edit10" })
