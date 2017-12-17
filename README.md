@@ -82,8 +82,7 @@ testredisshiro.sql是数据库代码-mysql----/cas-4.1.0/cas-server-webapp/src/m
 cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/50623395】
 四、自定义登录后的可传递字段，方便客户端读取
 　　在我们的应用场景中，客户端需要的参数不仅仅是用户名。还需要诸如userid等各类信息，那么，接下来我们就来配置获取自定义字段。
-1、找到cas/WEB-INF/deployerConfigContext.xml，注释以下代码：
-[plain] view plain copy
+1、找到cas/WEB-INF/deployerConfigContext.xml，注释以下代码：【替换为后面】
 <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"  
           p:backingMap-ref="attrRepoBackingMap" />  
   
@@ -100,8 +99,8 @@ cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/506
             </list>  
         </entry>  
     </util:map>  
-替换为： 
-<bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">  
+ 
+    <bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">  
         <constructor-arg index="0" ref="dataSource" />  
         <constructor-arg index="1" value="SELECT id,user_name,mobile,cid FROM user_info WHERE {0}" />  
             <property name="queryAttributeMapping">  
