@@ -1,0 +1,1365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0056)http://blog.csdn.net/chenhai201/article/details/50623395 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">          
+            <link rel="canonical" href="http://blog.csdn.net/chenhai201/article/details/50623395"> 
+
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/chenhai201/article/details/50623395#">
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客</title>
+    
+    <meta name="description" content="java cas sso服务端和客户端搭建实例">
+
+    <meta name="keywords" content="CAS,SSO,CAS SSO">
+    <script type="text/javascript" async="" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/iuygh.js.下载"></script><script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/hm.js.下载"></script><script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/blog_static_head.min.js.下载" type="text/javascript"></script>
+
+
+    <link rel="Stylesheet" type="text/css" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/style.css">
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/chenhai201/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/default.css">
+ 
+
+
+
+    <link href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet">
+     
+         <link rel="stylesheet" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/csdn_blog_detail.min.css">
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+<script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/share.js.下载"></script><script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/share.js(1).下载"></script><script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/shell_v2.js.下载"></script><link href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/bdsstyle.css" rel="stylesheet" type="text/css"><script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/logger.js.下载"></script><link rel="stylesheet" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/share_style0_16.css"></head>
+
+
+<body><iframe frameborder="0" style="display: none;" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/saved_resource.html"></iframe><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" id="toolbar_search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label"><span class="red_txt">*</span>标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group" style="display:none;">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">位置</label>                        <div class="col-sm-10">                          <div class="my_lib_box">                            个人主页&nbsp;-&nbsp;<a href="http://my.csdn.net/" target="_blank">我的知识</a>                          </div>                          <div class="checkbox">                            <div class="pull-left">                              <label>                                <input type="checkbox" name="share" class="save_lib_map" checked="checked">同时保存至：                              </label>                            </div>                            <div class="pull-left">                              <div class="dropdown">                                <button id="toolbar_sele_map" type="button">                                  选择知识图谱                                  <i class="fa fa-chevron-down"></i>                                </button>                                <div class="top_arr"></div>                                <div class="outside">                                  <ul class="dropdown-menu" id="toolbar_Design_knowledge"><li>选择知识图谱</li></ul>                                </div>                              </div>                            </div>                            <div class="pull-left new_txt">                              <a href="http://lib.csdn.net/my/create/structure" target="_blank">新建？</a>                            </div>                          </div>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left" style="display:none">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/saved_resource(1).html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://gitbook.cn/new/gitchat/activity?utm_source=csdnblog1" target="_blank" class="gitchat clearfix"><em class="icon"></em><span>发布Chat</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72" data-mtp="62" data-order="40" data-con="ad_content_2072">
+                     <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer" type="text/javascript"></script>
+                <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 -->
+                    <div id="cpro_u2895327">
+                        <!-- 投放代码 -->
+                        <script src="http://dup.baidustatic.com/js/ds.js"></script>
+                       <!-- 广告位：PC端-博客详情页右侧弹窗-300*250 -->
+                            <script>
+                                (function () {
+                                    var s = "_" + Math.random().toString(36).slice(2);
+                                    document.write('<div id="' + s + '"></div>');
+                                    (window.slotbydup = window.slotbydup || []).push({
+                                        id: '4740870',
+                                        container: s,
+                                        size: '300,250',
+                                        display: 'inlay-fix'
+                                    });
+                                })();
+                            </script><div id="_o8cde94mjdvq3ivf88ckdquxr"></div>
+                    </div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () {
+      var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 };
+      window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 });
+  }</script>
+            
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/html.js.下载" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/chenhai201">chenhai201的博客</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/chenhai201?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/chenhai201?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/chenhai201/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/ico_rss.gif">订阅</span></a></li>                   
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "chenhai201";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/chenhai201";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://blog.csdn.net/turingbooks/article/details/78475571" target="_blank">
+<font color="red"><strong>图灵赠书——程序员11月书单</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="http://edu.csdn.net/topic/python2?utm_source=blog4" target="_blank">
+<font color="blue"><strong>【思考】Python这么厉害的原因竟然是！</strong></font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/epubit17/article/details/78606519" target="_blank">
+<font color="blue"><strong>感恩节赠书：《深度学习》等异步社区优秀图书和作译者评选启动！</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="http://blog.csdn.net/broadview2006/article/details/78603363" target="_blank">
+<font color="red"><strong>每周荐书：京东架构、Linux内核、Python全栈</strong></font></a>
+
+
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script type="text/javascript" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/category.js.下载"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=cas+4.1.4%e5%8d%95%e7%82%b9%e7%99%bb%e5%bd%95%e5%ae%9e%e6%88%98&u=http://blog.csdn.net/chenhai201/article/details/50623395"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/chenhai201/article/details/50623395">
+        cas 4.1.4单点登录实战        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href="http://www.csdn.net/tag/CAS" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">CAS</a><a href="http://www.csdn.net/tag/SSO" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">SSO</a><a href="http://www.csdn.net/tag/CAS%20SSO" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">CAS SSO</a><a href="http://www.csdn.net/tag/cas-server" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">cas-server</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2016-02-02 13:44</span>
+            <span class="link_view" title="阅读次数">7291人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(8)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;cas+4.1.4%e5%8d%95%e7%82%b9%e7%99%bb%e5%bd%95%e5%ae%9e%e6%88%98&#39;,&#39;50623395&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" onclick="javascript:report(50623395,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label onclick="GetCategoryArticles(&#39;6089629&#39;,&#39;chenhai201&#39;,&#39;top&#39;,&#39;50623395&#39;);">
+                        <span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">CAS SSO<em>（3）</em></span>
+                      <img class="arrow-down" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a href="http://blog.csdn.net/chenhai201/article/category/6089629" target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_6089629">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+        <div class="bog_copyright">         
+            <p class="copyright_p">版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div style="clear:both"></div><div style="border:solid 1px #ccc; background:#eee; float:left; min-width:200px;padding:4px 10px;"><p style="text-align:right;margin:0;"><span style="float:left;">目录<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" title="系统根据文章中H1到H6标签自动生成文章目录">(?)</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" onclick="javascript:return openct(this);" title="展开">[+]</a></p><ol style="display:none;margin-left:14px;padding-left:14px;line-height:160%;"><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t0">使用工具</a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t1">一Hello cas</a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t2">二server配置数据库连接认证</a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t3"></a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t4">三添加客户端</a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t5">四自定义登录后的可传递字段方便客户端读取</a></li><li><a href="http://blog.csdn.net/chenhai201/article/details/50623395#t6">五单点退出</a></li></ol></div><div style="clear:both"></div><div id="article_content" class="article_content tracking-ad" data-mod="popu_307" data-dsm="post">
+
+<h1><a name="t0" target="_blank"></a>使用工具</h1>
+<p>maven-3.3.9</p>
+<p>cas-4.1.4</p>
+<p>Tomcat-7.0.57-win-x64</p>
+<p>cas-sample-java-webapp</p>
+<h1><a name="t1" target="_blank"></a>一、Hello cas</h1>
+<p>1、下载Tomcat，解压；修改其server.xml，增加对SSL支持（具体百度）：</p>
+<p></p>
+<div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 800px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;Connector&nbsp;SSLEnabled="true"&nbsp;acceptCount="100"&nbsp;clientAuth="false"&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;disableUploadTimeout="true"&nbsp;enableLookups="false"&nbsp;maxThreads="25"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;port="8443"&nbsp;keystoreFile="G:/work/xxx/tomcat.keystore"&nbsp;keystorePass="YOUR&nbsp;PASSWORD&nbsp;HERE"&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;protocol="org.apache.coyote.http11.Http11NioProtocol"&nbsp;scheme="https"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;secure="true"&nbsp;sslProtocol="TLS"&nbsp;/&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">&lt;Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+    disableUploadTimeout="true" enableLookups="false" maxThreads="25"
+    port="8443" keystoreFile="G:/work/xxx/tomcat.keystore" keystorePass="YOUR PASSWORD HERE"
+    protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
+    secure="true" sslProtocol="TLS" /&gt;</pre>
+<p></p>
+<p>&nbsp;</p>
+<p>1、从https://github.com/Jasig/cas/releases 下载cas-server对应的版本；</p>
+<p>2、解压，使用maven命令mvn package对cas进行编译打包，这里可能会出现2个问题：</p>
+<p>　　a.单元测试不通过==》尝试加上-Dmaven.test.skip=true跳过；</p>
+<p>　　b.编译到一半编译不过==》进入cas-server-core，执行命令mvn install&nbsp;-Dmaven.test.skip=true先将core编译为jar包后，再进行。</p>
+<p>3、将打包好的cas-server-webapp下的war包复制到tomcat下，运行tomcat先试试吧；</p>
+<p>4、使用账号casuser，密码Mellon登录，成功</p>
+<p>5、从https://github.com/Jasig/java-cas-client 下载java-cas-client，如上步骤解压编译，编译后不再操作，待用。</p>
+<p>6、从https://github.com/UniconLabs/cas-sample-java-webapp 下载cas-sample-java-webapp，如上步骤解压编译，编译后不再操作，待用。</p>
+<p>&nbsp;</p>
+<h1><a name="t2" target="_blank"></a>二、server配置数据库连接认证</h1>
+<p>&nbsp;　　上面我们采用的是默认配置，登录账号实际上是在cas/WEB-INF/deployerConfigContext.xml配置写死的。当然不符合我们大多数的实际使用场景。现在我们将其改为连接Mysql数据库验证。</p>
+<p>1、回到我们刚刚maven编译的cas目录下，将cas-server-support-jdbc/target/cas-server-support-jdbc-4.1.4.jar 复制到tomcat/webapp/cas/WEB-INF/lib下，再复制mysql-connector-java-5.0.8-bin.jar到tomcat/webapp/cas/WEB-INF/lib下。当然这些你可以在cas-server-webapp下的pom.xml进行依赖添加再进行打包编译。</p>
+<p>2、修改cas/WEB-INF/deployerConfigContext.xml，这里需要注意修改以下地方：</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 1589px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_2" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_2" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;bean&nbsp;id="primaryAuthenticationHandler"&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="users"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;map&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="casuser"&nbsp;value="Mellon"/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/map&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/bean&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">&lt;bean id="primaryAuthenticationHandler"
+         class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler"&gt;
+       &lt;property name="users"&gt;
+           &lt;map&gt;
+               &lt;entry key="casuser" value="Mellon"/&gt;
+           &lt;/map&gt;
+       &lt;/property&gt;
+&lt;/bean&gt;</pre><br><br></pre>
+</div>
+<p>注释以上代码，增加如下代码</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 1922px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_3" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_3" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=3&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;bean&nbsp;id="dataSource"&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;class="org.springframework.jdbc.datasource.DriverManagerDataSource"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="driverClassName"&nbsp;value="com.mysql.jdbc.Driver"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="url"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value="jdbc:mysql://10.3.64.87:3306/cas?characterEncoding=utf-8&amp;autoReconnect=true"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="username"&nbsp;value="root"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="password"&nbsp;value="123456"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/bean&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&lt;bean&nbsp;id="primaryAuthenticationHandler"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler"&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:dataSource-ref="dataSource"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:passwordEncoder-ref="MD5PasswordEncoder"&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:sql="select&nbsp;password&nbsp;from&nbsp;user_info&nbsp;where&nbsp;user_name=?"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&lt;bean&nbsp;id="MD5PasswordEncoder"&nbsp;class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;constructor-arg&nbsp;index="0"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;MD5&lt;/value&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/constructor-arg&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/bean&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">    &lt;bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"&gt;
+        &lt;property name="driverClassName" value="com.mysql.jdbc.Driver" /&gt;
+        &lt;property name="url"
+            value="jdbc:mysql://10.3.64.87:3306/cas?characterEncoding=utf-8&amp;autoReconnect=true" /&gt;
+        &lt;property name="username" value="root" /&gt;
+        &lt;property name="password" value="123456" /&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id="primaryAuthenticationHandler"
+          class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler"
+          p:dataSource-ref="dataSource"
+          p:passwordEncoder-ref="MD5PasswordEncoder"
+          p:sql="select password from user_info where user_name=?" /&gt;
+          
+    &lt;bean id="MD5PasswordEncoder" class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder"&gt;
+        &lt;constructor-arg index="0"&gt;
+            &lt;value&gt;MD5&lt;/value&gt;
+        &lt;/constructor-arg&gt;
+    &lt;/bean&gt;</pre><br><br></pre>
+</div>
+<p>这里我们增加了MySQL的数据连接dataSource，并编写了SQL查询用户认证信息。</p>
+<p>修改完成，我们来测试一下能否通过MySQL进行认证。启动tomcat。</p>
+<p>&nbsp;</p>
+<h1><a name="t3" target="_blank"></a><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/20160202134423373" alt=""></h1>
+<p></p>
+<p>&nbsp;登录成功，我们已经成功和MYSQL连接成功了。</p>
+<h1><a name="t4" target="_blank"></a>三、添加客户端</h1>
+<p>　　这里我们将用到第一步里面待用的cas-sample-java-webapp。</p>
+<p>1、将编译好的cas-sample-java-webapp/target/cas-sample-java-webapp.war部署到tomcat下；</p>
+<p>2、找到tomcat/webapp/cas-sample-java-webapp/WEB-INF/web.xml，删除以下代码</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 3104px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_4" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_4" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=4&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;init-param&gt;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;redirectAfterValidation&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;true&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/init-param&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;init-param&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;useSession&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;true&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/init-param&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;init-param&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;acceptAnyProxy&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;true&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/init-param&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;init-param&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;proxyReceptorUrl&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;/client/proxyUrl&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/init-param&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;init-param&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;proxyCallbackUrl&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;https://zhuajindian.com:8443/client/proxyUrl&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/init-param&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">        &lt;init-param&gt;
+            &lt;param-name&gt;redirectAfterValidation&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;useSession&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;acceptAnyProxy&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;proxyReceptorUrl&lt;/param-name&gt;
+            &lt;param-value&gt;/client/proxyUrl&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;proxyCallbackUrl&lt;/param-name&gt;
+            &lt;param-value&gt;https://zhuajindian.com:8443/client/proxyUrl&lt;/param-value&gt;
+        &lt;/init-param&gt;</pre><br><br></pre>
+</div>
+<p>将<span style="line-height:1.5">其中的多个casServerUrlPrefix、serverName、casServerLoginUrl替换成你自己的URL。</span></p>
+<p>3、修改deployerConfigContext.xml，找到下面的代码</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 3688px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_5" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_5" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=5&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;bean&nbsp;id="serviceRegistryDao"&nbsp;class="org.jasig.cas.services.JsonServiceRegistryDao"&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c:configDirectory="${service.registry.config.location:classpath:services}"&nbsp;/&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">    &lt;bean id="serviceRegistryDao" class="org.jasig.cas.services.JsonServiceRegistryDao"
+          c:configDirectory="${service.registry.config.location:classpath:services}" /&gt;</pre></pre>
+</div>
+<p>替换为</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 3828px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_6" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_6" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=6&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;!--&nbsp;注册服务&nbsp;--&gt;&nbsp;&nbsp;</span></span></li><li class=""><span>&lt;bean&nbsp;id="serviceRegistryDao"&nbsp;class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:registeredServices-ref="registeredServicesList"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;util:list&nbsp;id="registeredServicesList"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;bean&nbsp;class="org.jasig.cas.services.RegexRegisteredService"&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:id="0"&nbsp;p:name="HTTP&nbsp;and&nbsp;IMAP"&nbsp;p:description="Allows&nbsp;HTTP(S)&nbsp;and&nbsp;IMAP(S)&nbsp;protocols"&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:serviceId="^(https?|http?|imaps?)://.*"&nbsp;p:evaluationOrder="10000001"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;/util:list&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">    &lt;!-- 注册服务 --&gt;
+    &lt;bean id="serviceRegistryDao" class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"
+            p:registeredServices-ref="registeredServicesList" /&gt;
+
+    &lt;util:list id="registeredServicesList"&gt;
+        &lt;bean class="org.jasig.cas.services.RegexRegisteredService"
+              p:id="0" p:name="HTTP and IMAP" p:description="Allows HTTP(S) and IMAP(S) protocols"
+              p:serviceId="^(https?|http?|imaps?)://.*" p:evaluationOrder="10000001" /&gt;
+    &lt;/util:list&gt;</pre></pre>
+</div>
+<p>这里的serviceId就是你告诉cas服务器端，通过这个正则来判断，符合这个正则表达式的，就是我们自己的客户端。当然这里泛匹配了，你可以根据实际情况来。</p>
+<p>4、重启tomcat，访问刚刚填写在serverName处的URL试试</p>
+<p><br>
+</p>
+<p><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/20160202134512168" alt=""><br>
+</p>
+<p>可以看到，我们已经能够成功获取到Authenticated UserId，也就是登录的用户名。这样，我们的简单demo就完成了。</p>
+<h1><a name="t5" target="_blank"></a>四、自定义登录后的可传递字段，方便客户端读取</h1>
+<p>　　在我们的应用场景中，客户端需要的参数不仅仅是用户名。还需要诸如userid等各类信息，那么，接下来我们就来配置获取自定义字段。</p>
+<p>1、找到cas/WEB-INF/deployerConfigContext.xml，注释以下代码：</p>
+<p></p>
+<div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 4533px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_7" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_7" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=7&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;bean&nbsp;id="attributeRepository"&nbsp;class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:backingMap-ref="attrRepoBackingMap"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;util:map&nbsp;id="attrRepoBackingMap"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="uid"&nbsp;value="uid"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="eduPersonAffiliation"&nbsp;value="eduPersonAffiliation"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="groupMembership"&nbsp;value="groupMembership"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;key&gt;&lt;value&gt;memberOf&lt;/value&gt;&lt;/key&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;list&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;faculty&lt;/value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;staff&lt;/value&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;org&lt;/value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/list&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/entry&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/util:map&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">&lt;bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
+          p:backingMap-ref="attrRepoBackingMap" /&gt;
+
+    &lt;util:map id="attrRepoBackingMap"&gt;
+        &lt;entry key="uid" value="uid" /&gt;
+        &lt;entry key="eduPersonAffiliation" value="eduPersonAffiliation" /&gt;
+        &lt;entry key="groupMembership" value="groupMembership" /&gt;
+        &lt;entry&gt;
+            &lt;key&gt;&lt;value&gt;memberOf&lt;/value&gt;&lt;/key&gt;
+            &lt;list&gt;
+                &lt;value&gt;faculty&lt;/value&gt;
+                &lt;value&gt;staff&lt;/value&gt;
+                &lt;value&gt;org&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/entry&gt;
+    &lt;/util:map&gt;</pre>
+<p></p>
+<p>替换为：</p>
+<div class="cnblogs_code">
+<pre><div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 4925px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_8" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_8" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=8&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;bean&nbsp;id="attributeRepository"&nbsp;class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao"&gt;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;constructor-arg&nbsp;index="0"&nbsp;ref="dataSource"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;constructor-arg&nbsp;index="1"&nbsp;value="SELECT&nbsp;id,user_name,mobile,cid&nbsp;FROM&nbsp;user_info&nbsp;WHERE&nbsp;{0}"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="queryAttributeMapping"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;map&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="username"&nbsp;value="user_name"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/map&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="resultAttributeMapping"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;map&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="id"&nbsp;value="userId"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="user_name"&nbsp;value="username"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="mobile"&nbsp;value="mobile"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entry&nbsp;key="cid"&nbsp;value="cid"&nbsp;/&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/map&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/bean&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">&lt;bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao"&gt;
+        &lt;constructor-arg index="0" ref="dataSource" /&gt;
+        &lt;constructor-arg index="1" value="SELECT id,user_name,mobile,cid FROM user_info WHERE {0}" /&gt;
+            &lt;property name="queryAttributeMapping"&gt;
+                &lt;map&gt;
+                    &lt;entry key="username" value="user_name" /&gt;
+                &lt;/map&gt;
+            &lt;/property&gt;
+            &lt;property name="resultAttributeMapping"&gt;
+                &lt;map&gt;
+                    &lt;entry key="id" value="userId" /&gt;
+                    &lt;entry key="user_name" value="username" /&gt;
+                    &lt;entry key="mobile" value="mobile" /&gt;
+                    &lt;entry key="cid" value="cid" /&gt;
+                &lt;/map&gt;
+            &lt;/property&gt;
+    &lt;/bean&gt;</pre></pre>
+</div>
+<p>其中的sql只需要写前半部分，如示例，entry的key代表上面sql查询的字段，value代表服务端传给客户端的参数名，客户端可以通过value取出对应的值。</p>
+<p>2、修改cas/WEB-INF/view/jsp/protocol/2.0/casServiceValidationSuccess.jsp，增加下面这段</p>
+<p><span style="color:rgb(0,128,128); background-color:rgb(240,240,240)"></span></p>
+<div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 5405px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_9" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_9" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=9&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;cas:serviceResponse&nbsp;xmlns:cas='http://www.yale.edu/tp/cas'&gt;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:authenticationSuccess&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:user&gt;${fn:escapeXml(principal.id)}&lt;/cas:user&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;这段&nbsp;--&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c:if&nbsp;test="${fn:length(assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes)&nbsp;&gt;&nbsp;0}"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:attributes&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c:forEach&nbsp;var="attr"&nbsp;items="${assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes}"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:${fn:escapeXml(attr.key)}&gt;${fn:escapeXml(attr.value)}&lt;/cas:${fn:escapeXml(attr.key)}&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/c:forEach&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/cas:attributes&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/c:if&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;这段&nbsp;end--&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c:if&nbsp;test="${not&nbsp;empty&nbsp;pgtIou}"&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:proxyGrantingTicket&gt;${pgtIou}&lt;/cas:proxyGrantingTicket&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/c:if&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c:if&nbsp;test="${fn:length(chainedAuthentications)&nbsp;&gt;&nbsp;0}"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:proxies&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c:forEach&nbsp;var="proxy"&nbsp;items="${chainedAuthentications}"&nbsp;varStatus="loopStatus"&nbsp;begin="0"&nbsp;end="${fn:length(chainedAuthentications)}"&nbsp;step="1"&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cas:proxy&gt;${fn:escapeXml(proxy.principal.id)}&lt;/cas:proxy&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/c:forEach&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/cas:proxies&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/c:if&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/cas:authenticationSuccess&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;/cas:serviceResponse&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">&lt;cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'&gt;
+    &lt;cas:authenticationSuccess&gt;
+        &lt;cas:user&gt;${fn:escapeXml(principal.id)}&lt;/cas:user&gt;
+        &lt;!-- 这段 --&gt;
+        &lt;c:if test="${fn:length(assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes) &gt; 0}"&gt;
+            &lt;cas:attributes&gt;
+                &lt;c:forEach var="attr" items="${assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes}"&gt;
+                    &lt;cas:${fn:escapeXml(attr.key)}&gt;${fn:escapeXml(attr.value)}&lt;/cas:${fn:escapeXml(attr.key)}&gt;
+                &lt;/c:forEach&gt;
+            &lt;/cas:attributes&gt;
+        &lt;/c:if&gt;
+        &lt;!-- 这段 end--&gt;
+        &lt;c:if test="${not empty pgtIou}"&gt;
+            &lt;cas:proxyGrantingTicket&gt;${pgtIou}&lt;/cas:proxyGrantingTicket&gt;
+        &lt;/c:if&gt;
+        &lt;c:if test="${fn:length(chainedAuthentications) &gt; 0}"&gt;
+            &lt;cas:proxies&gt;
+                &lt;c:forEach var="proxy" items="${chainedAuthentications}" varStatus="loopStatus" begin="0" end="${fn:length(chainedAuthentications)}" step="1"&gt;
+                    &lt;cas:proxy&gt;${fn:escapeXml(proxy.principal.id)}&lt;/cas:proxy&gt;
+                &lt;/c:forEach&gt;
+            &lt;/cas:proxies&gt;
+        &lt;/c:if&gt;
+    &lt;/cas:authenticationSuccess&gt;
+&lt;/cas:serviceResponse&gt;</pre><br>
+<br>
+<p></p>
+<p>3、重启tomcat，登录看效果：</p>
+<p><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/20160202134534233" alt=""></p>
+<p>上面配置的4个参数这里显示了3个，原来mobile字段是因为没有值，所以他默认就不传递了。</p>
+<p><br>
+</p>
+<p></p>
+<h1><a name="t6" target="_blank"></a>五、单点退出</h1>
+<p><span style="white-space:pre"></span>单点登出在应用中是必不可少的，只需要在client的web.xml顶部加上以下代码即可：</p>
+<p></p>
+<div class="dp-highlighter bg_plain"><div class="bar"><div class="tools"><b>[plain]</b> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;" target="_blank">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;" target="_blank">copy</a><div style="position: absolute; left: 489px; top: 6329px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_10" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_10" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=10&amp;width=18&amp;height=18" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;" target="_blank">print</a></span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;" target="_blank">?</a></div></div><ol start="1"><li class="alt"><span><span>&lt;!--该过滤器用于实现单点登出功能，可选配置。&nbsp;--&gt;&nbsp;&nbsp;</span></span></li><li class=""><span>&lt;filter&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;filter-name&gt;CASSingle&nbsp;Sign&nbsp;OutFilter&lt;/filter-name&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;filter-class&gt;org.jasig.cas.client.session.SingleSignOutFilter&lt;/filter-class&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;init-param&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;casServerUrlPrefix&lt;/param-name&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;https://zhuajindian.com:8443/cas&lt;/param-value&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/init-param&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;/filter&gt;&nbsp;&nbsp;</span></li><li class=""><span>&lt;filter-mapping&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;filter-name&gt;CASSingle&nbsp;Sign&nbsp;OutFilter&lt;/filter-name&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;url-pattern&gt;/*&lt;/url-pattern&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;/filter-mapping&gt;&nbsp;&nbsp;</span></li><li class=""><span>;!--用于单点退出，该过滤器用于实现单点登出功能，可选配置&nbsp;--&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;listener&gt;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;listener-class&gt;org.jasig.cas.client.session.SingleSignOutHttpSessionListener&lt;/listener-class&gt;&nbsp;&nbsp;</span></li><li class="alt"><span>&lt;/listener&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="plain" style="display: none;">    &lt;!--该过滤器用于实现单点登出功能，可选配置。 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CASSingle Sign OutFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.jasig.cas.client.session.SingleSignOutFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;casServerUrlPrefix&lt;/param-name&gt;
+            &lt;param-value&gt;https://zhuajindian.com:8443/cas&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CASSingle Sign OutFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+	&lt;!--用于单点退出，该过滤器用于实现单点登出功能，可选配置 --&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;org.jasig.cas.client.session.SingleSignOutHttpSessionListener&lt;/listener-class&gt;
+    &lt;/listener&gt;</pre><br>
+<span style="white-space:pre"></span>注意单点登出在测试时，访问https://zhuajindian.com:8443/cas/logout登出后直接刷新client端，是没有退出的，需要在客户端有其他请求后才会通知退出，这个不知道是什么原因引起的。盼交流回复
+<p></p>
+<p><br>
+</p>
+<p><span style="font-size:18px">本文搭建的CAS4.1.4server+client实例下载地址：<a target="_blank" href="http://download.csdn.net/detail/chenhai201/9425625">http://download.csdn.net/detail/chenhai201/9425625</a></span></p>
+<p><br>
+</p>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1513486478059">
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/bds_s_v2.js.下载"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" articleid="50623395">
+            <dl id="btnDigg" class="digg digg_disable" onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>3</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable" onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" target="_blank">&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" target="_blank">&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;http://blog.csdn.net/chenhai201/article/details/50623426&#39;;">下一篇</span><a href="http://blog.csdn.net/chenhai201/article/details/50623426" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">CAS SSL证书错误处理</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article">
+                    <h4></h4>
+                    <div class="similar_c" style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36" style="max-height:250px">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/frinder/article/details/7969925" title="CAS单点登录(SSO)完整教程" strategy="BlogCommendFromBaidu_0" target="_blank">CAS单点登录(SSO)完整教程</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/74?utm_source=blog7" title="MySQL在微信支付下的高可用运营--莫晓东" strategy="undefined" target="_blank">MySQL在微信支付下的高可用运营--莫晓东</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/cheungmine/article/details/47313799" title="cas 单点登录(SSO)之一: jasig cas-server 安装" strategy="BlogCommendFromBaidu_1" target="_blank">cas 单点登录(SSO)之一: jasig cas-server 安装</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/73?utm_source=blog7" title="容器技术在58同城的实践--姚远" strategy="undefined" target="_blank">容器技术在58同城的实践--姚远</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wind520/article/details/19768631" title="jasig CAS实现单点登录(数据库认证)" strategy="BlogCommendFromBaidu_2" target="_blank">jasig CAS实现单点登录(数据库认证)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/73?utm_source=blog7" title="SDCC 2017之容器技术实战线上峰会" strategy="undefined" target="_blank">SDCC 2017之容器技术实战线上峰会</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/lifetragedy/article/details/43817903" title="单点登录之CAS SSO从入门到精通（第一天）" strategy="BlogCommendFromBaidu_3" target="_blank">单点登录之CAS SSO从入门到精通（第一天）</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/74?utm_source=blog7" title="SDCC 2017之数据库技术实战线上峰会" strategy="undefined" target="_blank">SDCC 2017之数据库技术实战线上峰会</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/jadyer/article/details/46970747" title="【试水CAS-4.0.3】第05节_CAS服务端自定义返回的用户信息" strategy="BlogCommendFromBaidu_4" target="_blank">【试水CAS-4.0.3】第05节_CAS服务端自定义返回的用户信息</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/73?utm_source=blog7" title="腾讯云容器服务架构实现介绍--董晓杰" strategy="undefined" target="_blank">腾讯云容器服务架构实现介绍--董晓杰</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/hejingyuan6/article/details/45126373" title="CAS 实现单点登录（SSO）返回更多用户信息（五）" strategy="BlogCommendFromBaidu_5" target="_blank">CAS 实现单点登录（SSO）返回更多用户信息（五）</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/74?utm_source=home7" title="微博热点事件背后的数据库运维心得--张冬洪" strategy="undefined" target="_blank">微博热点事件背后的数据库运维心得--张冬洪</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/koproblem/article/details/70046444" title="cas4.0.1返回给客户端登录用户的更多信息" strategy="BlogCommendFromBaidu_6" target="_blank">cas4.0.1返回给客户端登录用户的更多信息</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zhh309/article/details/47088329" title="CAS4.0 SERVER登录后用户信息的返回" strategy="BlogCommendFromBaidu_7" target="_blank">CAS4.0 SERVER登录后用户信息的返回</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wang379275614/article/details/46507405" title="CAS—登录后返回更多用户信息" strategy="BlogCommendFromBaidu_8" target="_blank">CAS—登录后返回更多用户信息</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/afreon/article/details/62891402" title="CAS4.0.0集成OpenLdap并返回用户信息配置讲解" strategy="BlogCommendFromBaidu_9" target="_blank">CAS4.0.0集成OpenLdap并返回用户信息配置讲解</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+           
+         <!-- 广告位：PC端-博客详情页底部banner-960*90 -->
+            <script>
+                (function() {
+                    var s = "_" + Math.random().toString(36).slice(2);
+                    document.write('<div id="' + s + '"></div>');
+                    (window.slotbydup=window.slotbydup || []).push({
+                        id: '4770928',
+                        container: s,
+                        size: '960,90',
+                        display: 'inlay-fix'
+                    });
+                })();
+            </script><div id="_e2w673u1d34rqoczc3x2sm7vi"></div>
+    </div>
+
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/chenhai201/svc/GetSuggestContent/50623395",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_7200853"><dt class="comment_head" floor="4">4楼 <span class="user"><a class="username" href="http://blog.csdn.net/MrTanAndMa" target="_blank">MrTanAndMa</a> <span class="ptime">2017-09-20 10:51发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="7200853" username="MrTanAndMa"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/MrTanAndMa" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_mrtanandma.jpg" width="40" height="40"></a></dd><dd class="comment_body">我现在遇到的问题是单点退出的时候，多登录几次，再退出就会在退出和登录之间卡着</dd></dl><dl class="comment_item comment_topic" id="comment_item_6495992"><dt class="comment_head" floor="3">3楼 <span class="user"><a class="username" href="http://blog.csdn.net/koproblem" target="_blank">koproblem</a> <span class="ptime">2016-12-20 16:28发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display: none;" commentid="6495992" username="koproblem"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/koproblem" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_koproblem.jpg" width="40" height="40"></a></dd><dd class="comment_body">好东西</dd></dl><dl class="comment_item comment_topic" id="comment_item_6406936"><dt class="comment_head" floor="2">2楼 <span class="user"><a class="username" href="http://blog.csdn.net/soft_xiang" target="_blank">soft_xiang</a> <span class="ptime">2016-11-13 17:56发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6406936" username="soft_xiang"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/soft_xiang" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_soft_xiang.jpg" width="40" height="40"></a></dd><dd class="comment_body">我的搭建起来以后没起到统一认证的效果，什么情况？<br>比如把你的cas-sample-java-webapp再部署一个到b.zhuajindian.com.../client，a经过验证登陆后，b依然要跳到验证页面<br>什么情况</dd><dl class="comment_item comment_reply" id="comment_item_6410638"><dt class="comment_head" floor="2">Re: <span class="user"><a class="username" href="http://blog.csdn.net/chenhai201" target="_blank">chenhai201</a> <span class="ptime">2016-11-15 15:37发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6410638" username="chenhai201"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/chenhai201" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_chenhai201.jpg" width="40" height="40"></a></dd><dd class="comment_body">回复soft_xiang：是不是web.xml配置不正确，建议下载demo看看</dd></dl></dl><dl class="comment_item comment_topic" id="comment_item_6400414"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/zhangk007" target="_blank">zhangk007</a> <span class="ptime">2016-11-09 15:01发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6400414" username="zhangk007"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/zhangk007" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_zhangk007.jpg" width="40" height="40"></a></dd><dd class="comment_body">sql呢</dd><dl class="comment_item comment_reply" id="comment_item_6410636"><dt class="comment_head" floor="1">Re: <span class="user"><a class="username" href="http://blog.csdn.net/chenhai201" target="_blank">chenhai201</a> <span class="ptime">2016-11-15 15:36发表</span>  <a href="http://blog.csdn.net/chenhai201/article/details/50623395#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6410636" username="chenhai201"> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/chenhai201/article/details/50623395#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/chenhai201" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/3_chenhai201.jpg" width="40" height="40"></a></dd><dd class="comment_body">回复zhangk007：只涉及到一张表user_info，字段id int,user_name varchar,mobile varchar,cid int</dd></dl></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fchenhai201%2Farticle%2Fdetails%2F50623395">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '50623395';
+    var commentscount = 8;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='cas 4.1.4单点登录实战';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/chenhai201" target="_blank">
+    <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/1_chenhai201.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/chenhai201" class="user_name" target="_blank">chenhai201</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=chenhai201&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>25197次</span></li>
+    <li>积分：<span>336</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/blog2.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：336 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>8篇</span></li>
+    <li>转载：<span>0篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>22条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" class="form_search csdn-tracking-statistics" target="_blank" data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            var url = "/" + username + "?q=" + encodeURIComponent($("#inputSearch").val());
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/chenhai201/article/category/6089629" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">CAS SSO</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/chenhai201/article/category/6935075" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">activiti</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/chenhai201/article/category/7300104" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">spring-cloud</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/chenhai201/article/month/2017/11">2017年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chenhai201/article/month/2017/08">2017年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chenhai201/article/month/2017/05">2017年05月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chenhai201/article/month/2016/11">2016年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chenhai201/article/month/2016/08">2016年08月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/chenhai201/article/month/2016/02">2016年02月</a><span>(3)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/72668275" title="Spring boot整合activiti modeler 5.22" target="_blank">Spring boot整合activiti modeler 5.22</a><span>(7763)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395" title="cas 4.1.4单点登录实战" target="_blank">cas 4.1.4单点登录实战</a><span>(7289)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/53179204" title="Spring boot war包方式部署" target="_blank">Spring boot war包方式部署</a><span>(4583)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50699558" title="CAS server 4.1.4自定义Controller" target="_blank">CAS server 4.1.4自定义Controller</a><span>(2013)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/52186153" title="CAS 引起的乱码问题解决" target="_blank">CAS 引起的乱码问题解决</a><span>(1964)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623426" title="CAS SSL证书错误处理" target="_blank">CAS SSL证书错误处理</a><span>(966)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/77196624" title="Activiti 生成图片乱码问题解决备忘录" target="_blank">Activiti 生成图片乱码问题解决备忘录</a><span>(343)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/78591075" title="Swarm+docker集群搭建" target="_blank">Swarm+docker集群搭建</a><span>(66)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel tracking-ad" data-mod="popu_341" "="">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/72668275" title="Spring boot整合activiti modeler 5.22" target="_blank">Spring boot整合activiti modeler 5.22</a><span>(12)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623395" title="cas 4.1.4单点登录实战" target="_blank">cas 4.1.4单点登录实战</a><span>(8)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50699558" title="CAS server 4.1.4自定义Controller" target="_blank">CAS server 4.1.4自定义Controller</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/52186153" title="CAS 引起的乱码问题解决" target="_blank">CAS 引起的乱码问题解决</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/50623426" title="CAS SSL证书错误处理" target="_blank">CAS SSL证书错误处理</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/53179204" title="Spring boot war包方式部署" target="_blank">Spring boot war包方式部署</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/77196624" title="Activiti 生成图片乱码问题解决备忘录" target="_blank">Activiti 生成图片乱码问题解决备忘录</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chenhai201/article/details/78591075" title="Swarm+docker集群搭建" target="_blank">Swarm+docker集群搭建</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li>
+<a href="http://blog.csdn.net/csdnproduct/article/details/78647961" target="_blank">* 【2017年11月27日】CSDN博客更新周报</a></li>
+<br>
+<li>
+<a href="http://blog.csdn.net/blogdevteam/article/details/78287539" target="_blank">* 【CSDN】邀请您来GitChat赚钱啦！</a></li>
+<br>
+<li>
+<a href="http://blog.csdn.net/blogdevteam/article/details/78625380" target="_blank">* 【GitChat】精选——JavaScript进阶指南</a></li>
+<br>
+
+<li>
+<a href="http://blog.csdn.net/gitchat/article/details/78546894" target="_blank">* 改做人工智能之前，90%的人都没能给自己定位</a></li>
+<br>
+<li>
+<a href="http://blog.csdn.net/gitchat/article/details/78546894" target="_blank">*  TensorFlow 人脸识别网络与对抗网络搭建</a></li>
+<br>
+<li>
+<a href="http://blog.csdn.net/gitchat/article/details/78557241" target="_blank">*  Vue 移动端项目生产环境优化</a></li>
+<br>
+<li>
+<a href="http://blog.csdn.net/gitchat/article/details/78546898" target="_blank">* 面试必考的计算机网络知识点梳理</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/chenhai201" class="user_name">chenhai201</a>:
+@lgllionky:可以下载代码看看:https://github.com/secsea/spri...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/chenhai201" class="user_name">chenhai201</a>:
+@shijinting:可以下载代码看看:https://github.com/secsea/spr...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/lgllionky" class="user_name">lgllionky</a>:
+启动报错：Caused by: org.springframework.beans.factory....
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/shijinting" class="user_name">shijinting</a>:
+作者你好，按照你的教程，尝试整合activiti，但是出现报错，自己无法解决，不知博主能否看下Des...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wenmei4343" class="user_name">wenmei4343</a>:
+你好，为什么运行起来页面是空白呢 是不是没有连接数据库什么的
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/72668275#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/bec_tt" class="user_name">bec_tt</a>:
+你好，请问如果要画流程图是怎么操作呢。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/50623395#comments">cas 4.1.4单点登录实战</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/MrTanAndMa" class="user_name">MrTanAndMa</a>:
+我现在遇到的问题是单点退出的时候，多登录几次，再退出就会在退出和登录之间卡着
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/50623395#comments">cas 4.1.4单点登录实战</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/chenhai201" class="user_name">chenhai201</a>:
+@vampirehgg:java-cas-client 里面打包的cas-client-core是客...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/50623395#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/chenhai201" class="user_name">chenhai201</a>:
+@u011952254:文章里有写：http://localhost:8080/static/mod...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chenhai201/article/details/50623395#comments">Spring boot整合activiti modeler 5.22</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u011952254" class="user_name">Silence-boby</a>:
+您好，这边代码下载下来运行，web页面流程图设计怎么打开啊？
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+                   <div class="tracking-ad" data-view="true" data-mod="ad_popu_189" data-mtp="63" data-order="40" data-con="ad_content_1259" style="width: 250px; height: 500px;">
+                        <div id="nav_show_top_stop" style="width: 250px; height: 500px; z-index: 1000; position: fixed; top: 0px;"><div id="cpro_u2734133">
+                             <!-- 投放代码 -->
+                             
+                            <!-- 请置于所有广告位代码之前 -->
+                            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+                            <!-- 广告位：PC端-博客详情页-左侧button1-250*250 -->
+                                    <script>
+                                        (function () {
+                                            var s = "_" + Math.random().toString(36).slice(2);
+                                            document.write('<div id="' + s + '"></div>');
+                                            (window.slotbydup = window.slotbydup || []).push({
+                                                id: '4740887',
+                                                container: s,
+                                                size: '250,250',
+                                                display: 'inlay-fix'
+                                            });
+                                        })();
+                                    </script><div id="_hgpxrlsvwvxdg0clhpok49529"></div>
+
+                                                                                                    </div>
+                            <div id="cpro_u3031286">
+                                 <!-- 投放代码 -->
+                               
+                                <!-- 请置于所有广告位代码之前 -->
+                                <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+                                <!-- 广告位：PC端-博客详情页-左侧Button2-250*250 -->
+                                <script>
+                                    (function () {
+                                        var s = "_" + Math.random().toString(36).slice(2);
+                                        document.write('<div id="' + s + '"></div>');
+                                        (window.slotbydup = window.slotbydup || []).push({
+                                            id: '4740890',
+                                            container: s,
+                                            size: '250,250',
+                                            display: 'inlay-fix'
+                                        });
+                                    })();
+                                </script><div id="_z5jrb8snjrclx5u1gmeipb9"></div>
+
+
+
+                            </div></div>
+                   </div>
+                    <script>
+
+                        setTimeout(function () {
+                            var naviga_offsetTop = 0; function naviga_stay_top() {
+                                var scrollTop = jQuery(document).scrollTop();
+                                if (scrollTop > naviga_offsetTop) {
+                                    jQuery("#nav_show_top_stop").css({ "position": "fixed" });
+                                    jQuery("#nav_show_top_stop").css({ "top": "0px" });
+                                } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); }
+                            }
+                            function onload_function() {
+                                naviga_offsetTop = jQuery("#nav_show_top_stop").position().top;
+                                jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top);
+                                jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top);
+                            } jQuery(document).ready(onload_function);
+                        }, 200);
+
+                    </script>
+
+           </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+     
+
+
+       <script type="text/javascript" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/MathJax.js.下载"></script>   
+    
+    <script src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/csdn_blog_detail.min.js.下载" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="javascript:void(0);" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-660-0108</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏知之为计算机有限公司</span><span class="interval">|</span><span>江苏乐知网络技术有限公司</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2017, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/saved_resource(2).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/notify.js.下载"></script><input type="hidden" id="aa_g_data_ids">
+        
+    <script type="text/javascript" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/csdn_public_blog_detail.min.js.下载"></script><div id="tuige" style="width:0px;height:0px;position:fixed;bottom:0px;z-index:22147483646;"><div id="tuigb" style="width:0px;height:0px;position:absolute;right:0px;top:0px;cursor:pointer;"></div><iframe scrolling="no" id="tuigv" style="width:0px;height:0px;border:none;" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/saved_resource(3).html"></iframe></div>
+
+    <script type="text/javascript" src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/showblogmedal.ashx"></script>
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="http://ads.csdn.net/js/opt/52b5334.js?t=0.5841005113133324"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+          
+    <div class="pop_CA_cover" style="display:none"></div>
+    <div class="pop pop_CA" style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon" id="fapancle" onclick="$(&#39;.pop_CA&#39;).hide();$(&#39;.pop_CA_cover&#39;).hide();"></span>
+          </div>
+          <iframe src="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/saved_resource(4).html" id="fa" frameborder="0" width="100%" height="360" scrolling="no"></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+
+   
+<link rel="stylesheet" type="text/css" media="screen" href="./cas 4.1.4单点登录实战 - chenhai201的博客 - CSDN博客_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="csdn-tracking-statistics" chg-blk="0"><a id="com-quick-QRcode" class="QRcodebg1" title="扫描二维码" style="top:175px"><span class="closeQR"></span></a><a id="com-quick-reply" title="快速回复" style="top:309px"></a><a id="com-quick-collect" title="我要收藏" style="top:347px"></a><a id="com-d-top-a" style="top: 385px; display: block;" title="返回顶部" onclick=""></a></div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/chenhai201/article/details/50623395#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/chenhai201/article/details/50623395#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor" style="visibility: hidden;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="visibility: hidden;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/chenhai201/article/details/50623395#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div></body></html>

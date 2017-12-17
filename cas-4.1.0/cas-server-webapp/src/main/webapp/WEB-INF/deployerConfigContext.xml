@@ -91,7 +91,7 @@
 	<!-- Bean that defines the attributes that a service may return. This example 
 		uses the Stub/Mock version. A real implementation may go against a database 
 		or LDAP server. The id should remain "attributeRepository" though. + -->
-	<bean id="attributeRepository"
+	<!-- <bean id="attributeRepository"
 		class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
 		p:backingMap-ref="attrRepoBackingMap" />
 
@@ -109,9 +109,27 @@
 				<value>org</value>
 			</list>
 		</entry>
-	</util:map> 
-	
+	</util:map> -->
+	<bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">  
+        <constructor-arg index="0" ref="dataSource" />  
+        <constructor-arg index="1" value="SELECT id,username,password,active FROM tb_user WHERE {0}" />  
+            <property name="queryAttributeMapping">  
+                <map>  
+                    <entry key="username" value="username" />  
+                </map>  
+            </property>  
+            <property name="resultAttributeMapping">  
+                <map>  
+                    <entry key="id" value="id" />  
+                    <entry key="username" value="username" />  
+                    <entry key="password" value="password" />  
+                    <entry key="active" value="active" />  
+                </map>  
+            </property>  
+    </bean> 
 
+	<bean id="serviceRegistryDao" class="org.jasig.cas.services.JsonServiceRegistryDao"
+		c:configDirectory="${service.registry.config.location:classpath:services}" />
 
 	<bean id="auditTrailManager"
 		class="org.jasig.inspektr.audit.support.Slf4jLoggingAuditTrailManager" />

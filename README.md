@@ -78,6 +78,75 @@ testredisshiro.sql是数据库代码-mysql----/cas-4.1.0/cas-server-webapp/src/m
 		</property>
 	</bean>】
 
+********************************************************************************************************************************
+cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/50623395】
+四、自定义登录后的可传递字段，方便客户端读取
+　　在我们的应用场景中，客户端需要的参数不仅仅是用户名。还需要诸如userid等各类信息，那么，接下来我们就来配置获取自定义字段。
+1、找到cas/WEB-INF/deployerConfigContext.xml，注释以下代码：
+[plain] view plain copy
+<bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"  
+          p:backingMap-ref="attrRepoBackingMap" />  
+  
+    <util:map id="attrRepoBackingMap">  
+        <entry key="uid" value="uid" />  
+        <entry key="eduPersonAffiliation" value="eduPersonAffiliation" />  
+        <entry key="groupMembership" value="groupMembership" />  
+        <entry>  
+            <key><value>memberOf</value></key>  
+            <list>  
+                <value>faculty</value>  
+                <value>staff</value>  
+                <value>org</value>  
+            </list>  
+        </entry>  
+    </util:map>  
+替换为：
+[plain] view plain copy 
+<bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">  
+        <constructor-arg index="0" ref="dataSource" />  
+        <constructor-arg index="1" value="SELECT id,user_name,mobile,cid FROM user_info WHERE {0}" />  
+            <property name="queryAttributeMapping">  
+                <map>  
+                    <entry key="username" value="user_name" />  
+                </map>  
+            </property>  
+            <property name="resultAttributeMapping">  
+                <map>  
+                    <entry key="id" value="userId" />  
+                    <entry key="user_name" value="username" />  
+                    <entry key="mobile" value="mobile" />  
+                    <entry key="cid" value="cid" />  
+                </map>  
+            </property>  
+    </bean>  
+其中的sql只需要写前半部分，如示例，entry的key代表上面sql查询的字段，value代表服务端传给客户端的参数名，客户端可以通过value取出对应的值。
+2、修改cas/WEB-INF/view/jsp/protocol/2.0/casServiceValidationSuccess.jsp，增加下面这段
+[plain] view plain copy
+<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>  
+    <cas:authenticationSuccess>  
+        <cas:user>${fn:escapeXml(principal.id)}</cas:user>  
+        <!-- 这段 -->  
+        <c:if test="${fn:length(assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes) > 0}">  
+            <cas:attributes>  
+                <c:forEach var="attr" items="${assertion.chainedAuthentications[fn:length(assertion.chainedAuthentications)-1].principal.attributes}">  
+                    <cas:${fn:escapeXml(attr.key)}>${fn:escapeXml(attr.value)}</cas:${fn:escapeXml(attr.key)}>  
+                </c:forEach>  
+            </cas:attributes>  
+        </c:if>  
+        <!-- 这段 end-->  
+        <c:if test="${not empty pgtIou}">  
+            <cas:proxyGrantingTicket>${pgtIou}</cas:proxyGrantingTicket>  
+        </c:if>  
+        <c:if test="${fn:length(chainedAuthentications) > 0}">  
+            <cas:proxies>  
+                <c:forEach var="proxy" items="${chainedAuthentications}" varStatus="loopStatus" begin="0" end="${fn:length(chainedAuthentications)}" step="1">  
+                    <cas:proxy>${fn:escapeXml(proxy.principal.id)}</cas:proxy>  
+                </c:forEach>  
+            </cas:proxies>  
+        </c:if>  
+    </cas:authenticationSuccess>  
+</cas:serviceResponse>  
+********************************************************************************************************************************
 
 
 
