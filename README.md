@@ -100,8 +100,7 @@ cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/506
             </list>  
         </entry>  
     </util:map>  
-替换为：
-[plain] view plain copy 
+替换为： 
 <bean id="attributeRepository" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">  
         <constructor-arg index="0" ref="dataSource" />  
         <constructor-arg index="1" value="SELECT id,user_name,mobile,cid FROM user_info WHERE {0}" />  
