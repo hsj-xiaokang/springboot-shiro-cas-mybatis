@@ -1,3 +1,7 @@
+目前该项目所有搭建测试来源于互联网，然后测试整理发布给大家使用，避免大家重复搜索查找，如有疑问，欢迎QQ：2356899074详谈，互相学习！
+
+目前该项目集成了好几个客户端项目，最好的是/client_shiro_cas_pac4j该客户端项目，集成shiro cas_client pac4j 能够满足web和APP的登录需求，还没有集成mybatis,如果shiro的session 和cache 外置请使用一个好的开源https://github.com/alexxiyang/shiro-redis。sso服务端使用cas4.1.x版本，具体可以配置返回更多用户信息[已经配置了返回更多信息]。
+
 
 这个是一个springboot工程
 
