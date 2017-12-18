@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -85,6 +86,28 @@ public class IndexController {
     @GetMapping("/user/detail")
     public Object detail(HttpServletRequest request) {
         return "users:" + request.getUserPrincipal().getName();
+    }
+    
+    /**
+     * 验证token权限-没有user:edit10权限返回用户的PrincipalCollection
+     * @return
+     */
+    @RequiresPermissions(value = { "user:edit10" })
+    @GetMapping("/user/hsj")
+    @ResponseBody
+    public Object hsj() {
+        return "hsjhsj_is_smart!!";
+    }
+    
+    /**
+     * 验证token权限-有权限返回要返回的信息
+     * @return
+     */
+    @RequiresPermissions(value = { "user:edit" })
+    @GetMapping("/user/hsj_")
+    @ResponseBody
+    public Object hsj_() {
+        return "hsjhsj_is_smart!!__";
     }
 
     /**
