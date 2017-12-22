@@ -166,7 +166,13 @@ cas4.1.0返回更多信息【http://blog.csdn.net/chenhai201/article/details/506
 </cas:serviceResponse>  
 ********************************************************************************************************************************
 
-
+```
+集成登录微信 QQ 方式
+https://github.com/luotuo/cas4.0.x-server-wechat
+http://blog.csdn.net/u012410733/article/details/51729962
+http://blog.csdn.net/carl_china/article/details/50333779
+http://blog.csdn.net/luotuo818/article/details/78685005
+```
 
 
 
