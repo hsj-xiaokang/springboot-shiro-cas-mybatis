@@ -1,4 +1,5 @@
 ## 该项目不维护，推荐OAuth2实现sso：
+## https://github.com/hsj-xiaokang/Oauth2-SSO
 ## https://gitee.com/hsjjsh123/cjs-oauth2-sso-demo
 
 
